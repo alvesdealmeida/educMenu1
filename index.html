@@ -508,9 +508,77 @@
     .card-desc { -webkit-line-clamp: 3; }
     .stats-row { flex-direction: column; align-items: center; }
   }
+  /* Overlay de bloqueio (fundo escuro) */
+  #overlay-aviso {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85); /* Escurece o fundo */
+    backdrop-filter: blur(8px);     /* Desfoca o que está atrás */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;                  /* Garante que fique acima de tudo */
+  }
+
+  /* Card do aviso */
+  .modal-aviso {
+    background: var(--white);
+    padding: 30px;
+    border-radius: 24px;
+    max-width: 90%;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    border: 3px solid var(--amber);
+  }
+
+  .modal-aviso h2 {
+    color: var(--navy);
+    margin-bottom: 15px;
+    font-family: 'Playfair Display', serif;
+  }
+
+  .modal-aviso p {
+    color: var(--text);
+    font-weight: 600;
+    line-height: 1.6;
+    margin-bottom: 25px;
+  }
+
+  .btn-entendi {
+    background: var(--amber);
+    color: var(--navy2);
+    border: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-weight: 800;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .btn-entendi:active {
+    transform: scale(0.95);
+  }
+
+  /* Trava o scroll do body enquanto o aviso estiver ativo */
+  body.modal-open {
+    overflow: hidden;
+  }
 </style>
 </head>
 <body>
+  <!-- overlay -->
+<div id="overlay-aviso">
+  <div class="modal-aviso">
+    <h2>📱 Atenção!</h2>
+    <p>
+      Para uma melhor experiência de aprendizagem, informamos que estas aplicações foram otimizadas para ambientes de <strong>Celulares e Tablets</strong>.
+    </p>
+    <button class="btn-entendi" onclick="fecharAviso()">Entendi, vamos jogar!</button>
+  </div>
+</div>
 
 <!-- ── HERO ─────────────────────────────────────────────────── -->
 <header class="hero">
@@ -867,6 +935,19 @@ function renderGames(list) {
 // ── Init ──────────────────────────────────────────────────────
 renderTabs();
 filterGames();
+// Trava o scroll ao carregar
+document.body.classList.add('modal-open');
+
+function fecharAviso() {
+  const overlay = document.getElementById('overlay-aviso');
+  overlay.style.transition = 'opacity 0.5s ease';
+  overlay.style.opacity = '0';
+  
+  setTimeout(() => {
+    overlay.style.display = 'none';
+    document.body.classList.remove('modal-open'); // Libera o scroll
+  }, 500);
+}
 </script>
 </body>
 </html>
