@@ -591,7 +591,19 @@
     </p>
     <button class="btn-entendi" onclick="fecharAviso()">Entendi, vamos jogar!</button>
   </div>
-</div>  
+</div> 
+<!-- Novo Modal de Presente -->
+<div id="overlay-presente" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); align-items: center; justify-content: center; z-index: 10000;">
+  <div class="modal-aviso" style="border-color: var(--green);">
+    <h2 style="color: var(--green);">🎁 Presente da Plataforma!</h2>
+    <p>
+      Temos uma novidade: <strong>2 aplicações</strong> desta plataforma agora podem ser executadas <strong>OFF-LINE</strong>! 
+      <br><br>
+      Você poderá continuar aprendendo mesmo sem conexão com a internet.
+    </p>
+    <button class="btn-entendi" style="background: var(--green); color: white;" onclick="fecharPresente()">Incrível, obrigado!</button>
+  </div>
+</div>
 
 <!-- ── HERO ─────────────────────────────────────────────────── -->
 <header class="hero">
@@ -1002,7 +1014,20 @@ function fecharAviso() {
   
   setTimeout(() => {
     overlay.style.display = 'none';
-    document.body.classList.remove('modal-open'); // Libera o scroll
+    // Abre o segundo modal de presente
+    const presente = document.getElementById('overlay-presente');
+    presente.style.display = 'flex';
+  }, 500);
+}
+
+function fecharPresente() {
+  const presente = document.getElementById('overlay-presente');
+  presente.style.transition = 'opacity 0.5s ease';
+  presente.style.opacity = '0';
+  
+  setTimeout(() => {
+    presente.style.display = 'none';
+    document.body.classList.remove('modal-open'); // Libera o scroll apenas aqui
   }, 500);
 }
 </script>
