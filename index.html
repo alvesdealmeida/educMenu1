@@ -592,7 +592,7 @@
     <button class="btn-entendi" onclick="fecharAviso()">Entendi, vamos jogar!</button>
   </div>
 </div> 
-<!-- Novo Modal de Presente -->
+<!-- Novo Modal de Presente 
 <div id="overlay-presente" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); align-items: center; justify-content: center; z-index: 10000;">
   <div class="modal-aviso" style="border-color: var(--green);">
     <h2 style="color: var(--green);">🎁 Presente da Plataforma!</h2>
@@ -603,7 +603,7 @@
     </p>
     <button class="btn-entendi" style="background: var(--green); color: white;" onclick="fecharPresente()">Incrível, obrigado!</button>
   </div>
-</div>
+</div>  -->
 
 <!-- ── HERO ─────────────────────────────────────────────────── -->
 <header class="hero">
@@ -657,6 +657,7 @@
     <a class="next-btn"
        href="https://alvesdealmeida.github.io/educMenu2/"
        rel="noopener">
+      onclick="mostrarPresente(event)">
       🎓 Ver Educ Games II &nbsp;<span>→</span>
     </a>
   </div>
@@ -1019,7 +1020,32 @@ function fecharAviso() {
     presente.style.display = 'flex';
   }, 500);
 }
+// Local: Dentro da tag <script>, após a função fecharAviso()
 
+function mostrarPresente(event) {
+    event.preventDefault(); // Trava o link para mostrar o aviso primeiro
+    const linkDestino = event.currentTarget.href; // Guarda o link para ir depois
+    
+    document.body.classList.add('modal-open');
+    const modal = document.getElementById('overlay-presente');
+    modal.style.display = 'flex';
+    
+    // Configura o botão do modal para ir ao link após fechar
+    window.destinoAposPresente = linkDestino;
+}
+
+function fecharPresente() {
+    const modal = document.getElementById('overlay-presente');
+    modal.style.opacity = '0';
+    
+    setTimeout(() => {
+        modal.style.display = 'none';
+        document.body.classList.remove('modal-open');
+        // Redireciona o usuário para o link original
+        window.location.href = window.destinoAposPresente;
+    }, 500);
+}
+/*
 function fecharPresente() {
   const presente = document.getElementById('overlay-presente');
   presente.style.transition = 'opacity 0.5s ease';
@@ -1029,11 +1055,20 @@ function fecharPresente() {
     presente.style.display = 'none';
     document.body.classList.remove('modal-open'); // Libera o scroll apenas aqui
   }, 500);
-}
+} */
 </script>
 <div style="text-align: center; margin-top: 20px;">
     <!-- Contador para o Portal Educacional 1 -->
     <img width="100" src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://alvesdealmeida.github.io/educMenu1/&count_bg=%232980B9&title_bg=%23555555&title=Acessos+Menu+1&edge_flat=false" alt="Contador de Visitas">
+</div>
+<div id="overlay-presente" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); align-items: center; justify-content: center; z-index: 10000;">
+  <div class="modal-aviso" style="border: 3px solid #10b981;">
+    <h2 style="color: #1e3a5f;">🎁 Presente da Plataforma!</h2>
+    <p style="color: #334155; font-weight: 600;">
+      As aplicações <strong>Astro Crew</strong> e <strong>Robô Run</strong> agora podem ser executadas <strong>OFF-LINE</strong> como presente para você!
+    </p>
+    <button class="btn-entendi" style="background: #10b981; color: white;" onclick="fecharPresente()">Que demais, obrigado!</button>
+  </div>
 </div>
 </body>
 </html>
