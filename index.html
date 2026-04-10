@@ -1019,31 +1019,6 @@ function fecharAviso() {
     presente.style.display = 'flex';
   }, 500);
 }
-// Local: Dentro da tag <script>, após a função fecharAviso()
-
-function mostrarPresente(event) {
-    event.preventDefault(); // Trava o link para mostrar o aviso primeiro
-    const linkDestino = event.currentTarget.href; // Guarda o link para ir depois
-    
-    document.body.classList.add('modal-open');
-    const modal = document.getElementById('overlay-presente');
-    modal.style.display = 'flex';
-    
-    // Configura o botão do modal para ir ao link após fechar
-    window.destinoAposPresente = linkDestino;
-}
-
-function fecharPresente() {
-    const modal = document.getElementById('overlay-presente');
-    modal.style.opacity = '0';
-    
-    setTimeout(() => {
-        modal.style.display = 'none';
-        document.body.classList.remove('modal-open');
-        // Redireciona o usuário para o link original
-        window.location.href = window.destinoAposPresente;
-    }, 500);
-}
 
 function fecharPresente() {
   const presente = document.getElementById('overlay-presente');
@@ -1054,7 +1029,9 @@ function fecharPresente() {
     presente.style.display = 'none';
     document.body.classList.remove('modal-open'); // Libera o scroll apenas aqui
   }, 500);
-} 
+}
+
+
 </script>
 <div style="text-align: center; margin-top: 20px;">
     <!-- Contador para o Portal Educacional 1 -->
