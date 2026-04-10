@@ -36,13 +36,14 @@
   }
 
   /* ── Topo decorativo ── */
-  .hero {
+  /* Reduzi o padding de 48px/80px para 20px/40px */
+.hero {
     background: linear-gradient(135deg, var(--navy2) 0%, var(--navy) 60%, #1e4d8c 100%);
     position: relative;
     overflow: hidden;
-    padding: 48px 24px 80px;
+    padding: 20px 24px 40px; /* Header mais curto */
     text-align: center;
-  }
+}
 
   /* Bolhas decorativas */
   .hero::before {
@@ -100,7 +101,7 @@
     font-size: 0.8rem; font-weight: 700;
     color: rgba(255,255,255,0.85);
     letter-spacing: 0.12em; text-transform: uppercase;
-    margin-bottom: 24px;
+    margin-bottom: 10px;
     backdrop-filter: blur(6px);
   }
   .logo-badge span { font-size: 1rem; }
@@ -111,7 +112,7 @@
     font-weight: 800;
     color: #fff;
     line-height: 1.15;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
     letter-spacing: -0.01em;
   }
   h1 em {
@@ -127,6 +128,7 @@
     color: rgba(255,255,255,0.65);
     font-weight: 600;
     max-width: 480px; margin: 0 auto 36px;
+    margin-bottom: 20px;
     line-height: 1.6;
   }
 
@@ -147,20 +149,22 @@
   .stat-pill .lbl  { font-size: 0.72rem; color: rgba(255,255,255,0.6); font-weight: 600; margin-top: 1px; }
 
   /* Onda separadora */
-  .wave-sep {
-    display: block; width: 100%; height: 60px;
+  /* Diminui a altura da onda separadora de 60px para 30px */
+.wave-sep {
+    display: block; width: 100%; height: 30px; 
     margin-top: -1px;
     background: var(--cream);
     clip-path: ellipse(56% 100% at 50% 100%);
-  }
+}
 
   /* ── Corpo principal ── */
-  .main {
+  /* Ajuste do conteúdo principal para subir mais e encostar no header curto */
+.main {
     max-width: 1140px; margin: 0 auto;
     padding: 0 24px 80px;
     position: relative;
-    top: -30px;
-  }
+    top: -15px; /* Ajustado de -30px para -15px para harmonia */
+}
 
   /* Barra de busca */
   .search-bar {
@@ -452,11 +456,13 @@
 
   /* ── CELULAR (≤600px) ───────────────────── */
   @media (max-width: 600px) {
-    .hero { padding: 28px 16px 66px; }
-    .main { padding: 0 14px 60px; top: -24px; }
+    .hero { padding: 15px 16px 35px; }
+    .main { padding: 0 14px 60px; top: -10px; }
 
-    h1 { font-size: clamp(1.55rem, 7.5vw, 2rem); }
-    .hero-sub { font-size: 0.9rem; margin-bottom: 24px; }
+    /*h1 { font-size: clamp(1.55rem, 7.5vw, 2rem); }*/
+     h1 { font-size: 1.6rem; }
+    /*.hero-sub { font-size: 0.9rem; margin-bottom: 24px; }*/
+    .hero-sub { margin-bottom: 15px; }
     .logo-badge { font-size: 0.72rem; padding: 7px 16px; }
 
     .stats-row { gap: 10px; }
