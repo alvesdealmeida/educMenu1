@@ -440,6 +440,34 @@
   }
   footer strong { color: rgba(255,255,255,0.85); }
 
+  /* Layout para explicação lateral */
+  .content-wrapper {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  }
+  .games-container { flex: 1; }
+
+  .bncc-info-card {
+    width: 280px;
+    background: var(--white);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    border-top: 6px solid var(--purple);
+    position: sticky;
+    top: 20px;
+    text-align: left;
+  }
+  .bncc-info-card h3 { font-family: 'Playfair Display', serif; color: var(--navy); margin-bottom: 12px; font-size: 1.2rem; }
+  .bncc-info-card p { font-size: 0.85rem; line-height: 1.6; color: var(--muted); margin-bottom: 15px; }
+  .bncc-tag { display: inline-block; background: rgba(139, 92, 246, 0.1); color: var(--purple); padding: 4px 10px; border-radius: 8px; font-weight: 800; font-size: 0.65rem; text-transform: uppercase; margin-bottom: 10px; }
+
+  @media (max-width: 900px) {
+    .content-wrapper { flex-direction: column; }
+    .bncc-info-card { width: 100%; position: static; margin-bottom: 24px; }
+  }
+
   /* ── TABLET (601–900px) ─────────────────── */
   @media (min-width: 601px) and (max-width: 900px) {
     .hero { padding: 38px 20px 72px; }
@@ -754,7 +782,29 @@
   <div class="tabs-wrap">
     <div class="tabs" id="tabs"></div>
   </div>
+  <div class="games-container">
+      <div class="games-heading">
+        <h2>Jogos Educacionais</h2>
+        <span class="count-badge" id="count-label"></span>
+      </div>
+      <div class="games-grid" id="gamesGrid"></div>
+    </div>
 
+    <aside class="bncc-info-card">
+      <span class="bncc-tag">BNCC & Tecnologia</span>
+      <h3>Pensamento Computacional</h3>
+      <p>
+        Nossos jogos integram <strong>Robótica e Programação</strong> para estimular a lógica e a resolução de problemas, competências essenciais previstas na <strong>BNCC</strong>.
+      </p>
+      <p>
+        Através da gamificação, o aluno desenvolve a abstração e o raciocínio algorítmico de forma lúdica.
+      </p>
+      <div style="font-size: 1.4rem; display: flex; gap: 8px; justify-content: center; opacity: 0.8;">
+        🧩 🤖 💻 🔢
+      </div>
+    </aside>
+
+  </div>
   <!-- Grid -->
   <div class="games-heading">
     <h2>Jogos Educacionais</h2>
