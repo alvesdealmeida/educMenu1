@@ -7,152 +7,1323 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy:    #1e3a5f;
-    --navy2:   #15294a;
-    --teal:    #0ea5e9;
-    --amber:   #f59e0b;
-    --green:   #10b981;
-    --coral:   #f43f5e;
-    --purple:  #8b5cf6;
-    --orange:  #f97316;
-    --cream:   #fef9f0;
-    --white:   #ffffff;
-    --text:    #1e293b;
-    --muted:   #64748b;
-    --border:  #e2e8f0;
+    --navy:   #1e3a5f;
+    --navy2:  #15294a;
+    --teal:   #0ea5e9;
+    --amber:  #f59e0b;
+    --green:  #10b981;
+    --coral:  #f43f5e;
+    --purple: #8b5cf6;
+    --orange: #f97316;
+    --cream:  #fef9f0;
+    --white:  #ffffff;
+    --text:   #1e293b;
+    --muted:  #64748b;
+    --border: #e2e8f0;
     --shadow: 0 4px 24px rgba(30,58,95,0.10);
   }
 
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family: 'Nunito', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; overflow-x: hidden; }
 
-  .hero { background: linear-gradient(135deg, var(--navy2) 0%, var(--navy) 60%, #1e4d8c 100%); padding: 20px 24px 40px; text-align: center; position: relative; overflow: hidden; }
-  .hero-inner { position: relative; z-index: 2; max-width: 760px; margin: 0 auto; }
-  h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 6vw, 3.4rem); color: #fff; margin-bottom: 8px; }
-  
-  .stats-row { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 20px; }
-  .stat-pill { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 30px; padding: 10px 22px; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(6px); color: #fff; }
-  
-  .main { max-width: 1140px; margin: 0 auto; padding: 0 24px 80px; position: relative; top: -15px; }
-  .search-bar { display: flex; align-items: center; background: var(--white); border: 2px solid var(--border); border-radius: 16px; padding: 0 20px; box-shadow: var(--shadow); margin-bottom: 28px; }
-  .search-bar input { flex: 1; border: none; outline: none; padding: 16px 14px; font-size: 1rem; font-family: 'Nunito'; }
+  html { scroll-behavior: smooth; }
 
-  .tabs-wrap { overflow-x: auto; margin-bottom: 34px; padding-bottom: 4px; scrollbar-width: none; }
-  .tabs { display: flex; gap: 10px; width: max-content; }
-  .tab { padding: 10px 20px; border-radius: 40px; border: 2px solid var(--border); background: var(--white); cursor: pointer; font-weight: 800; transition: 0.2s; }
-  .tab.active { background: var(--navy); color: #fff; border-color: var(--navy); }
-
-  .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 24px; }
-  .game-card { background: var(--white); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; box-shadow: var(--shadow); text-decoration: none; transition: 0.3s; }
-  .game-card:hover { transform: translateY(-8px); }
-  
-  .card-thumb { height: 140px; display: flex; align-items: center; justify-content: center; position: relative; background: var(--navy); }
-  .big-emoji { font-size: 4rem; z-index: 1; }
-  .card-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
-  .card-title { font-weight: 900; color: var(--navy); margin-bottom: 8px; }
-  .card-desc { font-size: 0.85rem; color: var(--muted); flex: 1; margin-bottom: 16px; }
-  .card-btn { background: var(--navy); color: #fff; border: none; padding: 10px; border-radius: 10px; font-weight: 800; cursor: pointer; text-align: center; }
-
-  @media (max-width: 600px) {
-    .games-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .card-title { font-size: 0.9rem; }
-    .card-desc { display: none; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
   }
 
-  footer { background: var(--navy2); color: rgba(255,255,255,0.6); text-align: center; padding: 40px 20px; margin-top: 40px; }
+  /* ── Topo decorativo ── */
+  /* Reduzi o padding de 48px/80px para 20px/40px */
+.hero {
+    background: linear-gradient(135deg, var(--navy2) 0%, var(--navy) 60%, #1e4d8c 100%);
+    position: relative;
+    overflow: hidden;
+    padding: 20px 24px 40px; /* Header mais curto */
+    text-align: center;
+}
+
+  /* Bolhas decorativas */
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(14,165,233,0.18) 0%, transparent 70%);
+    top: -200px; right: -100px;
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,158,11,0.12) 0%, transparent 70%);
+    bottom: -120px; left: -60px;
+    pointer-events: none;
+  }
+
+  /* Pontinhos decorativos */
+  .hero-dots {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+  }
+
+  /* Itens flutuantes */
+  .float-items {
+    position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+  }
+  .fi {
+    position: absolute;
+    font-size: 1.6rem;
+    opacity: 0.15;
+    animation: floatItem var(--d,6s) ease-in-out infinite;
+    animation-delay: var(--dl,0s);
+  }
+  @keyframes floatItem {
+    0%,100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(-18px) rotate(8deg); }
+  }
+
+  /* Logo */
+  .hero-inner { position: relative; z-index: 2; max-width: 760px; margin: 0 auto; }
+
+  .logo-badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 40px;
+    padding: 8px 22px;
+    font-size: 0.8rem; font-weight: 700;
+    color: rgba(255,255,255,0.85);
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 10px;
+    backdrop-filter: blur(6px);
+  }
+  .logo-badge span { font-size: 1rem; }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 6vw, 3.4rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  h1 em {
+    font-style: normal;
+    background: linear-gradient(90deg, var(--amber), #fde68a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.65);
+    font-weight: 600;
+    max-width: 480px; margin: 0 auto 36px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  /* Stats pill */
+  .stats-row {
+    display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;
+    margin-bottom: 0;
+  }
+  .stat-pill {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 30px; padding: 10px 22px;
+    display: flex; align-items: center; gap: 8px;
+    backdrop-filter: blur(6px);
+  }
+  .stat-pill .icon { font-size: 1.2rem; }
+  .stat-pill .val  { font-size: 1rem; font-weight: 800; color: #fff; }
+  .stat-pill .lbl  { font-size: 0.72rem; color: rgba(255,255,255,0.6); font-weight: 600; margin-top: 1px; }
+
+  /* Onda separadora */
+  /* Diminui a altura da onda separadora de 60px para 30px */
+.wave-sep {
+    display: block; width: 100%; height: 30px; 
+    margin-top: -1px;
+    background: var(--cream);
+    clip-path: ellipse(56% 100% at 50% 100%);
+}
+
+  /* ── Corpo principal ── */
+  /* Ajuste do conteúdo principal para subir mais e encostar no header curto */
+.main {
+    max-width: 1140px; margin: 0 auto;
+    padding: 0 24px 80px;
+    position: relative;
+    top: -15px; /* Ajustado de -30px para -15px para harmonia */
+}
+
+  /* Barra de busca */
+  .search-bar {
+    display: flex; align-items: center;
+    background: var(--white);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 0 20px;
+    box-shadow: var(--shadow);
+    margin-bottom: 28px;
+    transition: border-color .25s, box-shadow .25s;
+  }
+  .search-bar:focus-within {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 4px rgba(14,165,233,0.12), var(--shadow);
+  }
+  .search-bar .si { font-size: 1.2rem; color: var(--muted); flex-shrink: 0; }
+  .search-bar input {
+    flex: 1; border: none; outline: none; background: transparent;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem; font-weight: 600; color: var(--text);
+    padding: 16px 14px;
+  }
+  .search-bar input::placeholder { color: #94a3b8; font-weight: 600; }
+
+  /* Botão ir para menu II */
+  .next-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(245,158,11,0.18);
+    border: 2px solid rgba(245,158,11,0.55);
+    border-radius: 40px; padding: 10px 24px;
+    color: var(--amber);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem; font-weight: 800;
+    text-decoration: none; letter-spacing: 0.04em;
+    backdrop-filter: blur(6px);
+    margin-top: 24px;
+    transition: background .22s, box-shadow .22s, transform .2s;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  .next-btn:hover {
+    background: rgba(245,158,11,0.32);
+    box-shadow: 0 0 24px rgba(245,158,11,0.35);
+    transform: translateY(-2px);
+  }
+
+  /* Tabs de categoria */
+  .section-label {
+    font-size: 0.75rem; font-weight: 800;
+    color: var(--muted); letter-spacing: 0.12em;
+    text-transform: uppercase; margin-bottom: 12px;
+  }
+
+  /* Wrapper com scroll horizontal — sem quebra de linha */
+  .tabs-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin-bottom: 34px;
+    padding-bottom: 4px;
+  }
+  .tabs-wrap::-webkit-scrollbar { display: none; }
+
+  .tabs {
+    display: flex; gap: 10px;
+    width: max-content;
+    min-width: 100%;
+  }
+  .tab {
+    display: flex; align-items: center; gap: 7px;
+    padding: 10px 20px;
+    border-radius: 40px;
+    border: 2px solid var(--border);
+    background: var(--white);
+    color: var(--muted);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem; font-weight: 800;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: all .22s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    min-height: 44px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  .tab:hover {
+    border-color: var(--teal);
+    color: var(--teal);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(14,165,233,0.14);
+  }
+  .tab.active {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: #fff;
+    box-shadow: 0 6px 20px rgba(30,58,95,0.25);
+    transform: translateY(-2px);
+  }
+  .tab .tab-count {
+    background: rgba(255,255,255,0.22);
+    border-radius: 20px;
+    padding: 2px 7px;
+    font-size: 0.72rem;
+  }
+  .tab:not(.active) .tab-count {
+    background: var(--border);
+    color: var(--muted);
+  }
+
+  /* Grade de jogos */
+  .games-heading {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 22px;
+  }
+  .games-heading h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 700; color: var(--navy);
+  }
+  .games-heading .count-badge {
+    font-size: 0.8rem; font-weight: 800; color: var(--muted);
+    background: var(--border); border-radius: 20px; padding: 4px 12px;
+  }
+
+  .games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 24px;
+  }
+
+  /* Card de jogo */
+  .game-card {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    text-decoration: none;
+    display: flex; flex-direction: column;
+    box-shadow: 0 2px 16px rgba(30,58,95,0.08);
+    border: 2px solid transparent;
+    transition: transform .28s cubic-bezier(.34,1.56,.64,1), box-shadow .28s, border-color .28s;
+    animation: cardIn .45s ease both;
+    position: relative;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  .game-card:hover {
+    transform: translateY(-8px) scale(1.015);
+    box-shadow: 0 20px 50px rgba(30,58,95,0.15);
+    border-color: var(--accent, var(--teal));
+  }
+  .game-card:active { transform: scale(.98); }
+  @keyframes cardIn {
+    from { opacity:0; transform: translateY(24px) scale(.97); }
+    to   { opacity:1; transform: translateY(0)    scale(1); }
+  }
+
+  /* Thumbnail */
+  .card-thumb {
+    height: 140px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    background: var(--thumb-bg, linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%));
+  }
+  .card-thumb::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.25) 100%);
+  }
+  .card-thumb .big-emoji {
+    font-size: 4rem;
+    filter: drop-shadow(0 4px 16px rgba(0,0,0,0.3));
+    animation: emojiFloat var(--ef-dur, 3.5s) ease-in-out infinite;
+    animation-delay: var(--ef-dl, 0s);
+    position: relative; z-index: 1;
+  }
+  @keyframes emojiFloat {
+    0%,100% { transform: translateY(0) scale(1); }
+    50%     { transform: translateY(-9px) scale(1.07); }
+  }
+
+  /* Badge de matéria */
+  .subject-badge {
+    position: absolute; top: 12px; left: 12px; z-index: 2;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.28);
+    color: #fff;
+    border-radius: 8px;
+    font-size: 0.68rem; font-weight: 800;
+    padding: 4px 10px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+
+  /* Tag de nível no canto */
+  .level-tag {
+    position: absolute; bottom: 12px; right: 12px; z-index: 2;
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(6px);
+    color: rgba(255,255,255,0.9);
+    border-radius: 20px;
+    font-size: 0.7rem; font-weight: 700;
+    padding: 3px 10px;
+    display: flex; align-items: center; gap: 4px;
+  }
+
+  /* Corpo do card */
+  .card-body {
+    padding: 20px 20px 18px;
+    display: flex; flex-direction: column; flex: 1;
+  }
+  .card-title {
+    font-size: 1.05rem; font-weight: 900;
+    color: var(--navy); margin-bottom: 7px;
+    letter-spacing: -0.01em;
+  }
+  .card-desc {
+    font-size: 0.84rem; font-weight: 600;
+    color: var(--muted);
+    line-height: 1.55;
+    flex: 1; margin-bottom: 16px;
+  }
+
+  /* Rodapé do card */
+  .card-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 10px;
+  }
+  .card-tag {
+    font-size: 0.72rem; font-weight: 800;
+    color: var(--accent-txt, var(--teal));
+    background: var(--accent-bg, rgba(14,165,233,0.1));
+    border-radius: 20px; padding: 4px 12px;
+    letter-spacing: 0.06em;
+  }
+  .card-btn {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--navy);
+    color: #fff;
+    border: none; border-radius: 10px;
+    padding: 9px 18px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.82rem; font-weight: 800;
+    cursor: pointer;
+    transition: background .2s, transform .18s;
+    letter-spacing: 0.04em;
+    min-height: 44px;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  .card-btn:hover { background: var(--teal); transform: scale(1.05); }
+  .card-btn svg { width: 13px; height: 13px; fill: #fff; flex-shrink: 0; }
+
+  /* Empty state */
+  .empty {
+    grid-column: 1/-1;
+    text-align: center; padding: 80px 20px;
+    color: var(--muted);
+  }
+  .empty .empty-icon { font-size: 3.5rem; margin-bottom: 16px; display:block; }
+  .empty h3 { font-size: 1.2rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
+  .empty p  { font-size: 0.9rem; font-weight: 600; }
+
+  /* ── Rodapé ── */
+  footer {
+    background: var(--navy2);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 28px 24px;
+    font-size: 0.82rem; font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  footer strong { color: rgba(255,255,255,0.85); }
+
+  /* Layout para explicação lateral */
+  .content-wrapper {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  }
+  .games-container { flex: 1; }
+
+  .bncc-info-card {
+    width: 280px;
+    background: var(--white);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    border-top: 6px solid var(--purple);
+    position: sticky;
+    top: 20px;
+    text-align: left;
+  }
+  .bncc-info-card h3 { font-family: 'Playfair Display', serif; color: var(--navy); margin-bottom: 12px; font-size: 1.2rem; }
+  .bncc-info-card p { font-size: 0.85rem; line-height: 1.6; color: var(--muted); margin-bottom: 15px; }
+  .bncc-tag { display: inline-block; background: rgba(139, 92, 246, 0.1); color: var(--purple); padding: 4px 10px; border-radius: 8px; font-weight: 800; font-size: 0.65rem; text-transform: uppercase; margin-bottom: 10px; }
+
+  @media (max-width: 900px) {
+    .content-wrapper { flex-direction: column; }
+    .bncc-info-card { width: 100%; position: static; margin-bottom: 24px; }
+  }
+
+  /* ── TABLET (601–900px) ─────────────────── */
+  @media (min-width: 601px) and (max-width: 900px) {
+    .hero { padding: 38px 20px 72px; }
+    .main { padding: 0 20px 64px; }
+    h1    { font-size: clamp(1.8rem, 4.5vw, 2.6rem); }
+    .hero-sub { font-size: 0.96rem; }
+    .games-grid { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 18px; }
+    .card-thumb { height: 130px; }
+    .card-thumb .big-emoji { font-size: 3.4rem; }
+    .stat-pill { padding: 8px 16px; }
+    .stat-pill .val { font-size: 0.92rem; }
+    .next-btn { font-size: 0.82rem; padding: 9px 20px; }
+  }
+
+  /* ── CELULAR (≤600px) ───────────────────── */
+  @media (max-width: 600px) {
+    .hero { padding: 15px 16px 35px; }
+    .main { padding: 0 14px 60px; top: -10px; }
+
+    /*h1 { font-size: clamp(1.55rem, 7.5vw, 2rem); }*/
+     h1 { font-size: 1.6rem; }
+    /*.hero-sub { font-size: 0.9rem; margin-bottom: 24px; }*/
+    .hero-sub { margin-bottom: 15px; }
+    .logo-badge { font-size: 0.72rem; padding: 7px 16px; }
+
+    .stats-row { gap: 10px; }
+    .stat-pill { padding: 8px 13px; gap: 7px; }
+    .stat-pill .icon { font-size: 1rem; }
+    .stat-pill .val  { font-size: 0.88rem; }
+    .stat-pill .lbl  { font-size: 0.62rem; }
+
+    .next-btn { font-size: 0.8rem; padding: 9px 18px; margin-top: 20px; }
+
+    .search-bar { border-radius: 12px; }
+    .search-bar input { font-size: 0.92rem; padding: 13px 12px; }
+
+    .games-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .card-thumb { height: 110px; }
+    .card-thumb .big-emoji { font-size: 2.8rem; }
+    .subject-badge { font-size: 0.6rem; padding: 3px 8px; }
+    .level-tag { font-size: 0.6rem; padding: 2px 8px; bottom: 8px; right: 8px; }
+
+    .card-body { padding: 14px 14px 12px; }
+    .card-title { font-size: 0.88rem; }
+    .card-desc {
+      font-size: 0.76rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+    .card-tag { font-size: 0.62rem; padding: 3px 9px; }
+    .card-btn { font-size: 0.74rem; padding: 8px 12px; }
+
+    .games-heading h2 { font-size: 1.2rem; }
+    .count-badge { font-size: 0.72rem; }
+
+    footer { padding: 22px 16px; font-size: 0.76rem; }
+  }
+
+  /* ── CELULAR MUITO PEQUENO (≤360px) ──────── */
+  @media (max-width: 360px) {
+    .games-grid { grid-template-columns: 1fr; }
+    .card-thumb { height: 120px; }
+    .card-thumb .big-emoji { font-size: 3.2rem; }
+    .card-body { padding: 14px 16px 14px; }
+    .card-desc { -webkit-line-clamp: 3; }
+    .stats-row { flex-direction: column; align-items: center; }
+  }
+  /* Overlay de bloqueio (fundo escuro) */
+  #overlay-aviso {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85); /* Escurece o fundo */
+    backdrop-filter: blur(8px);     /* Desfoca o que está atrás */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;                  /* Garante que fique acima de tudo */
+  }
+
+  /* Card do aviso */
+  .modal-aviso {
+    background: var(--white);
+    padding: 30px;
+    border-radius: 24px;
+    max-width: 90%;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    border: 3px solid var(--amber);
+  }
+
+  .modal-aviso h2 {
+    color: var(--navy);
+    margin-bottom: 15px;
+    font-family: 'Playfair Display', serif;
+  }
+
+  .modal-aviso p {
+    color: var(--text);
+    font-weight: 600;
+    line-height: 1.6;
+    margin-bottom: 25px;
+  }
+
+  .btn-entendi {
+    background: var(--amber);
+    color: var(--navy2);
+    border: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-weight: 800;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .btn-entendi:active {
+    transform: scale(0.95);
+  }
+
+  /* Trava o scroll do body enquanto o aviso estiver ativo */
+  body.modal-open {
+    overflow: hidden;
+  }
+
+  /* Estilos do Modal de Novidades 
+  #overlay-novidades {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10001; /* Fica acima do aviso de celular 
+  }
+
+  .modal-novidades {
+    background: var(--white);
+    padding: 30px;
+    border-radius: 24px;
+    max-width: 90%;
+    width: 450px;
+    text-align: center;
+    border: 3px solid var(--teal);
+    animation: modalPop 0.3s ease-out;
+  }
+
+  @keyframes modalPop {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .novidade-item {
+    background: var(--cream);
+    padding: 15px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-align: left;
+    border: 1px solid var(--border);
+  }
+
+  .novidade-emoji { font-size: 2rem; }
+  .novidade-texto h4 { color: var(--navy); margin-bottom: 4px; font-weight: 800; }
+  .novidade-texto p { font-size: 0.85rem; color: var(--muted); margin: 0; }
+
+  .btn-fechar-novidade {
+    background: var(--teal);
+    color: white;
+    border: none;
+    padding: 12px 40px;
+    border-radius: 30px;
+    font-weight: 800;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+   */
 </style>
 </head>
 <body>
-
-<header class="hero">
-  <div class="hero-inner">
-    <h1>Aprender nunca foi tão divertido!</h1>
-    <div class="stats-row">
-      <div class="stat-pill"><span class="icon">🎮</span> <div class="val" id="total-count">21</div> <div class="lbl">Jogos</div></div>
-      <div class="stat-pill"><span class="icon">📐</span> <div class="val">5</div> <div class="lbl">Disciplinas</div></div>
+<body>
+  <!-- COLE O CÓDIGO DO VLIBRAS AQUI -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
     </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
+
+  <!-- O resto do seu código continua aqui (overlay-aviso, etc) -->
+  <!-- overlay -->
+
+<div id="overlay-aviso">
+  <div class="modal-aviso">
+    <h2>📱 Atenção!</h2>
+    <p>
+      Para uma melhor experiência de aprendizagem, informamos que estas aplicações foram otimizadas para ambientes de <strong>Celulares e Tablets</strong>.
+    </p>
+    <button class="btn-entendi" onclick="fecharAviso()">Entendi, vamos jogar!</button>
+  </div>
+</div> 
+<!--
+<div id="overlay-novidades" style="display:none;">
+  <div class="modal-novidades">
+    <h2 style="font-family: 'Playfair Display', serif; color: var(--navy); margin-bottom: 20px;">🚀 Novos Jogos Chegaram!</h2>
+    
+    <div class="novidade-item">
+      <div class="novidade-emoji">🤖</div>
+      <div class="novidade-texto">
+        <h4>Ik Robô</h4>
+        <p>Estratégia e robótica gamificada para treinar a atenção.</p>
+      </div>
+    </div>
+
+    <div class="novidade-item">
+      <div class="novidade-emoji">🐍</div>
+      <div class="novidade-texto">
+        <h4>Snake Matemática</h4>
+        <p>Agora disponível para jogar <strong>OFF-LINE</strong>!</p>
+      </div>
+    </div>
+
+    <button class="btn-fechar-novidade" onclick="fecharNovidades()">Começar a Explorar!</button>
+  </div>
+</div>
+<!-- ── HERO ─────────────────────────────────────────────────── -->
+<header class="hero">
+  <div class="hero-dots"></div>
+
+  <!-- Ícones flutuantes decorativos -->
+  <div class="float-items">
+    <div class="fi" style="left:4%;top:18%;--d:7s;--dl:0s">📚</div>
+    <div class="fi" style="left:12%;top:62%;--d:5s;--dl:1s">✏️</div>
+    <div class="fi" style="left:88%;top:14%;--d:6s;--dl:.5s">🔭</div>
+    <div class="fi" style="left:82%;top:65%;--d:8s;--dl:2s">🧪</div>
+    <div class="fi" style="left:50%;top:8%;--d:5.5s;--dl:1.5s">⭐</div>
+    <div class="fi" style="left:70%;top:40%;--d:9s;--dl:.3s">🧩</div>
+    <div class="fi" style="left:22%;top:40%;--d:6.5s;--dl:2.5s">🎯</div>
+  </div>
+
+  <div class="hero-inner">
+    <div class="logo-badge"><span>🎓</span> EDUC Plataforma de Aprendizagem</div>
+
+    <h1>Aprender nunca foi tão divertido!</h1>
+    <!--
+    <p class="hero-sub">
+      Explore os jogos educacionais de todas as disciplinas.
+    </p>
+     -->
+    <div class="stats-row">
+      <div class="stat-pill">
+        <span class="icon">🎮</span>
+        <div>
+          <div class="val" id="total-count">11</div>
+          <div class="lbl">Jogos disponíveis</div>
+        </div>
+      </div>
+      <div class="stat-pill">
+        <span class="icon">📐</span>
+        <div>
+          <div class="val">4</div>
+          <div class="lbl">Disciplinas</div>
+        </div>
+      </div>
+      <div class="stat-pill">
+        <span class="icon">🆓</span>
+        <div>
+          <div class="val">100%</div>
+          <div class="lbl">Gratuito</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Link para o Menu II      target="_blank" -->
+    <a class="next-btn"
+       href="https://alvesdealmeida.github.io/educMenu2/"
+      onclick="mostrarPresente(event)">
+      🎓 Ver Educ Games II &nbsp;<span>→</span>
+    </a>
   </div>
 </header>
 
+<div class="wave-sep"></div>
+
+<!-- ── CONTEÚDO PRINCIPAL ────────────────────────────────────── -->
 <main class="main">
+
+  <!-- Busca -->
   <div class="search-bar">
-    <input id="searchInput" type="text" placeholder="Buscar jogo..." oninput="filterGames()">
+    <span class="si">🔍</span>
+    <input id="searchInput" type="text"
+      placeholder="Buscar jogo por nome ou descrição..."
+      oninput="filterGames()" autocomplete="off">
   </div>
 
+  <!-- Tabs com scroll horizontal -->
+  <p class="section-label">Filtrar por disciplina</p>
   <div class="tabs-wrap">
-    <div class="tabs" id="tabs">
-      <div class="tab active" onclick="filterByCategory('Todos')">Todos</div>
-      <div class="tab" onclick="filterByCategory('Matemática')">Matemática</div>
-      <div class="tab" onclick="filterByCategory('Português')">Português</div>
-      <div class="tab" onclick="filterByCategory('Lógica')">Lógica</div>
-      <div class="tab" onclick="filterByCategory('Programação')">Programação</div>
-      <div class="tab" onclick="filterByCategory('Educativo')">Educativo</div>
+    <div class="tabs" id="tabs"></div>
+  </div>
+  <div class="games-container">
+      <div class="games-heading">
+        <h2>Jogos Educacionais</h2>
+        <span class="count-badge" id="count-label"></span>
+      </div>
+      <div class="games-grid" id="gamesGrid"></div>
     </div>
+
+    <aside class="bncc-info-card">
+      <span class="bncc-tag">BNCC & Tecnologia</span>
+      <h3>Pensamento Computacional</h3>
+      <p>
+        Nossos jogos integram <strong>Robótica e Programação</strong> para estimular a lógica e a resolução de problemas, competências essenciais previstas na <strong>BNCC</strong>.
+      </p>
+      <p>
+        Através da gamificação, o aluno desenvolve a abstração e o raciocínio algorítmico de forma lúdica.
+      </p>
+      <div style="font-size: 1.4rem; display: flex; gap: 8px; justify-content: center; opacity: 0.8;">
+        🧩 🤖 💻 🔢
+      </div>
+    </aside>
+
+  </div>
+  <!-- Grid -->
+  <div class="games-heading">
+    <h2>Jogos Educacionais</h2>
+    <span class="count-badge" id="count-label"></span>
   </div>
 
   <div class="games-grid" id="gamesGrid"></div>
+
 </main>
 
+<!-- ── RODAPÉ ─────────────────────────────────────────────────── -->
 <footer>
-  Desenvolvido pelo <strong>Professor Sebastião Alves de Almeida</strong>
+  Desenvolvido com 💙 para a <strong>educação</strong> &nbsp;·&nbsp;
+  Todos os jogos são gratuitos e de uso educacional.
+  Desenvolvido pelo <strong>Professor Sebastião Alves de Almeida.</strong>
+  <br><br>
+  <a href="http://lattes.cnpq.br/9094218444915879" target="_blank" rel="noopener" 
+     style="color: var(--teal); text-decoration: none; font-size: 0.9rem; border: 1px solid var(--teal); padding: 5px 15px; border-radius: 20px; display: inline-block; margin-top: 10px; transition: all 0.3s;">
+     📄 Visualizar Currículo Lattes
+  </a>
+  <div style="margin-top: 16px;">
+    <!--
+    <img
+      src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Falvesdealmeida.github.io%2FeducMenu1%2F&count_bg=%232980B9&title_bg=%23555555&title=Acessos+Menu+1&edge_flat=false"
+      alt="Contador de Visitas"
+      style="height: 22px; width: auto;">
+    -->
+    <div align=center>
+      <a href='https://contador.s12.com.br'><img src='https://contador.s12.com.br/img-xC1zb67b8ZYDwCY0-7.gif' border='0' alt='contador grátis'>
+      </a>
+      <script type='text/javascript' src='https://contador.s12.com.br/ad.js?id=xC1zb67b8ZYDwCY0'></script>
+    </div>
+  </div>
 </footer>
 
 <script>
+// ── Paleta por disciplina ─────────────────────────────────────
+const SUBJECT_STYLES = {
+  "Matemática": {
+    thumbGrad: "linear-gradient(135deg,#064e3b,#10b981)",
+    tagTxt: "#059669", tagBg: "rgba(16,185,129,0.12)",
+    btn: "#059669"
+  },
+  "Lógica": {
+    thumbGrad: "linear-gradient(135deg,#3b0764,#8b5cf6)",
+    tagTxt: "#7c3aed", tagBg: "rgba(139,92,246,0.12)",
+    btn: "#7c3aed"
+  },
+  "Português": {
+    thumbGrad: "linear-gradient(135deg,#7c2d12,#f97316)",
+    tagTxt: "#ea580c", tagBg: "rgba(249,115,22,0.12)",
+    btn: "#ea580c"
+  },
+  "Educativo": {
+    thumbGrad: "linear-gradient(135deg,#0c4a6e,#0ea5e9)",
+    tagTxt: "#0284c7", tagBg: "rgba(14,165,233,0.12)",
+    btn: "#0284c7"
+  },
+   "Robótica": {
+    thumbGrad: "linear-gradient(135deg,#3b0764,#8b5cf6)",
+    tagTxt: "#7c3aed", tagBg: "rgba(139,92,246,0.12)",
+    btn: "#7c3aed"
+  },
+   "Programação": {
+    thumbGrad: "linear-gradient(135deg,#3b0764,#8b5cf6)",
+    tagTxt: "#7c3aed", tagBg: "rgba(139,92,246,0.12)",
+    btn: "#7c3aed"
+  },
+};
+
+// ── Dados dos jogos ───────────────────────────────────────────
 const games = [
-  /* 7 JOGOS COMENTADOS (PRESERVADOS)
-  { title: "Desafio Matemático: Festival de Pipas", desc: "Duelos de lógica e matemática.", emoji: "🪁", category: "Matemática", url: "https://alvesdealmeida.github.io/pipasMatematica/" },
-  { title: "Folclore Brasileiro", desc: "Vocabulário e cultura.", emoji: "🌿", category: "Português", url: "https://alvesdealmeida.github.io/vocabularioFolcloreBR/" },
-  { title: "Mestre da Tabuada", desc: "Domine as operações.", emoji: "🧮", category: "Matemática", url: "https://alvesdealmeida.github.io/tabuadaMultiplicacao/" },
-  { title: "Pacman de Palavras", desc: "Alfabetização interativa.", emoji: "🟡", category: "Educativo", url: "https://alvesdealmeida.github.io/pacmanPortugues/" },
-  { title: "Smart City: Eco-Robô", desc: "Interdisciplinar e sustentável.", emoji: "🤖", category: "Educativo", url: "https://alvesdealmeida.github.io/smartCity/" },
-  { title: "Reparo Crítico 3D", desc: "Depuração de dados em 3D.", emoji: "☢️", category: "Educativo", url: "https://alvesdealmeida.github.io/nucleo3D/" },
-  { title: "Cofre da Memória", desc: "Desafio de sílabas e conexões.", emoji: "🧠", category: "Educativo", url: "https://alvesdealmeida.github.io/cofredaMemoria/" },
+  /*
+   {
+    title: "Desafio Matemático: Festival de Pipas",
+    desc: "Domine os céus manobrando sua pipa e vencendo duelos de lógica e matemática para se tornar o campeão do festival!",
+    emoji: "🪁🎓",
+    category: "Matemática",
+    badge: "BNCC",
+    url: "https://alvesdealmeida.github.io/pipasMatematica/",
+    accent: "#00ffff",
+  },
+  {
+    title: "Folclore Brasileiro - Vocabulário & Imagem",
+    desc: "Um jogo educativo de associação para explorar a cultura brasileira. Aprenda 24 palavras essenciais divididas em personagens, objetos, festas e ambientes através de 6 rodadas interativas.",
+    emoji: "🌿",
+    category: "Português",
+    badge: "Folclore",
+    url: "https://alvesdealmeida.github.io/vocabularioFolcloreBR/",
+    accent: "#E8A020",
+  },
+   {
+    title: "Mestre da Tabuada",
+    desc: "Domine as operações matemáticas de forma interativa! Arraste os resultados para as expressões correspondentes e visualize as quantidades através de grupos de pontos.",
+    emoji: "🧮",
+    category: "Matemática,
+    badge: "Tabuada",
+    url: "https://alvesdealmeida.github.io/tabuadaMultiplicacao/",
+    accent: "#f39c12",
+  },
+  {
+    title: "Pacman de Palavras",
+    desc: "Jogo educacional de alfabetização em português: mova o Pacman e devore os fantasmas com letras na ordem certa para escrever cada palavra!",
+    emoji: "🟡",
+    category: "Educativo",
+    badge: "Jogos",
+    url: "https://alvesdealmeida.github.io/pacmanPortugues/",
+    accent: "#FFD700",
+  },
+   {
+    title: "Smart City: Eco-Robô Pro",
+    desc: "Desafio interdisciplinar de matemática e português em uma cidade futurista.",
+    emoji: "🤖",
+    category: "Educativo",
+    badge: "V2.0",
+    url: "https://alvesdealmeida.github.io/smartCity/",
+    accent: "#2ecc71",
+  },
+
+  {
+    title: "Reparo Crítico - Núcleo 3D",
+    desc: "jogo (Matrix 3D) apresenta uma narrativa de invasão por vírus onde o jogador deve depurar dados escolares para estabilizar um núcleo de energia.",
+    emoji: "☢️",
+    category: "Educativo",
+    badge: "Alta Voltagem",
+    url: "https://alvesdealmeida.github.io/nucleo3D/",
+    accent: "#00f2ff",
+  },
+   {
+    title: "Cofre da Memória: Rede Sináptica",
+    desc: "Desvende as sílabas e abra o cofre neural para reconstruir as conexões do seu cérebro neste desafio 3D.",
+    emoji: "🧠",
+    category: "Educativo",
+    badge: "Desafio 3D",
+    url: "https://alvesdealmeida.github.io/cofredaMemoria/",
+    accent: "#00d4ff",
+  },
   */
-  { title: "Pixel Educ Pro", desc: "Lógica e Pixel Art.", emoji: "✏️", category: "Educativo", url: "https://alvesdealmeida.github.io/pixelEduc/" },
-  { title: "Super Missão Brasil", desc: "Aventura sobre o Brasil.", emoji: "🍄", category: "Educativo", url: "https://alvesdealmeida.github.io/missaoBrasil/" },
-  { title: "Robo Code Kids", desc: "Aprenda a programar.", emoji: "👨‍💻", category: "Programação", url: "https://alvesdealmeida.github.io/robocodeKids/" },
-  { title: "Astro Crew Beta", desc: "Missões espaciais de lógica.", emoji: "🚀", category: "Programação", url: "https://alvesdealmeida.github.io/jogoOffLine/" },
-  { title: "Spider Match Matemática", desc: "Cálculos com números inteiros.", emoji: "🕷️", category: "Matemática", url: "https://alvesdealmeida.github.io/spiderMatematica/" },
-  { title: "Copa Matemática", desc: "Gols e operações matemáticas.", emoji: "🏆", category: "Matemática", url: "https://alvesdealmeida.github.io/copaMatematica/" },
-  { title: "MathGame", desc: "Adição e subtração divertida.", emoji: "➕", category: "Matemática", url: "https://alvesdealmeida.github.io/mathGame/" },
-  { title: "ComDecom", desc: "Decomposição numérica.", emoji: "🔢", category: "Matemática", url: "https://alvesdealmeida.github.io/comDEcom/" },
-  { title: "Material Dourado", desc: "Valor posicional visual.", emoji: "🟡", category: "Matemática", url: "https://alvesdealmeida.github.io/joguinhoMD/" },
-  { title: "Torre de Hanói", desc: "O clássico desafio de lógica.", emoji: "🗼", category: "Lógica", url: "https://alvesdealmeida.github.io/torreHanoi/" },
-  { title: "Cidades Algoritmos 3D", desc: "Logística e sequenciamento.", emoji: "🏙️", category: "Programação", url: "https://alvesdealmeida.github.io/cidadeAlgoritmos/" },
-  { title: "Mostrabot Mobile", desc: "Programação direcional para robôs.", emoji: "🤖", category: "Robótica", url: "https://alvesdealmeida.github.io/mostrabot/" },
-  { title: "Expedição Morse", desc: "História e Código Morse.", emoji: "📻", category: "Educativo", url: "https://alvesdealmeida.github.io/expedicaoMorse/" },
-  { title: "Bio Registro: Animais", desc: "Pesquisa sobre vertebrados.", emoji: "🐳", category: "Educativo", url: "https://alvesdealmeida.github.io/bioRegistro/" }
+   {
+    title: "Pixel Educ Pro --- [ON e OFF LINE]",
+    desc: "Desafie sua lógica e percepção espacial criando desenhos em pixel art seguindo objetivos específicos.",
+    emoji: "✏️",
+    category: "Educativo",
+    badge: "OFFLINE",
+    url: "https://alvesdealmeida.github.io/pixelEduc/",
+    accent: "#7c3aed",
+  },
+   {
+    title: "Super Missão Brasil",
+    desc: "Plataforma educativa estilo Mario: pule em inimigos, bata nos blocos ❓ e responda perguntas sobre o Brasil para vencer!",
+    emoji: "🍄👲🏻🏰🐢⭐",
+    category: "Educativo",
+    badge: "Jogo",
+    url: "https://alvesdealmeida.github.io/missaoBrasil/",
+    accent: "#009c3b",
+  },
+   {
+    title: "Robo Code Kids",
+    desc: "Joguinho que te ensina a programar",
+    emoji: "💻 👨‍💻",
+    category: "Programação",
+    badge: "PROGRAMAÇÃO",
+    url: "https://alvesdealmeida.github.io/robocodeKids/",
+    accent: "#00E5FF",
+  },
+   {
+    title: "Astro Crew - programação - **** VERSÃO BETA - ON OFF LINE****",
+    desc: "Programe um robô espacial e aprenda lógica de programação em 10 missões pela galáxia.",
+    emoji: "🤖 💭",
+    category: "Programação",
+    badge: "PROGRAMAÇÃO",
+    url: "https://alvesdealmeida.github.io/jogoOffLine/",
+    accent: "#00E5FF",
+  },
+  {
+    title: "Spider Match Matemátaica - **** VERSÃO BETA****",
+    desc: "VCapture números inteiros na teia para resolver somas antes das outras aranhas.",
+    emoji: "🕷️",
+    category: "Matemática",
+    badge: "NÚMEROS INTEIROS",
+    url: "https://alvesdealmeida.github.io/spiderMatematica/",
+    accent: "#ef4444",
+  },
+  {
+    title: "Copa Matemátaica - **** VERSÃO BETA****",
+    desc: "Vença desafios de cálculo para marcar gols e conquistar o troféu no estádio.",
+    emoji: "🏆",
+    category: "Matemática",
+    badge: "OPERAÇÕES",
+    url: "https://alvesdealmeida.github.io/copaMatematica/",
+    accent: "#10b981",
+  },
+  {
+    title: "MathGame",
+    desc: "Pratique adição e subtração de forma divertida e interativa!",
+    emoji: "➕",
+    category: "Matemática",
+    badge: "ADIÇÃO",
+    url: "https://alvesdealmeida.github.io/mathGame/",
+    accent: "#10b981",
+  },
+  {
+    title: "ComDecom",
+    desc: "Aprenda decomposição de números de forma lúdica e visual.",
+    emoji: "🔢",
+    category: "Matemática",
+    badge: "DECOMPOSIÇÃO",
+    url: "https://alvesdealmeida.github.io/comDEcom/",
+    accent: "#10b981",
+  },
+  {
+    title: "JogoMD",
+    desc: "Explore o material dourado para entender valor posicional.",
+    emoji: "🟡",
+    category: "Matemática",
+    badge: "MAT. DOURADO",
+    url: "https://alvesdealmeida.github.io/joguinhoMD/",
+    accent: "#10b981",
+  },
+  {
+    title: "Torre de Hanói",
+    desc: "Resolva o clássico puzzle de lógica movendo os discos.",
+    emoji: "🗼",
+    category: "Lógica",
+    badge: "PUZZLE",
+    url: "https://alvesdealmeida.github.io/torreHanoi/",
+    accent: "#8b5cf6",
+  },
+  {
+    title: "Joguinho de Xadrez - [[**EM BREVE ON LINE PARA 2 JOGADORES**]]",
+    desc: "Aprenda e pratique xadrez com peças e regras completas.",
+    emoji: "♟️",
+    category: "Lógica",
+    badge: "XADREZ",
+    url: "https://alvesdealmeida.github.io/jogoXadrez/",
+    accent: "#8b5cf6",
+  },
+  {
+    title: "Sudoku Educacional",
+    desc: "Desenvolva lógica, foco e raciocínio dedutivo com 3 níveis.",
+    emoji: "🔢",
+    category: "Lógica",
+    badge: "3 NÍVEIS",
+    url: "https://alvesdealmeida.github.io/sudokuEducacional/",
+    accent: "#8b5cf6",
+  },
+  {
+    title: "NúmeroQuest",
+    desc: "Reta numérica e sequências: descubra o número oculto e complete os padrões!",
+    emoji: "📏",
+    category: "Matemática",
+    badge: "SEQUÊNCIAS",
+    url: "https://alvesdealmeida.github.io/numeroQuest/",
+    accent: "#10b981",
+  },
+  {
+    title: "Papão Come Palavras",
+    desc: "Escreva um substantivo próprio ou comum — se acertar, o Papão devora a palavra!",
+    emoji: "👾",
+    category: "Português",
+    badge: "SUBSTANTIVOS",
+    url: "https://alvesdealmeida.github.io/subProprioComum/",
+    accent: "#f97316",
+  },
+  {
+    title: "Batalha Matemática",
+    desc: "Responda questões de matemática para disparar nos navios inimigos!",
+    emoji: "⚓",
+    category: "Matemática",
+    badge: "BATALHA",
+    url: "https://alvesdealmeida.github.io/batalhaMatematica/",
+    accent: "#10b981",
+  },
+  {
+    title: "Snake Matemática - **LIBERADA PARA OFF LINE**",
+    desc: "Alimente a cobra direcionando ela para a resposta certa.",
+    emoji: "🐍",
+    category: "Matemática",
+    badge: "CÁLCULO",
+    url: "https://alvesdealmeida.github.io/cobraMatOff/",
+    accent: "#10b981",
+  },
+  {
+    title: "Caça-Palavras",
+    desc: "Encontre palavras de Matemática, Português, Ciências, Geografia e História escondidas na grade!",
+    emoji: "🔤",
+    category: "Educativo",
+    badge: "MULTIDISCIPLINAR",
+    url: "https://alvesdealmeida.github.io/ca-aPalavras/",
+    accent: "#0ea5e9",
+  },
+  {
+    title: "Robô Run---[[[VERSÃO BETA - TESTE]]]",
+    desc: "Programe o robô para pegar os objetos e pular os obstáculos.",
+    emoji: "💾🤖🎮",
+    category: "Lógica",
+    badge: "PROGRAMAÇÃO & LÓGICA",
+    url: "https://alvesdealmeida.github.io/roboRun/",
+    accent: "#0ea5e9",
+  },
+  {
+    title: "Ik Robô",
+    desc: "Robótica gamificada em nível de estratégia e atenção.",
+    emoji: "🤖🤖🤖",
+    category: "Robótica",
+    badge: "ROBÓTICA GAMIFICDA",
+    url: "https://alvesdealmeida.github.io/ikRobo/",
+    accent: "#0ea5e9",
+  },
+  {
+    title: "Soletre com Formas",
+    desc: "Arraste e colete letras coloridas para formar palavras antes que o tempo acabe!",
+    emoji: "🎨",
+    category: "Português",
+    badge: "NÍVEL 1-3",
+    url: "https://alvesdealmeida.github.io/soletrandoInfantil/",
+    accent: "#0ea5e9",
+  },
+  {
+    title: "Matemática Master",
+    desc: "Desafio de aritmética em tela cheia. Misture as 4 operações e conquiste o ouro!",
+    emoji: "📱",
+    category: "Matemática",
+    badge: "Landscape",
+    url: "https://alvesdealmeida.github.io/tabuleiroAritimetico/",
+    accent: "#0ea5e9",
+  },
+  /*
+   {
+    title: "MazeLogic AI - Protocolo de Teste",
+    desc: "Um simulador interativo de lógica de programação onde o utilizador guia um robô através de labirintos progressivos utilizando comandos sequenciais e sensores de IA.",
+    emoji: "🤖 🤖 🤖",
+    category: "Programação",
+    badge: "Beta 1.0",
+    url: "https://alvesdealmeida.github.io/mazeloLogicIA/",
+    accent: "#00d4ff",
+  },
+  {
+    title: "Mestre da Geometria",
+    desc: "Programe o robô para desenhar formas geométricas e desafios 3D usando lógica e ângulos.",
+    emoji: "🤖 🤖 🤖",
+    category: "Programação",
+    badge: "Lógica",
+    url: "https://alvesdealmeida.github.io/programDesenhGeog/",
+    accent: "#3498db",
+  },
+  */
 ];
 
-function renderGames(data) {
-  const grid = document.getElementById('gamesGrid');
-  grid.innerHTML = data.map(game => `
-    <a href="${game.url}" class="game-card" target="_blank">
-      <div class="card-thumb"><span class="big-emoji">${game.emoji}</span></div>
-      <div class="card-body">
-        <h3 class="card-title">${game.title}</h3>
-        <p class="card-desc">${game.desc}</p>
-        <div class="card-btn">JOGAR AGORA</div>
-      </div>
-    </a>
+// ── Estado ────────────────────────────────────────────────────
+let activeCategory = "Todos";
+
+function getCategories() {
+  return ["Todos", "Matemática", "Lógica", "Português", "Educativo","Robótica","Programação",];
+}
+
+function countByCategory(cat) {
+  if (cat === "Todos") return games.length;
+  return games.filter(g => g.category === cat).length;
+}
+
+// ── Render tabs ───────────────────────────────────────────────
+const CAT_ICONS = {
+  "Todos": "📚",
+  "Matemática": "📐",
+  "Lógica": "🧩",
+  "Português": "📖",
+  "Educativo": "🌐",
+};
+
+function renderTabs() {
+  const tabs = document.getElementById("tabs");
+  tabs.innerHTML = getCategories().map(cat => `
+    <button class="tab ${cat === activeCategory ? 'active' : ''}"
+      onclick="setCategory('${cat}')">
+      ${CAT_ICONS[cat] || ''} ${cat}
+      <span class="tab-count">${countByCategory(cat)}</span>
+    </button>
   `).join('');
 }
 
+function setCategory(cat) {
+  activeCategory = cat;
+  renderTabs();
+  filterGames();
+}
+
+// ── Filtrar ───────────────────────────────────────────────────
 function filterGames() {
-  const term = document.getElementById('searchInput').value.toLowerCase();
-  const filtered = games.filter(g => g.title.toLowerCase().includes(term) || g.desc.toLowerCase().includes(term));
+  const q = document.getElementById("searchInput").value.toLowerCase().trim();
+  const filtered = games.filter(g => {
+    const matchCat = activeCategory === "Todos" || g.category === activeCategory;
+    const matchQ   = !q || g.title.toLowerCase().includes(q) || g.desc.toLowerCase().includes(q);
+    return matchCat && matchQ;
+  });
   renderGames(filtered);
 }
 
-function filterByCategory(cat) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  event.target.classList.add('active');
-  if(cat === 'Todos') return renderGames(games);
-  const filtered = games.filter(g => g.category === cat);
-  renderGames(filtered);
+// ── Render cards ──────────────────────────────────────────────
+function renderGames(list) {
+  const grid = document.getElementById("gamesGrid");
+  const lbl  = document.getElementById("count-label");
+  lbl.textContent = list.length + (list.length === 1 ? " jogo" : " jogos");
+
+  if (!list.length) {
+    grid.innerHTML = `
+      <div class="empty">
+        <span class="empty-icon">🤔</span>
+        <h3>Nenhum jogo encontrado</h3>
+        <p>Tente outro termo de busca ou selecione outra disciplina.</p>
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map((g, i) => {
+    const s = SUBJECT_STYLES[g.category] || SUBJECT_STYLES["Educativo"];
+    return `
+    <a class="game-card" href="${g.url}" target="_blank" rel="noopener"
+       style="--accent:${g.accent}; animation-delay:${i * 0.06}s">
+
+      <div class="card-thumb" style="background:${s.thumbGrad}">
+        <span class="big-emoji"
+          style="--ef-dur:${3 + (i % 3) * 0.8}s; --ef-dl:${(i * 0.25) % 2}s">
+          ${g.emoji}
+        </span>
+        <span class="subject-badge">${g.badge}</span>
+        <span class="level-tag">▶ Jogar agora</span>
+      </div>
+
+      <div class="card-body">
+        <div class="card-title">${g.title}</div>
+        <div class="card-desc">${g.desc}</div>
+        <div class="card-footer">
+          <span class="card-tag"
+            style="color:${s.tagTxt}; background:${s.tagBg}">
+            ${CAT_ICONS[g.category] || ''} ${g.category}
+          </span>
+          <button class="card-btn"
+            style="background:${s.btn}"
+            onclick="event.preventDefault(); window.open('${g.url}','_blank')">
+            <svg viewBox="0 0 16 16"><path d="M6 3l6 5-6 5V3z"/></svg>
+            Jogar
+          </button>
+        </div>
+      </div>
+    </a>`;
+  }).join('');
+
+  document.getElementById("total-count").textContent = games.length;
 }
 
-renderGames(games);
+// ── Init ──────────────────────────────────────────────────────
+renderTabs();
+filterGames();
+// Trava o scroll ao carregar
+document.body.classList.add('modal-open');
+
+function fecharAviso() {
+  const overlay = document.getElementById('overlay-aviso');
+  overlay.style.transition = 'opacity 0.5s ease';
+  overlay.style.opacity = '0';
+  
+  setTimeout(() => {
+    overlay.style.display = 'none';
+    // Abre o segundo modal de presente
+    const presente = document.getElementById('overlay-presente');
+    presente.style.display = 'flex';
+  }, 500);
+}
+
+function fecharPresente() {
+  const presente = document.getElementById('overlay-presente');
+  presente.style.transition = 'opacity 0.5s ease';
+  presente.style.opacity = '0';
+  
+  setTimeout(() => {
+    presente.style.display = 'none';
+    document.body.classList.remove('modal-open'); // Libera o scroll apenas aqui
+  }, 500);
+}
+/*
+// Função para fechar o modal de novidades
+function fecharNovidades() {
+  document.getElementById('overlay-novidades').style.display = 'none';
+  document.body.classList.remove('modal-open');
+}
+
+// Lógica para mostrar o modal ao carregar a página
+window.addEventListener('DOMContentLoaded', (event) => {
+  // Mostra o modal de novidades
+  document.getElementById('overlay-novidades').style.display = 'flex';
+  document.body.classList.add('modal-open');
+});
+
+// Ajuste na sua função fecharAviso original para não conflitar
+function fecharAviso() {
+  document.getElementById('overlay-aviso').style.display = 'none';
+  // Só remove o modal-open se o de novidades também estiver fechado
+  if(document.getElementById('overlay-novidades').style.display === 'none') {
+    document.body.classList.remove('modal-open');
+  }
+}
+*/
+
 </script>
+  <!--
+<div style="text-align: center; margin-top: 20px;">
+    <!-- Contador para o Portal Educacional 1 
+    <img width="100" src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://alvesdealmeida.github.io/educMenu1/&count_bg=%232980B9&title_bg=%23555555&title=Acessos+Menu+1&edge_flat=false" alt="Contador de Visitas">
+</div>
+  -->
+<div id="overlay-presente" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); align-items: center; justify-content: center; z-index: 10000;">
+  <div class="modal-aviso" style="border: 3px solid #10b981;">
+    <h2 style="color: #1e3a5f;">🎁 Presente da Plataforma!</h2>
+    <p style="color: #334155; font-weight: 600;">
+      As aplicações <strong>Pixel Educ Pro</strong>-<strong>Astro Crew</strong> e <strong>Snake Matematica</strong> agora podem ser executadas <strong>OFF-LINE</strong> como presente para você!
+    </p>
+    <button class="btn-entendi" style="background: #10b981; color: white;" onclick="fecharPresente()">Que demais, obrigado!</button>
+  </div>
+</div>
 </body>
 </html>
