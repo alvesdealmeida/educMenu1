@@ -1344,21 +1344,6 @@ function fecharAviso() {
     document.body.classList.remove('modal-open');
   }
 }
-*/
-// Função para abrir as novidades (pode chamar ao carregar a página)
-window.onload = function() {
-  // Se quiser que apareça assim que abrir o site:
-  document.getElementById('overlay-novidades').style.display = 'flex';
-  document.body.classList.add('modal-open'); 
-};
-// Função para fechar o modal de novidades
-function fecharNovidades() {
-  document.getElementById('overlay-novidades').style.display = 'none';
-  //Se o outro aviso (celular) estiver fechado, remove a trava de scroll
-  if (document.getElementById('overlay-aviso').style.display === 'none') {
-    document.body.classList.remove('modal-open');
-  }
-}
 
 // Lógica para mostrar o modal ao carregar a página
 window.addEventListener('DOMContentLoaded', (event) => {
