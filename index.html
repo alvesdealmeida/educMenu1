@@ -1354,7 +1354,27 @@ function fecharAviso() {
   }
 }
 */
+// Função para fechar o modal de novidades
+function fecharNovidades() {
+  document.getElementById('overlay-novidades').style.display = 'none';
+  document.body.classList.remove('modal-open');
+}
 
+// Lógica para mostrar o modal ao carregar a página
+window.addEventListener('DOMContentLoaded', (event) => {
+  // Mostra o modal de novidades
+  document.getElementById('overlay-novidades').style.display = 'flex';
+  document.body.classList.add('modal-open');
+});
+
+// Ajuste na sua função fecharAviso original para não conflitar
+function fecharAviso() {
+  document.getElementById('overlay-aviso').style.display = 'none';
+  // Só remove o modal-open se o de novidades também estiver fechado
+  if(document.getElementById('overlay-novidades').style.display === 'none') {
+    document.body.classList.remove('modal-open');
+  }
+}
 </script>
   <!--
 <div style="text-align: center; margin-top: 20px;">
