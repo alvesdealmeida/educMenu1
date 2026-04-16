@@ -664,6 +664,38 @@
 }
 
 /* Garante que o de novidades esteja pronto para aparecer */
+/* Ajuste para legibilidade total */
+.modal-novidades {
+    background: var(--white) !important; /* Força fundo branco */
+    padding: 30px;
+    border-radius: 24px;
+    max-width: 90%;
+    width: 450px;
+    text-align: center;
+    border: 3px solid var(--teal);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5); /* Sombra para destacar */
+    animation: modalPop 0.3s ease-out;
+}
+
+.novidade-texto h4 { 
+    color: #1e3a5f !important; /* Azul marinho forte */
+    margin-bottom: 4px; 
+    font-weight: 800; 
+    font-size: 1.1rem;
+}
+
+.novidade-texto p { 
+    font-size: 0.9rem; 
+    color: #475569 !important; /* Cinza escuro legível */
+    margin: 0; 
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+/* Esconde o aviso de celular que você não quer */
+#overlay-aviso {
+    display: none !important;
+}
 #overlay-novidades {
     display: flex; /* Muda de 'none' para 'flex' */
     position: fixed;
