@@ -713,6 +713,16 @@
   margin-top: 10px;
 }
 /* --- FIM DO BLOCO CSS --- */
+
+
+#overlay-aviso, #overlay-novidades {
+    display: none !important;
+}
+
+/* Garante que o scroll do site funcione sem as janelas */
+body {
+    overflow: auto !important;
+}
 </style>
 </head>
 <body>
@@ -956,10 +966,12 @@ function fecharNovidades() {
   }
 }
 
-// Garante que o corpo do site comece travado se o pop-up estiver aberto
+// Garante que o corpo do site comece travado se o pop-up estiver aberta
+/*
 window.onload = function() {
   document.body.classList.add('modal-open');
 };
+*/
 /* --------------------------------------------------------- */
 // ── Paleta por disciplina ─────────────────────────────────────
 const SUBJECT_STYLES = {
