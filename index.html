@@ -1014,6 +1014,11 @@ const SUBJECT_STYLES = {
     tagTxt: "#7c3aed", tagBg: "rgba(139,92,246,0.12)",
     btn: "#7c3aed"
   },
+  "Programação-Scratch": {
+    thumbGrad: "linear-gradient(135deg,#3b0764,#8b5cf6)",
+    tagTxt: "#7c3aed", tagBg: "rgba(139,92,246,0.12)",
+    btn: "#7c3aed"
+  },
 };
 
 // ── Dados dos jogos ───────────────────────────────────────────
@@ -1025,6 +1030,15 @@ const games = [
    category: "Programação",
    badge: "EM BREVE",
    url: "#",
+   accent: "#f59e0b",
+ },
+   {
+   title: "🖼️ Programção Scratch",
+   desc: "Programação com Scratch.",
+   emoji: "🖼️💻🚀",
+   category: "Programação",
+   badge: "PPROGRAMAS-JOGOS",
+   url: "https://alvesdealmeida.github.io/scratchVirus/",
    accent: "#f59e0b",
  },
   {
@@ -1316,7 +1330,7 @@ const games = [
 let activeCategory = "Todos";
 
 function getCategories() {
-  return ["Todos", "Matemática", "Lógica", "Português", "Educativo","Robótica","Programação",];
+  return ["Todos", "Matemática", "Lógica", "Português", "Educativo","Robótica","Programação","Programação-Scratch",];
 }
 
 function countByCategory(cat) {
@@ -1331,6 +1345,7 @@ const CAT_ICONS = {
   "Lógica": "🧩",
   "Português": "📖",
   "Educativo": "🌐",
+  "Scratch": "🖼️",
 };
 
 function renderTabs() {
