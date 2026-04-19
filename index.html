@@ -814,6 +814,14 @@
 .modal-bncc-link:hover { border-color: var(--purple); }
 
 </style>
+<script>
+function tocarBoasVindas() {
+  const audio = new Audio("Terminator2.mp3");
+  audio.volume = 0.5;
+  audio.play().catch(() => {});
+}
+</script>
+
 </head>
 <body>
   
@@ -1610,14 +1618,15 @@ function fecharNovidades() {
 window.onload = function() {
   document.getElementById('overlay-novidades').style.display = 'flex';
 };
-/*
+
 // Função para fechar o modal de novidades
 
 function fecharNovidades() {
   document.getElementById('overlay-novidades').style.display = 'none';
   document.body.classList.remove('modal-open');
+  tocarBoasVindas(); // ← aqui
 }
-
+/*
 // Lógica para mostrar o modal ao carregar a página
 window.addEventListener('DOMContentLoaded', (event) => {
   // Mostra o modal de novidades
