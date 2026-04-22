@@ -556,8 +556,9 @@
     h1{font-size:.9rem;line-height:1.2;}
     .hero-logo{height:32px;width:32px;}
     .hero-brand-name{font-size:.5rem;} .hero-brand-name strong{font-size:.78rem;}
-    .hero-brand{gap:5px;}
-    .hero-top-row{min-height:36px;}
+    /* ── CORREÇÃO MOBILE: empilha brand + slogan sem sobreposição ── */
+    .hero-brand{gap:5px;position:static;transform:none;}
+    .hero-top-row{min-height:auto;flex-direction:column;gap:4px;align-items:center;}
     .hero-bottom-row{gap:5px;flex-wrap:wrap;}
     .stats-row{flex-wrap:nowrap;}
     .stat-pill{padding:3px 6px;gap:3px;}
