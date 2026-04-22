@@ -354,6 +354,146 @@
   .quiz-success-check { font-size:2rem; }
   .quiz-success-overlay span { font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:800;color:var(--green); }
 
+  /* ════════════════════════════════════════════════════════════════════
+     ██████  ÁREA DO ADMINISTRADOR — CSS — INÍCIO
+     ██████  Não modificar este bloco sem autorização.
+     ██████  Corresponde ao #adm-card, #modal-adm-login e #adm-trigger.
+     ════════════════════════════════════════════════════════════════════ */
+
+  /* Card do admin na sidebar — oculto por padrão */
+  .adm-card {
+    display:none;background:rgba(255,255,255,.9);border-radius:20px;
+    padding:18px;box-shadow:var(--shadow);border-top:5px solid var(--coral);
+    position:relative;overflow:hidden;transition:box-shadow .22s;
+  }
+  .adm-card.adm-visivel { display:block;animation:cardIn .35s ease; }
+  .adm-card::before {
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(135deg,rgba(244,63,94,.04) 0%,transparent 60%);
+    pointer-events:none;
+  }
+  .adm-card:hover { box-shadow:0 8px 32px rgba(244,63,94,.18); }
+  .adm-tag {
+    display:inline-block;background:rgba(244,63,94,.1);color:#be123c;
+    padding:4px 10px;border-radius:8px;font-weight:800;font-size:.65rem;
+    text-transform:uppercase;margin-bottom:10px;
+    border:1px solid rgba(244,63,94,.25);
+  }
+  .adm-title {
+    font-family:'Playfair Display',serif;color:var(--navy);
+    margin-bottom:6px;font-size:1.05rem;font-weight:700;
+    display:flex;align-items:center;gap:6px;
+  }
+  .adm-card > p { font-size:.8rem;line-height:1.5;color:var(--muted);margin-bottom:12px;font-weight:600; }
+  /* Status do PIN ativo */
+  .adm-pin-status {
+    background:#f8fafc;border-radius:10px;padding:10px 12px;
+    margin-bottom:12px;border:1.5px solid var(--border);
+    font-size:.78rem;font-weight:700;color:var(--muted);line-height:1.5;
+  }
+  .adm-pin-status .pin-val {
+    font-size:1.5rem;font-weight:900;letter-spacing:.22em;
+    display:block;text-align:center;margin:4px 0;color:var(--navy);
+  }
+  .adm-pin-status .pin-exp { font-size:.64rem;text-align:center;display:block;color:var(--muted); }
+  .adm-pin-status.ativo  { border-color:var(--green);background:rgba(16,185,129,.06); }
+  .adm-pin-status.ativo .pin-val { color:var(--green); }
+  .adm-pin-status.inativo { border-color:var(--coral);background:rgba(244,63,94,.05); }
+  .adm-pin-status.inativo .pin-val { color:var(--coral);font-size:.9rem;letter-spacing:0; }
+  /* Seletor de duração */
+  .adm-label-sm {
+    font-size:.65rem;color:var(--muted);letter-spacing:.1em;
+    text-transform:uppercase;margin-bottom:6px;font-weight:700;
+  }
+  .adm-duracao-select {
+    width:100%;background:#f8fafc;border:2px solid var(--border);
+    border-radius:10px;color:var(--navy);font-family:'Nunito',sans-serif;
+    font-size:.82rem;font-weight:700;padding:8px 10px;outline:none;
+    cursor:pointer;transition:border-color .2s;margin-bottom:10px;
+    -webkit-appearance:none;appearance:none;
+  }
+  .adm-duracao-select:focus { border-color:var(--coral);box-shadow:0 0 0 3px rgba(244,63,94,.12); }
+  /* Botões do admin */
+  .adm-btn-row { display:flex;gap:7px;margin-bottom:8px; }
+  .adm-btn {
+    flex:1;border:none;border-radius:10px;color:#fff;
+    font-family:'Nunito',sans-serif;font-size:.74rem;font-weight:800;
+    padding:9px 6px;cursor:pointer;transition:opacity .2s,transform .15s;
+    letter-spacing:.02em;text-shadow:0 1px 2px rgba(0,0,0,.2);text-align:center;
+  }
+  .adm-btn:active { transform:scale(.96); }
+  .adm-btn.gerar     { background:linear-gradient(135deg,var(--coral),#be123c); }
+  .adm-btn.gerar:hover { opacity:.88; }
+  .adm-btn.desativar { background:linear-gradient(135deg,#64748b,#475569); }
+  .adm-btn.desativar:hover { opacity:.88; }
+  .adm-btn-logout {
+    width:100%;border:1.5px solid rgba(244,63,94,.4);border-radius:10px;
+    background:transparent;color:#be123c;font-family:'Nunito',sans-serif;
+    font-size:.7rem;font-weight:800;padding:7px;cursor:pointer;
+    transition:background .2s;letter-spacing:.04em;margin-top:4px;
+  }
+  .adm-btn-logout:hover { background:rgba(244,63,94,.08); }
+  .adm-feedback {
+    font-size:.7rem;font-weight:700;min-height:16px;
+    text-align:center;transition:opacity .3s;margin-top:2px;
+  }
+  .adm-feedback.ok  { color:var(--green); }
+  .adm-feedback.err { color:var(--coral); }
+  /* Modal de login do administrador */
+  #modal-adm-login {
+    display:none;position:fixed;inset:0;
+    background:rgba(0,0,0,.88);backdrop-filter:blur(10px);
+    z-index:30000;align-items:center;justify-content:center;
+  }
+  #modal-adm-login.open { display:flex; }
+  .adm-login-box {
+    background:var(--white);border-radius:24px;max-width:360px;width:92%;
+    padding:32px 28px 24px;box-shadow:0 24px 64px rgba(0,0,0,.4);
+    border-top:6px solid var(--coral);position:relative;animation:modalPop .3s ease-out;
+  }
+  .adm-login-box h2 {
+    font-family:'Playfair Display',serif;color:var(--navy);
+    margin-bottom:6px;font-size:1.35rem;text-align:center;
+  }
+  .adm-login-box > p {
+    font-size:.82rem;color:var(--muted);font-weight:600;
+    text-align:center;margin-bottom:20px;line-height:1.5;
+  }
+  .adm-pass-row { display:flex;gap:8px;margin-bottom:8px; }
+  .adm-pass-input {
+    flex:1;background:#f8fafc;border:2px solid var(--border);
+    border-radius:10px;color:var(--navy);font-family:'Nunito',sans-serif;
+    font-size:1rem;font-weight:700;padding:10px 12px;outline:none;
+    transition:border-color .2s,box-shadow .2s;
+  }
+  .adm-pass-input:focus { border-color:var(--coral);box-shadow:0 0 0 3px rgba(244,63,94,.12); }
+  .adm-pass-input.err   { border-color:var(--coral);animation:pinShake .35s ease; }
+  .adm-login-btn {
+    background:linear-gradient(135deg,var(--coral),#be123c);
+    border:none;border-radius:10px;color:#fff;font-family:'Nunito',sans-serif;
+    font-size:.8rem;font-weight:800;padding:10px 14px;cursor:pointer;
+    transition:opacity .2s;white-space:nowrap;letter-spacing:.03em;
+  }
+  .adm-login-btn:hover { opacity:.88; }
+  .adm-login-feedback { font-size:.75rem;font-weight:700;min-height:18px;text-align:center; }
+  .adm-login-feedback.err { color:var(--coral); }
+  .adm-login-close {
+    position:absolute;top:14px;right:16px;background:var(--border);
+    border:none;border-radius:50%;width:32px;height:32px;font-size:1rem;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;
+  }
+  .adm-login-close:hover { background:#e2e8f0; }
+  /* Gatilho discreto no rodapé */
+  #adm-trigger {
+    background:none;border:none;cursor:pointer;opacity:.2;font-size:.72rem;
+    transition:opacity .3s;padding:2px 6px;color:rgba(255,255,255,.6);vertical-align:middle;
+  }
+  #adm-trigger:hover { opacity:.55; }
+
+  /* ════════════════════════════════════════════════════════════════════
+     ██████  ÁREA DO ADMINISTRADOR — CSS — FIM
+     ════════════════════════════════════════════════════════════════════ */
+
   /* ── MODAIS ── */
   #overlay-aviso { display:none !important; }
   .modal-novidades { background:var(--white) !important;padding:30px;border-radius:24px;max-width:90%;width:450px;text-align:center;border:3px solid var(--teal);box-shadow:0 20px 50px rgba(0,0,0,.5);animation:modalPop .3s ease-out; }
@@ -609,6 +749,49 @@ function tocarBoasVindas() {
       </div>
       <!-- ── FIM QUIZ PIN CARD ── -->
 
+      <!-- ════════════════════════════════════════════════════════════════
+           ██  ÁREA DO ADMINISTRADOR — HTML CARD SIDEBAR — INÍCIO
+           ██  Card oculto por padrão. Visível somente após login de admin.
+           ██  Acesso: clique 3x na logo EDUC (header) OU no ⚙ do rodapé.
+           ██  Não remover, mover ou renomear os IDs deste bloco.
+           ════════════════════════════════════════════════════════════════ -->
+      <div class="adm-card" id="adm-card">
+        <span class="adm-tag">🔐 Administrador</span>
+        <div class="adm-title">⚙️ Painel do Professor</div>
+        <p>Gerencie o PIN de acesso ao Quiz da turma.</p>
+
+        <!-- Status do PIN atual -->
+        <div class="adm-label-sm">📊 Status do PIN</div>
+        <div class="adm-pin-status inativo" id="adm-pin-status">
+          <span class="pin-val" id="adm-pin-val">Nenhum PIN ativo</span>
+          <span class="pin-exp" id="adm-pin-exp">—</span>
+        </div>
+
+        <!-- Seletor de duração para o novo PIN -->
+        <div class="adm-label-sm">⏱ Duração do novo PIN</div>
+        <select class="adm-duracao-select" id="adm-duracao">
+          <option value="1800000">30 minutos</option>
+          <option value="3600000" selected>1 hora</option>
+          <option value="7200000">2 horas</option>
+          <option value="14400000">4 horas</option>
+          <option value="28800000">8 horas</option>
+          <option value="86400000">24 horas</option>
+        </select>
+
+        <!-- Ações principais -->
+        <div class="adm-btn-row">
+          <button class="adm-btn gerar"     onclick="admGerarPin()">🎲 Gerar PIN</button>
+          <button class="adm-btn desativar" onclick="admDesativarPin()">🚫 Desativar</button>
+        </div>
+        <div class="adm-feedback" id="adm-feedback"></div>
+
+        <!-- Sair do painel -->
+        <button class="adm-btn-logout" onclick="admLogout()">↩ Sair do painel admin</button>
+      </div>
+      <!-- ════════════════════════════════════════════════════════════════
+           ██  ÁREA DO ADMINISTRADOR — HTML CARD SIDEBAR — FIM
+           ════════════════════════════════════════════════════════════════ -->
+
     </div>
     <!-- ══ FIM SIDEBAR ══ -->
 
@@ -642,6 +825,36 @@ function tocarBoasVindas() {
   </div>
 </div>
 
+<!-- ════════════════════════════════════════════════════════════════════
+     ██  ÁREA DO ADMINISTRADOR — MODAL DE LOGIN — INÍCIO
+     ██  Modal de autenticação do professor/administrador.
+     ██  A senha está definida no JS (variável ADM_SENHA).
+     ██  Gatilhos: triple-click na logo OU botão ⚙ discreto no rodapé.
+     ════════════════════════════════════════════════════════════════════ -->
+<div id="modal-adm-login" onclick="if(event.target===this)fecharLoginAdm()">
+  <div class="adm-login-box">
+    <button class="adm-login-close" onclick="fecharLoginAdm()">✕</button>
+    <h2>🔐 Área Restrita</h2>
+    <p>Acesso exclusivo para o professor administrador da plataforma.</p>
+    <div class="adm-pass-row">
+      <input
+        type="password"
+        id="adm-pass-input"
+        class="adm-pass-input"
+        placeholder="Senha do administrador"
+        autocomplete="new-password"
+        maxlength="32"
+        onkeydown="if(event.key==='Enter') admLogin()"
+      >
+      <button class="adm-login-btn" onclick="admLogin()">▶ Entrar</button>
+    </div>
+    <div class="adm-login-feedback" id="adm-login-feedback"></div>
+  </div>
+</div>
+<!-- ════════════════════════════════════════════════════════════════════
+     ██  ÁREA DO ADMINISTRADOR — MODAL DE LOGIN — FIM
+     ════════════════════════════════════════════════════════════════════ -->
+
 <!-- ── FOOTER ── -->
 <footer>
   Desenvolvido com 💙 para a <strong>educação</strong> &nbsp;·&nbsp;
@@ -656,6 +869,10 @@ function tocarBoasVindas() {
      style="color:var(--teal);text-decoration:none;font-size:.9rem;border:1px solid var(--teal);padding:5px 15px;border-radius:20px;display:inline-block;margin-top:10px;margin-left:10px;">
      🔒 Política &amp; Termos
   </a>
+  <!-- ██ ÁREA DO ADMINISTRADOR — Gatilho discreto no rodapé ██
+       Botão ⚙ quase invisível. Triple-click na logo também funciona. -->
+  <button id="adm-trigger" onclick="abrirLoginAdm()" title="">⚙</button>
+  <!-- ██ FIM Gatilho ██ -->
   <div style="margin-top:16px;">
     <div align="center">
       <a href='https://contador.s12.com.br'><img src='https://contador.s12.com.br/img-xC1zb67b8ZYDwCY0-7.gif' border='0' alt='contador grátis'></a>
@@ -866,6 +1083,190 @@ function validarPinQuiz() {
     setTimeout(() => input.classList.remove('pin-err'), 600);
   }
 }
+</script>
+
+<!--
+  ══════════════════════════════════════════════════════════════════════════════
+  ██████████████████████████████████████████████████████████████████████████████
+  ██                                                                          ██
+  ██   ÁREA DO ADMINISTRADOR — JAVASCRIPT — INÍCIO                           ██
+  ██                                                                          ██
+  ██   INSTRUÇÕES PARA O DESENVOLVEDOR:                                       ██
+  ██   • Senha de acesso: variável ADM_SENHA logo abaixo.                    ██
+  ██     ALTERE antes de publicar em produção.                                ██
+  ██   • Dois gatilhos para abrir o painel:                                   ██
+  ██       1. Clique TRIPLO rápido na logo EDUC (header, canto esquerdo).    ██
+  ██       2. Botão ⚙ quase invisível no rodapé da página.                   ██
+  ██   • O login persiste enquanto a aba estiver aberta (sessionStorage).    ██
+  ██     Fechar a aba desloga automaticamente.                                ██
+  ██   • O PIN gerado é salvo no localStorage e lido pelo card de alunos.    ██
+  ██   • Não há validação de servidor — proteção de uso cotidiano.           ██
+  ██   • Este bloco termina em: ÁREA DO ADMINISTRADOR — JAVASCRIPT — FIM     ██
+  ██                                                                          ██
+  ██████████████████████████████████████████████████████████████████████████████
+  ══════════════════════════════════════════════════════════════════════════════
+-->
+<script>
+/* ════════════════════════════════════════════════════════════════════════════
+   ██  ÁREA DO ADMINISTRADOR — JAVASCRIPT — INÍCIO
+   ════════════════════════════════════════════════════════════════════════════
+
+   CONFIGURAÇÃO — edite APENAS as constantes desta seção:
+   ─────────────────────────────────────────────────────────────────────────── */
+
+  // ► ALTERE a senha padrão antes de publicar!
+  const ADM_SENHA = 'EDUC@Prof2025';
+
+  // Chave de sessão — não alterar (mantém login ativo enquanto a aba estiver aberta)
+  const ADM_SESSION_KEY = 'educ_adm_logado';
+
+  // Timer interno para atualizar o contador de expiração do PIN
+  let admStatusTimer = null;
+
+  /* ─── Abrir modal de login do admin ────────────────────────────────── */
+  function abrirLoginAdm() {
+    // Se já logado nesta sessão, vai direto para o painel
+    if (sessionStorage.getItem(ADM_SESSION_KEY) === '1') {
+      admMostrarCard(); return;
+    }
+    document.getElementById('modal-adm-login').classList.add('open');
+    setTimeout(() => document.getElementById('adm-pass-input').focus(), 120);
+  }
+
+  /* ─── Fechar modal de login ─────────────────────────────────────────── */
+  function fecharLoginAdm() {
+    document.getElementById('modal-adm-login').classList.remove('open');
+    const inp = document.getElementById('adm-pass-input');
+    inp.value = ''; inp.classList.remove('err');
+    const fb = document.getElementById('adm-login-feedback');
+    fb.textContent = ''; fb.className = 'adm-login-feedback';
+  }
+
+  /* ─── Autenticar administrador ──────────────────────────────────────── */
+  function admLogin() {
+    const input = document.getElementById('adm-pass-input');
+    const fb    = document.getElementById('adm-login-feedback');
+    input.classList.remove('err');
+    fb.textContent = ''; fb.className = 'adm-login-feedback';
+
+    if (!input.value) {
+      input.classList.add('err');
+      fb.className = 'adm-login-feedback err';
+      fb.textContent = 'Digite a senha.'; return;
+    }
+    if (input.value === ADM_SENHA) {
+      sessionStorage.setItem(ADM_SESSION_KEY, '1');
+      fecharLoginAdm();
+      admMostrarCard();
+    } else {
+      input.value = ''; input.classList.add('err');
+      fb.className = 'adm-login-feedback err';
+      fb.textContent = 'Senha incorreta.';
+      setTimeout(() => input.classList.remove('err'), 600);
+    }
+  }
+
+  /* ─── Mostrar card de admin na sidebar ─────────────────────────────── */
+  function admMostrarCard() {
+    document.getElementById('adm-card').classList.add('adm-visivel');
+    admAtualizarStatus();
+    // Atualiza o tempo restante do PIN a cada minuto
+    clearInterval(admStatusTimer);
+    admStatusTimer = setInterval(admAtualizarStatus, 60000);
+    // Rola até o card para o professor visualizar
+    setTimeout(() => {
+      document.getElementById('adm-card').scrollIntoView({ behavior:'smooth', block:'nearest' });
+    }, 400);
+  }
+
+  /* ─── Atualizar painel de status do PIN ─────────────────────────────── */
+  function admAtualizarStatus() {
+    const statusEl = document.getElementById('adm-pin-status');
+    const valEl    = document.getElementById('adm-pin-val');
+    const expEl    = document.getElementById('adm-pin-exp');
+    const pin    = localStorage.getItem('quiz_pin_ativo');
+    const expiry = parseInt(localStorage.getItem('quiz_pin_expiry') || '0');
+    const agora  = Date.now();
+
+    if (pin && agora < expiry) {
+      const restMin  = Math.ceil((expiry - agora) / 60000);
+      const horas    = Math.floor(restMin / 60);
+      const mins     = restMin % 60;
+      const tempoStr = horas > 0
+        ? `Expira em ${horas}h ${mins < 10 ? '0'+mins : mins}min`
+        : `Expira em ${mins} min`;
+      statusEl.className = 'adm-pin-status ativo';
+      valEl.textContent  = pin;
+      expEl.textContent  = tempoStr;
+    } else {
+      // Limpa entradas expiradas do localStorage
+      if (pin) { localStorage.removeItem('quiz_pin_ativo'); localStorage.removeItem('quiz_pin_expiry'); }
+      statusEl.className = 'adm-pin-status inativo';
+      valEl.textContent  = 'Nenhum PIN ativo';
+      expEl.textContent  = '—';
+    }
+  }
+
+  /* ─── Gerar novo PIN aleatório de 6 dígitos ─────────────────────────── */
+  function admGerarPin() {
+    const fb      = document.getElementById('adm-feedback');
+    const duracao = parseInt(document.getElementById('adm-duracao').value);
+    // PIN: número aleatório entre 100000 e 999999
+    const novoPin = String(Math.floor(100000 + Math.random() * 900000));
+    localStorage.setItem('quiz_pin_ativo',  novoPin);
+    localStorage.setItem('quiz_pin_expiry', String(Date.now() + duracao));
+    admAtualizarStatus();
+    fb.textContent = `✅ PIN ${novoPin} ativado!`;
+    fb.className   = 'adm-feedback ok';
+    setTimeout(() => { fb.textContent = ''; fb.className = 'adm-feedback'; }, 5000);
+  }
+
+  /* ─── Desativar PIN atual ───────────────────────────────────────────── */
+  function admDesativarPin() {
+    const fb = document.getElementById('adm-feedback');
+    if (!localStorage.getItem('quiz_pin_ativo')) {
+      fb.textContent = 'Nenhum PIN para desativar.';
+      fb.className   = 'adm-feedback err';
+      setTimeout(() => { fb.textContent = ''; fb.className = 'adm-feedback'; }, 3000);
+      return;
+    }
+    localStorage.removeItem('quiz_pin_ativo');
+    localStorage.removeItem('quiz_pin_expiry');
+    admAtualizarStatus();
+    fb.textContent = '🚫 PIN desativado.';
+    fb.className   = 'adm-feedback err';
+    setTimeout(() => { fb.textContent = ''; fb.className = 'adm-feedback'; }, 3000);
+  }
+
+  /* ─── Logout do administrador ───────────────────────────────────────── */
+  function admLogout() {
+    sessionStorage.removeItem(ADM_SESSION_KEY);
+    clearInterval(admStatusTimer);
+    document.getElementById('adm-card').classList.remove('adm-visivel');
+  }
+
+  /* ─── Gatilho de triple-click na logo EDUC (header) ────────────────── */
+  (function registrarGatilhoLogo() {
+    let cliques = 0, timerClique;
+    document.addEventListener('DOMContentLoaded', () => {
+      const logo = document.querySelector('.hero-logo');
+      if (!logo) return;
+      logo.addEventListener('click', () => {
+        cliques++;
+        clearTimeout(timerClique);
+        timerClique = setTimeout(() => { cliques = 0; }, 700); // janela de 700ms
+        if (cliques >= 3) { cliques = 0; abrirLoginAdm(); }
+      });
+    });
+    // Restaura o painel se o professor já estava logado nesta sessão de browser
+    if (sessionStorage.getItem(ADM_SESSION_KEY) === '1') {
+      document.addEventListener('DOMContentLoaded', admMostrarCard);
+    }
+  })();
+
+/* ════════════════════════════════════════════════════════════════════════════
+   ██  ÁREA DO ADMINISTRADOR — JAVASCRIPT — FIM
+   ════════════════════════════════════════════════════════════════════════════ */
 </script>
 
 <!-- Matrix Canvas -->
