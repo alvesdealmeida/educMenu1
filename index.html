@@ -169,8 +169,8 @@
 .hero::before {
   content: ''; position: absolute;
   top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg,
-    transparent 0%, #00ff41 30%, #39ff14 50%, #00ff41 70%, transparent 100%);
+  background: radial-gradient(circle, rgba(14,165,233,0.18) 0%, transparent 70%);
+ /* background: linear-gradient(90deg, transparent 0%, #00ff41 30%, #39ff14 50%, #00ff41 70%, transparent 100%); */
   z-index: 10;
   animation: scanLine 3s ease-in-out infinite;
 }
@@ -181,8 +181,8 @@
 .hero::after {
   content: ''; position: absolute;
   top: 0; left: 0; bottom: 0; width: 3px;
-  background: linear-gradient(180deg,
-    transparent 0%, #00ff41 40%, #39ff14 60%, transparent 100%);
+  background: radial-gradient(circle, rgba(245,158,11,0.12) 0%, transparent 70%);
+  /*background: linear-gradient(180deg, transparent 0%, #00ff41 40%, #39ff14 60%, transparent 100%);*/
   z-index: 10; opacity: 0.7;
 }
 .hero-inner { position: relative; z-index: 5; max-width: 760px; margin: 0 auto; }
