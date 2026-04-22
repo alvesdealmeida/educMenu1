@@ -24,941 +24,415 @@
   }
 
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  html {
-    overflow-y: scroll; /* barra lateral sempre visível */
-  }
+  html { scroll-behavior: smooth; overflow-y: scroll; }
   body {
     font-family: 'Nunito', sans-serif;
     background: var(--cream);
-    /*background: #e8e8ec; */
     color: var(--text);
     min-height: 100vh;
     overflow-x: hidden;
   }
-   /* ── REDES SOCIAIS ──────────────────────────────── */
-  .social-bar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    margin-top: 14px;
-    flex-wrap: wrap;
-  }
+
   .social-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    padding: 7px 18px;
-    border-radius: 40px;
-    border: 2px solid transparent;
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 800;
-    text-decoration: none;
-    letter-spacing: 0.03em;
-    backdrop-filter: blur(6px);
-    transition: transform .2s, box-shadow .2s, background .2s;
+    display:inline-flex;align-items:center;gap:5px;
+    padding:4px 12px;border-radius:40px;border:2px solid transparent;
+    font-family:'Nunito',sans-serif;font-size:.7rem;font-weight:800;
+    text-decoration:none;letter-spacing:.03em;backdrop-filter:blur(6px);
+    transition:transform .2s,box-shadow .2s,background .2s;
   }
-  .social-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-  }
-  .social-btn svg {
-    width: 18px; height: 18px;
-    flex-shrink: 0;
-    fill: currentColor;
-  }
-  .social-btn.fb {
-    background: rgba(24,119,242,0.18);
-    border-color: rgba(24,119,242,0.50);
-    color: #5b9bf8;
-  }
-  .social-btn.fb:hover { background: rgba(24,119,242,0.32); }
-  .social-btn.ig {
-    background: rgba(225,48,108,0.15);
-    border-color: rgba(225,48,108,0.45);
-    color: #f06090;
-  }
-  .social-btn.ig:hover { background: rgba(225,48,108,0.28); }
-  .social-btn.wa {
-    background: rgba(37,211,102,0.15);
-    border-color: rgba(37,211,102,0.45);
-    color: #4cd87a;
-  }
-  .social-btn.wa:hover { background: rgba(37,211,102,0.28); }
-  /* ── FIM REDES SOCIAIS ───────────────────────────── */
-  /* ── Topo decorativo ── */
-  /* Reduzi o padding de 48px/80px para 20px/40px */
-  /*
-.hero {
-    background: linear-gradient(135deg, var(--navy2) 0%, var(--navy) 60%, #1e4d8c 100%);
-    position: relative;
-    overflow: hidden;
-    padding: 14px 24px 28px;
-    text-align: center;
-}
+  .social-btn:hover { transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.25); }
+  .social-btn svg { width:18px;height:18px;flex-shrink:0;fill:currentColor; }
+  .social-btn.fb { background:rgba(24,119,242,.18);border-color:rgba(24,119,242,.50);color:#5b9bf8; }
+  .social-btn.fb:hover { background:rgba(24,119,242,.32); }
+  .social-btn.ig { background:rgba(225,48,108,.15);border-color:rgba(225,48,108,.45);color:#f06090; }
+  .social-btn.ig:hover { background:rgba(225,48,108,.28); }
+  .social-btn.wa { background:rgba(37,211,102,.15);border-color:rgba(37,211,102,.45);color:#4cd87a; }
+  .social-btn.wa:hover { background:rgba(37,211,102,.28); }
 
-  /* Bolhas decorativas 
+  /* ── HERO MATRIX ── */
+  .hero {
+    position:relative;overflow:hidden;
+    padding:8px 20px 10px;text-align:center;
+    background:#000;z-index:2;
+  }
+  #matrix-canvas {
+    position:fixed;top:0;left:0;
+    width:100vw;height:100vh;
+    opacity:.55;pointer-events:none;z-index:0;display:block;
+  }
+  .hero-fog { display:none; }
   .hero::before {
-    content: '';
-    position: absolute;
-    width: 500px; height: 500px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(14,165,233,0.18) 0%, transparent 70%);
-    top: -200px; right: -100px;
-    pointer-events: none;
+    content:'';position:absolute;top:0;left:0;right:0;height:2px;
+    background:radial-gradient(circle,rgba(14,165,233,.18) 0%,transparent 70%);
+    z-index:10;animation:scanLine 3s ease-in-out infinite;
   }
+  @keyframes scanLine { 0%,100%{opacity:.6} 50%{opacity:1;box-shadow:0 0 16px #00ff41} }
   .hero::after {
-    content: '';
-    position: absolute;
-    width: 320px; height: 320px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(245,158,11,0.12) 0%, transparent 70%);
-    bottom: -120px; left: -60px;
-    pointer-events: none;
+    content:'';position:absolute;top:0;left:0;bottom:0;width:3px;
+    background:radial-gradient(circle,rgba(245,158,11,.12) 0%,transparent 70%);
+    z-index:10;opacity:.7;
   }
+  .hero-inner { position:relative;z-index:5;max-width:1100px;margin:0 auto; }
 
-  /* Pontinhos decorativos 
-  .hero-dots {
-    position: absolute; inset: 0;
-    background-image: radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
-    background-size: 28px 28px;
-    pointer-events: none;
+  /* ── Linha 1: badge + título ── */
+  .hero-top-row {
+    display:flex;align-items:center;justify-content:center;
+    gap:14px;flex-wrap:wrap;margin-bottom:6px;
   }
-
-  /* Itens flutuantes 
-  .float-items {
-    position: absolute; inset: 0; overflow: hidden; pointer-events: none;
-  }
-  .fi {
-    position: absolute;
-    font-size: 1.6rem;
-    opacity: 0.15;
-    animation: floatItem var(--d,6s) ease-in-out infinite;
-    animation-delay: var(--dl,0s);
-  }
-  @keyframes floatItem {
-    0%,100% { transform: translateY(0) rotate(0deg); }
-    50%      { transform: translateY(-18px) rotate(8deg); }
-  }
-  */
-  /* ── HERO MATRIX ─────────────────────────────────── */
-.hero {
-  position: relative;
-  overflow: hidden;
- /* overflow: visible;*/
-  padding: 20px 24px 32px;
-  text-align: center;
-  background: #000;
-  /*background: linear-gradient(135deg, var(--navy2) 0%, var(--navy) 60%, #1e4d8c 100%);*/
-  /*background: transparent; */
-  z-index: 2;
-}
-#matrix-canvas {
-  position: fixed;
-  /*position: absolute;*/
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  opacity: 0.55;
-  pointer-events: none;
-  z-index: 0;
-  display: block;
-}
-/* hero overflow removido — canvas é fixed agora */
-.hero-fog { display: none; }
-.hero::before {
-  content: ''; position: absolute;
-  top: 0; left: 0; right: 0; height: 2px;
-  background: radial-gradient(circle, rgba(14,165,233,0.18) 0%, transparent 70%);
- /* background: linear-gradient(90deg, transparent 0%, #00ff41 30%, #39ff14 50%, #00ff41 70%, transparent 100%); */
-  z-index: 10;
-  animation: scanLine 3s ease-in-out infinite;
-}
-@keyframes scanLine {
-  0%,100% { opacity:.6; }
-  50%      { opacity:1; box-shadow:0 0 16px #00ff41; }
-}
-.hero::after {
-  content: ''; position: absolute;
-  top: 0; left: 0; bottom: 0; width: 3px;
-  background: radial-gradient(circle, rgba(245,158,11,0.12) 0%, transparent 70%);
-  /*background: linear-gradient(180deg, transparent 0%, #00ff41 40%, #39ff14 60%, transparent 100%);*/
-  z-index: 10; opacity: 0.7;
-}
-.hero-inner { position: relative; z-index: 5; max-width: 760px; margin: 0 auto; }
-.logo-badge {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(0,255,65,0.08);
-  border: 1px solid rgba(0,255,65,0.35);
-  border-radius: 40px; padding: 5px 16px;
-  font-size: .68rem; font-weight: 700;
-  color: #00ff41; letter-spacing: .15em; text-transform: uppercase;
-  margin-bottom: 10px; backdrop-filter: blur(6px);
-  text-shadow: 0 0 8px rgba(0,255,65,.6);
-  animation: glowPulse 2.5s ease-in-out infinite;
-}
-@keyframes glowPulse {
-  0%,100% { box-shadow: 0 0 0 rgba(0,255,65,0); }
-  50%      { box-shadow: 0 0 18px rgba(0,255,65,.25); }
-}
-.logo-badge span { font-size: .9rem; }
-h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(1.5rem,4vw,2.6rem);
-  font-weight: 800; color: #fff;
-  line-height: 1.15; margin-bottom: 10px;
-  text-shadow: 0 0 20px rgba(0,255,65,.3), 0 2px 4px rgba(0,0,0,.8);
-  animation: textFlicker 8s ease-in-out infinite;
-}
-@keyframes textFlicker {
-  0%,95%,100% { opacity:1; } 96% { opacity:.85; } 97% { opacity:1; } 98% { opacity:.9; }
-}
-h1 em {
-  font-style: normal;
-  background: linear-gradient(90deg, #00ff41, #39ff14, #ccff00);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text; filter: drop-shadow(0 0 8px rgba(0,255,65,.5));
-}
-.stat-pill {
-  background: rgba(0,255,65,0.07);
-  border: 1px solid rgba(0,255,65,0.25);
-  border-radius: 30px; padding: 7px 16px;
-  display: flex; align-items: center; gap: 7px;
-  backdrop-filter: blur(8px);
-  transition: border-color .3s, box-shadow .3s;
-}
-.stat-pill:hover {
-  border-color: rgba(0,255,65,.55);
-  box-shadow: 0 0 14px rgba(0,255,65,.2);
-}
-.stat-pill .val  { font-size:.85rem; font-weight:800; color:#00ff41; text-shadow:0 0 6px rgba(0,255,65,.5); }
-.stat-pill .lbl  { font-size:.62rem; color:rgba(255,255,255,.5); font-weight:600; margin-top:1px; }
-.next-btn {
-  display: inline-flex; align-items: center; gap: 7px;
-  background: rgba(0,255,65,0.12);
-  border: 2px solid rgba(0,255,65,0.55);
-  border-radius: 40px; padding: 7px 18px;
-  color: #00ff41; font-family:'Nunito',sans-serif;
-  font-size:.78rem; font-weight:800;
-  text-decoration:none; letter-spacing:.04em;
-  backdrop-filter:blur(6px); margin-top:16px;
-  text-shadow:0 0 6px rgba(0,255,65,.5);
-  transition: background .22s, box-shadow .22s, transform .2s;
-}
-.next-btn:hover {
-  background: rgba(0,255,65,.28);
-  box-shadow: 0 0 24px rgba(0,255,65,.45);
-  transform: translateY(-2px);
-}
-/* ── FIM HERO MATRIX ──────────────────────────────── */
-
-  /* Logo */
-  .hero-inner { position: relative; z-index: 2; max-width: 760px; margin: 0 auto; }
-
   .logo-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.18);
-    border-radius: 40px;
-    padding: 5px 16px;
-    font-size: 0.68rem; font-weight: 700;
-    color: rgba(255,255,255,0.85);
-    letter-spacing: 0.12em; text-transform: uppercase;
-    margin-bottom: 8px;
-    backdrop-filter: blur(6px);
+    display:inline-flex;align-items:center;gap:6px;flex-shrink:0;
+    background:rgba(0,255,65,.08);border:1px solid rgba(0,255,65,.35);
+    border-radius:40px;padding:3px 13px;
+    font-size:.6rem;font-weight:700;color:#00ff41;
+    letter-spacing:.14em;text-transform:uppercase;
+    backdrop-filter:blur(6px);
+    text-shadow:0 0 8px rgba(0,255,65,.6);
+    animation:glowPulse 2.5s ease-in-out infinite;
+    white-space:nowrap;
   }
-  .logo-badge span { font-size: 0.85rem; }
-
+  @keyframes glowPulse { 0%,100%{box-shadow:0 0 0 rgba(0,255,65,0)} 50%{box-shadow:0 0 18px rgba(0,255,65,.25)} }
+  .logo-badge span { font-size:.78rem; }
   h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.5rem, 4vw, 2.4rem);
-    font-weight: 800;
-    color: #fff;
-    line-height: 1.15;
-    margin-bottom: 8px;
-    letter-spacing: -0.01em;
+    font-family:'Playfair Display',serif;
+    font-size:clamp(1rem,2.6vw,1.55rem);font-weight:800;color:#fff;
+    line-height:1.15;margin:0;
+    text-shadow:0 0 20px rgba(0,255,65,.3),0 2px 4px rgba(0,0,0,.8);
+    animation:textFlicker 8s ease-in-out infinite;
   }
+  @keyframes textFlicker { 0%,95%,100%{opacity:1} 96%{opacity:.85} 97%{opacity:1} 98%{opacity:.9} }
   h1 em {
-    font-style: normal;
-    background: linear-gradient(90deg, var(--amber), #fde68a);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-style:normal;
+    background:linear-gradient(90deg,#00ff41,#39ff14,#ccff00);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    background-clip:text;filter:drop-shadow(0 0 8px rgba(0,255,65,.5));
   }
 
-  .hero-sub {
-    font-size: 1.05rem;
-    color: rgba(255,255,255,0.65);
-    font-weight: 600;
-    max-width: 480px; margin: 0 auto 36px;
-    margin-bottom: 20px;
-    line-height: 1.6;
+  /* ── Linha 2: pills + botão + redes — tudo horizontal ── */
+  .hero-bottom-row {
+    display:flex;align-items:center;justify-content:center;
+    gap:10px;flex-wrap:wrap;
   }
-
-  .stats-row {
-    display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;
-    margin-bottom: 0;
-  }
+  .stats-row { display:flex;align-items:center;gap:6px;flex-wrap:nowrap; }
   .stat-pill {
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 30px; padding: 7px 16px;
-    display: flex; align-items: center; gap: 7px;
-    backdrop-filter: blur(6px);
+    background:rgba(0,255,65,.07);border:1px solid rgba(0,255,65,.25);
+    border-radius:30px;padding:4px 10px;
+    display:flex;align-items:center;gap:5px;
+    backdrop-filter:blur(8px);
+    transition:border-color .3s,box-shadow .3s;
+    white-space:nowrap;
   }
-  .stat-pill .icon { font-size: 1rem; }
-  .stat-pill .val  { font-size: 0.85rem; font-weight: 800; color: #fff; }
-  .stat-pill .lbl  { font-size: 0.62rem; color: rgba(255,255,255,0.6); font-weight: 600; margin-top: 1px; }
+  .stat-pill:hover { border-color:rgba(0,255,65,.55);box-shadow:0 0 14px rgba(0,255,65,.2); }
+  .stat-pill .icon { font-size:.75rem; }
+  .stat-pill .val  { font-size:.72rem;font-weight:800;color:#00ff41;text-shadow:0 0 6px rgba(0,255,65,.5); }
+  .stat-pill .lbl  { font-size:.55rem;color:rgba(255,255,255,.5);font-weight:600;margin-top:1px; }
 
-  /* Onda separadora */
-  /* Diminui a altura da onda separadora de 60px para 30px */
-.wave-sep {
-    display: block; width: 100%; height: 8px;
-    margin-top: -1px;
-    background: #e8e8ec;
-    position: relative; z-index: 2;
-}
+  /* Separador | */
+  .hero-sep { width:1px;height:22px;background:rgba(0,255,65,.2); }
 
-  /* ── Corpo principal ── */
-  /* Ajuste do conteúdo principal para subir mais e encostar no header curto */
-.main {
-    max-width: 1400px; margin: 0 auto;
-    padding: 0 24px 80px;
-    position: relative;
-    top: -15px;
-    z-index: 2;
-}
+  .next-btn {
+    display:inline-flex;align-items:center;gap:5px;
+    background:rgba(0,255,65,.12);border:1px solid rgba(0,255,65,.45);
+    border-radius:40px;padding:4px 12px;color:#00ff41;
+    font-family:'Nunito',sans-serif;font-size:.68rem;font-weight:800;
+    text-decoration:none;letter-spacing:.04em;
+    backdrop-filter:blur(6px);
+    text-shadow:0 0 6px rgba(0,255,65,.5);
+    transition:background .22s,box-shadow .22s,transform .2s;
+    white-space:nowrap;
+  }
+  .next-btn:hover { background:rgba(0,255,65,.28);box-shadow:0 0 18px rgba(0,255,65,.4);transform:translateY(-1px); }
 
-  /* Barra de busca */
+  /* Redes sociais — só ícone, sem label */
+  .social-bar { display:flex;align-items:center;gap:6px; }
+  .social-btn {
+    display:inline-flex;align-items:center;justify-content:center;
+    width:30px;height:30px;
+    border-radius:50%;border:1px solid transparent;
+    text-decoration:none;backdrop-filter:blur(6px);
+    transition:transform .2s,box-shadow .2s,background .2s;
+    flex-shrink:0;
+  }
+  .social-btn:hover { transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,.3); }
+  .social-btn svg { width:14px;height:14px;flex-shrink:0;fill:currentColor; }
+  .social-btn.fb { background:rgba(24,119,242,.2);border-color:rgba(24,119,242,.5);color:#5b9bf8; }
+  .social-btn.fb:hover { background:rgba(24,119,242,.35); }
+  .social-btn.ig { background:rgba(225,48,108,.18);border-color:rgba(225,48,108,.45);color:#f06090; }
+  .social-btn.ig:hover { background:rgba(225,48,108,.32); }
+  .social-btn.wa { background:rgba(37,211,102,.18);border-color:rgba(37,211,102,.45);color:#4cd87a; }
+  .social-btn.wa:hover { background:rgba(37,211,102,.32); }
+
+  /* ── ONDA + MAIN ── */
+  .wave-sep { display:block;width:100%;height:8px;margin-top:-1px;background:#e8e8ec;position:relative;z-index:2; }
+  .main { max-width:1400px;margin:0 auto;padding:0 24px 80px;position:relative;top:-15px;z-index:2; }
+
+  /* ── BUSCA ── */
   .search-bar {
-    display: flex; align-items: center;
-    background: rgba(255,255,255,0.82);
-    border: 2px solid var(--border);
-    border-radius: 16px;
-    padding: 0 20px;
-    box-shadow: var(--shadow);
-    margin-bottom: 28px;
-    transition: border-color .25s, box-shadow .25s;
+    display:flex;align-items:center;
+    background:rgba(255,255,255,.82);border:2px solid var(--border);
+    border-radius:16px;padding:0 20px;box-shadow:var(--shadow);
+    margin-bottom:28px;transition:border-color .25s,box-shadow .25s;
   }
-  .search-bar:focus-within {
-    border-color: var(--teal);
-    box-shadow: 0 0 0 4px rgba(14,165,233,0.12), var(--shadow);
-  }
-  .search-bar .si { font-size: 1.2rem; color: var(--muted); flex-shrink: 0; }
+  .search-bar:focus-within { border-color:var(--teal);box-shadow:0 0 0 4px rgba(14,165,233,.12),var(--shadow); }
+  .search-bar .si { font-size:1.2rem;color:var(--muted);flex-shrink:0; }
   .search-bar input {
-    flex: 1; border: none; outline: none; background: transparent;
-    font-family: 'Nunito', sans-serif;
-    font-size: 1rem; font-weight: 600; color: var(--text);
-    padding: 16px 14px;
+    flex:1;border:none;outline:none;background:transparent;
+    font-family:'Nunito',sans-serif;font-size:1rem;font-weight:600;color:var(--text);padding:16px 14px;
   }
-  .search-bar input::placeholder { color: #94a3b8; font-weight: 600; }
+  .search-bar input::placeholder { color:#94a3b8;font-weight:600; }
 
-  /* next-btn versão amber removida — versão Matrix verde está acima */
-
-  /* Tabs de categoria */
-  .section-label {
-    font-size: 0.75rem; font-weight: 800;
-    color: var(--muted); letter-spacing: 0.12em;
-    text-transform: uppercase; margin-bottom: 12px;
-  }
-
-  /* Wrapper com scroll horizontal — sem quebra de linha */
-  .tabs-wrap {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    margin-bottom: 34px;
-    padding-bottom: 4px;
-  }
-  .tabs-wrap::-webkit-scrollbar { display: none; }
-
-  .tabs {
-    display: flex; gap: 10px;
-    width: max-content;
-    min-width: 100%;
-  }
+  /* ── TABS ── */
+  .section-label { font-size:.75rem;font-weight:800;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px; }
+  .tabs-wrap { overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin-bottom:34px;padding-bottom:4px; }
+  .tabs-wrap::-webkit-scrollbar { display:none; }
+  .tabs { display:flex;gap:10px;width:max-content;min-width:100%; }
   .tab {
-    display: flex; align-items: center; gap: 7px;
-    padding: 10px 20px;
-    border-radius: 40px;
-    border: 2px solid var(--border);
-    background: rgba(255,255,255,0.78);
-    color: var(--muted);
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.88rem; font-weight: 800;
-    cursor: pointer;
-    white-space: nowrap;
-    flex-shrink: 0;
-    transition: all .22s;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    min-height: 44px;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
+    display:flex;align-items:center;gap:7px;padding:10px 20px;
+    border-radius:40px;border:2px solid var(--border);
+    background:rgba(255,255,255,.78);color:var(--muted);
+    font-family:'Nunito',sans-serif;font-size:.88rem;font-weight:800;
+    cursor:pointer;white-space:nowrap;flex-shrink:0;
+    transition:all .22s;box-shadow:0 2px 8px rgba(0,0,0,.04);
+    min-height:44px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;
   }
-  .tab:hover {
-    border-color: var(--teal);
-    color: var(--teal);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(14,165,233,0.14);
-  }
-  .tab.active {
-    background: var(--navy);
-    border-color: var(--navy);
-    color: #fff;
-    box-shadow: 0 6px 20px rgba(30,58,95,0.25);
-    transform: translateY(-2px);
-  }
-  .tab .tab-count {
-    background: rgba(255,255,255,0.22);
-    border-radius: 20px;
-    padding: 2px 7px;
-    font-size: 0.72rem;
-  }
-  .tab:not(.active) .tab-count {
-    background: var(--border);
-    color: var(--muted);
-  }
+  .tab:hover { border-color:var(--teal);color:var(--teal);transform:translateY(-2px);box-shadow:0 6px 18px rgba(14,165,233,.14); }
+  .tab.active { background:var(--navy);border-color:var(--navy);color:#fff;box-shadow:0 6px 20px rgba(30,58,95,.25);transform:translateY(-2px); }
+  .tab .tab-count { background:rgba(255,255,255,.22);border-radius:20px;padding:2px 7px;font-size:.72rem; }
+  .tab:not(.active) .tab-count { background:var(--border);color:var(--muted); }
 
-  /* Grade de jogos */
-  .games-heading {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 22px;
-  }
-  .games-heading h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem; font-weight: 700; color: var(--navy);
-  }
-  .games-heading .count-badge {
-    font-size: 0.8rem; font-weight: 800; color: var(--muted);
-    background: var(--border); border-radius: 20px; padding: 4px 12px;
-  }
+  /* ── GRADE DE JOGOS ── */
+  .games-heading { display:flex;align-items:center;justify-content:space-between;margin-bottom:22px; }
+  .games-heading h2 { font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--navy); }
+  .games-heading .count-badge { font-size:.8rem;font-weight:800;color:var(--muted);background:var(--border);border-radius:20px;padding:4px 12px; }
+  .games-grid { display:grid;grid-template-columns:repeat(5,1fr);gap:18px; }
 
-  .games-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 18px;
-  }
-
-  /* Card de jogo */
+  /* ── GAME CARD ── */
   .game-card {
-    background: rgba(255,255,255,0.82);
-    border-radius: 20px;
-    overflow: hidden;
-    text-decoration: none;
-    display: flex; flex-direction: column;
-    box-shadow: 0 2px 16px rgba(30,58,95,0.08);
-    border: 2px solid transparent;
-    transition: transform .28s cubic-bezier(.34,1.56,.64,1), box-shadow .28s, border-color .28s;
-    animation: cardIn .45s ease both;
-    position: relative;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
+    background:rgba(255,255,255,.82);border-radius:20px;overflow:hidden;
+    text-decoration:none;display:flex;flex-direction:column;
+    box-shadow:0 2px 16px rgba(30,58,95,.08);border:2px solid transparent;
+    transition:transform .28s cubic-bezier(.34,1.56,.64,1),box-shadow .28s,border-color .28s;
+    animation:cardIn .45s ease both;position:relative;
+    -webkit-tap-highlight-color:transparent;touch-action:manipulation;
   }
-  .game-card:hover {
-    transform: translateY(-8px) scale(1.015);
-    box-shadow: 0 20px 50px rgba(30,58,95,0.15);
-    border-color: var(--accent, var(--teal));
-  }
-  .game-card:active { transform: scale(.98); }
-  @keyframes cardIn {
-    from { opacity:0; transform: translateY(24px) scale(.97); }
-    to   { opacity:1; transform: translateY(0)    scale(1); }
-  }
+  .game-card:hover { transform:translateY(-8px) scale(1.015);box-shadow:0 20px 50px rgba(30,58,95,.15);border-color:var(--accent,var(--teal)); }
+  .game-card:active { transform:scale(.98); }
+  @keyframes cardIn { from{opacity:0;transform:translateY(24px) scale(.97)} to{opacity:1;transform:translateY(0) scale(1)} }
+  .card-thumb { height:110px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:var(--thumb-bg,linear-gradient(135deg,#1e3a5f 0%,#2563eb 100%)); }
+  .card-thumb::after { content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.25) 100%); }
+  .card-thumb .big-emoji { font-size:3rem;filter:drop-shadow(0 4px 16px rgba(0,0,0,.3));animation:emojiFloat var(--ef-dur,3.5s) ease-in-out infinite;animation-delay:var(--ef-dl,0s);position:relative;z-index:1; }
+  @keyframes emojiFloat { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-9px) scale(1.07)} }
+  .subject-badge { position:absolute;top:12px;left:12px;z-index:2;background:rgba(255,255,255,.18);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.28);color:#fff;border-radius:8px;font-size:.68rem;font-weight:800;padding:4px 10px;letter-spacing:.08em;text-transform:uppercase; }
+  .level-tag { position:absolute;bottom:12px;right:12px;z-index:2;background:rgba(0,0,0,.35);backdrop-filter:blur(6px);color:rgba(255,255,255,.9);border-radius:20px;font-size:.7rem;font-weight:700;padding:3px 10px;display:flex;align-items:center;gap:4px; }
+  .card-body { padding:14px 16px 13px;display:flex;flex-direction:column;flex:1; }
+  .card-title { font-size:.92rem;font-weight:900;color:var(--navy);margin-bottom:6px;letter-spacing:-.01em; }
+  .card-desc { font-size:.82rem;font-weight:600;color:#94a3b8;line-height:1.5;flex:1;margin-bottom:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden; }
+  .card-footer { display:flex;align-items:center;justify-content:space-between;gap:10px; }
+  .card-tag { font-size:.72rem;font-weight:800;color:var(--accent-txt,var(--teal));background:var(--accent-bg,rgba(14,165,233,.1));border-radius:20px;padding:4px 12px;letter-spacing:.06em; }
+  .card-btn { display:flex;align-items:center;gap:6px;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:9px 18px;font-family:'Nunito',sans-serif;font-size:.82rem;font-weight:800;cursor:pointer;transition:background .2s,transform .18s;letter-spacing:.04em;min-height:44px;white-space:nowrap;-webkit-tap-highlight-color:transparent;touch-action:manipulation; }
+  .card-btn:hover { background:var(--teal);transform:scale(1.05); }
+  .card-btn svg { width:13px;height:13px;fill:#fff;flex-shrink:0; }
+  .empty { grid-column:1/-1;text-align:center;padding:80px 20px;color:var(--muted); }
+  .empty .empty-icon { font-size:3.5rem;margin-bottom:16px;display:block; }
+  .empty h3 { font-size:1.2rem;font-weight:800;color:var(--navy);margin-bottom:8px; }
+  .empty p  { font-size:.9rem;font-weight:600; }
 
-  /* Thumbnail */
-  .card-thumb {
-    height: 110px;
-    display: flex; align-items: center; justify-content: center;
-    position: relative; overflow: hidden;
-    background: var(--thumb-bg, linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%));
-  }
-  .card-thumb::after {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.25) 100%);
-  }
-  .card-thumb .big-emoji {
-    font-size: 3rem;
-    filter: drop-shadow(0 4px 16px rgba(0,0,0,0.3));
-    animation: emojiFloat var(--ef-dur, 3.5s) ease-in-out infinite;
-    animation-delay: var(--ef-dl, 0s);
-    position: relative; z-index: 1;
-  }
-  @keyframes emojiFloat {
-    0%,100% { transform: translateY(0) scale(1); }
-    50%     { transform: translateY(-9px) scale(1.07); }
-  }
+  /* ── FOOTER ── */
+  footer { background:rgba(30,58,95,.95);color:rgba(255,255,255,.5);text-align:center;padding:28px 24px;font-size:.82rem;font-weight:700;letter-spacing:.04em;position:relative;z-index:2; }
+  footer strong { color:rgba(255,255,255,.85); }
 
-  /* Badge de matéria */
-  .subject-badge {
-    position: absolute; top: 12px; left: 12px; z-index: 2;
-    background: rgba(255,255,255,0.18);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255,255,255,0.28);
-    color: #fff;
-    border-radius: 8px;
-    font-size: 0.68rem; font-weight: 800;
-    padding: 4px 10px;
-    letter-spacing: 0.08em; text-transform: uppercase;
-  }
+  /* ── LAYOUT SIDEBAR + GAMES ── */
+  .content-wrapper { display:flex;gap:24px;align-items:flex-start; }
+  .games-container { flex:1;min-width:0; }
 
-  /* Tag de nível no canto */
-  .level-tag {
-    position: absolute; bottom: 12px; right: 12px; z-index: 2;
-    background: rgba(0,0,0,0.35);
-    backdrop-filter: blur(6px);
-    color: rgba(255,255,255,0.9);
-    border-radius: 20px;
-    font-size: 0.7rem; font-weight: 700;
-    padding: 3px 10px;
-    display: flex; align-items: center; gap: 4px;
-  }
-
-  .card-body {
-    padding: 14px 16px 13px;
-    display: flex; flex-direction: column; flex: 1;
-  }
-  .card-title {
-    font-size: 0.92rem; font-weight: 900;
-    color: var(--navy); margin-bottom: 6px;
-    letter-spacing: -0.01em;
-  }
-  .card-desc {
-    font-size: 0.82rem; font-weight: 600;
-    color: #94a3b8;
-    line-height: 1.5;
-    flex: 1; margin-bottom: 14px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  /* Rodapé do card */
-  .card-footer {
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 10px;
-  }
-  .card-tag {
-    font-size: 0.72rem; font-weight: 800;
-    color: var(--accent-txt, var(--teal));
-    background: var(--accent-bg, rgba(14,165,233,0.1));
-    border-radius: 20px; padding: 4px 12px;
-    letter-spacing: 0.06em;
-  }
-  .card-btn {
-    display: flex; align-items: center; gap: 6px;
-    background: var(--navy);
-    color: #fff;
-    border: none; border-radius: 10px;
-    padding: 9px 18px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.82rem; font-weight: 800;
-    cursor: pointer;
-    transition: background .2s, transform .18s;
-    letter-spacing: 0.04em;
-    min-height: 44px;
-    white-space: nowrap;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-  }
-  .card-btn:hover { background: var(--teal); transform: scale(1.05); }
-  .card-btn svg { width: 13px; height: 13px; fill: #fff; flex-shrink: 0; }
-
-  /* Empty state */
-  .empty {
-    grid-column: 1/-1;
-    text-align: center; padding: 80px 20px;
-    color: var(--muted);
-  }
-  .empty .empty-icon { font-size: 3.5rem; margin-bottom: 16px; display:block; }
-  .empty h3 { font-size: 1.2rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
-  .empty p  { font-size: 0.9rem; font-weight: 600; }
-
-  /* ── Rodapé ── */
-  footer {
-    background: rgba(30,58,95,0.95);
-    color: rgba(255,255,255,0.5);
-    text-align: center;
-    padding: 28px 24px;
-    font-size: 0.82rem; font-weight: 700;
-    letter-spacing: 0.04em;
-    position: relative; z-index: 2;
-  }
-  footer strong { color: rgba(255,255,255,0.85); }
-
-  /* Layout para explicação lateral */
-  .content-wrapper {
-    display: flex;
-    gap: 24px;
-    align-items: flex-start;
-  }
-  .games-container { flex: 1; min-width: 0; }
-
-  .bncc-info-card {
+  /* ── SIDEBAR ── */
+  .sidebar {
     width: 200px;
     flex-shrink: 0;
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* ── BNCC INFO CARD ── */
+  .bncc-info-card {
+    background:rgba(255,255,255,.82);border-radius:20px;padding:18px;
+    box-shadow:var(--shadow);border-top:5px solid var(--purple);
+    text-align:left;cursor:pointer;
+    transition:border-top-color .22s,box-shadow .22s;
+  }
+  .bncc-info-card h3 { font-family:'Playfair Display',serif;color:var(--navy);margin-bottom:12px;font-size:1.2rem; }
+  .bncc-info-card p { font-size:.85rem;line-height:1.6;color:var(--muted);margin-bottom:15px; }
+  .bncc-tag { display:inline-block;background:rgba(139,92,246,.1);color:var(--purple);padding:4px 10px;border-radius:8px;font-weight:800;font-size:.65rem;text-transform:uppercase;margin-bottom:10px; }
+  .bncc-info-card:hover { border-top-color:#7c3aed;box-shadow:0 8px 32px rgba(139,92,246,.18); }
+  .bncc-saiba-btn { display:inline-flex;align-items:center;gap:6px;background:var(--purple);color:#fff;border:none;border-radius:20px;padding:9px 20px;margin-top:14px;font-family:'Nunito',sans-serif;font-size:.82rem;font-weight:800;cursor:pointer;transition:background .2s,transform .18s;width:100%;justify-content:center; }
+  .bncc-saiba-btn:hover { background:#7c3aed;transform:scale(1.03); }
+
+  /* ── QUIZ PIN CARD ── */
+  .quiz-pin-card {
     background: rgba(255,255,255,0.82);
     border-radius: 20px;
     padding: 18px;
     box-shadow: var(--shadow);
-    border-top: 5px solid var(--purple);
-    position: static;
-    align-self: flex-start;
-    text-align: left;
-    cursor: pointer;
-    transition: border-top-color .22s, box-shadow .22s;
+    border-top: 5px solid var(--amber);
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow .22s;
   }
-  .bncc-info-card h3 { font-family: 'Playfair Display', serif; color: var(--navy); margin-bottom: 12px; font-size: 1.2rem; }
-  .bncc-info-card p { font-size: 0.85rem; line-height: 1.6; color: var(--muted); margin-bottom: 15px; }
-  .bncc-tag { display: inline-block; background: rgba(139, 92, 246, 0.1); color: var(--purple); padding: 4px 10px; border-radius: 8px; font-weight: 800; font-size: 0.65rem; text-transform: uppercase; margin-bottom: 10px; }
-
-  /* ── TABLET LARGO (901–1200px) ─────────────── */
-  @media (max-width: 1200px) {
-    .games-grid { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .quiz-pin-card::before {
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(135deg,rgba(245,158,11,0.05) 0%,transparent 60%);
+    pointer-events:none;
   }
-
-  /* ── TABLET (601–900px) ─────────────────── */
-  @media (max-width: 900px) {
-    /* Hero compacto */
-    .hero { padding: 12px 18px 22px; }
-    h1 { font-size: clamp(1.3rem, 5vw, 1.9rem); }
-    .logo-badge { font-size: 0.64rem; padding: 5px 14px; margin-bottom: 6px; }
-    .stats-row { gap: 8px; }
-    .stat-pill { padding: 6px 12px; gap: 6px; }
-    .stat-pill .icon { font-size: 0.9rem; }
-    .stat-pill .val  { font-size: 0.78rem; }
-    .stat-pill .lbl  { font-size: 0.58rem; }
-    .next-btn { font-size: 0.76rem; padding: 7px 16px; margin-top: 12px; }
-    .wave-sep { height: 20px; }
-
-    /* Layout: sidebar vai para baixo dos cards */
-    .content-wrapper { flex-direction: column-reverse; gap: 16px; }
-    .bncc-info-card {
-      width: 100%;
-      position: static;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 14px 18px;
-      border-top: none;
-      border-left: 5px solid var(--purple);
-      border-radius: 14px;
-    }
-    .bncc-info-card h3 { font-size: 1rem; margin-bottom: 4px; }
-    .bncc-info-card p  { font-size: 0.8rem; margin-bottom: 8px; }
-    .bncc-saiba-btn { margin-top: 0; width: auto; padding: 8px 16px; }
-
-    /* Grid 3 colunas */
-    .main { padding: 0 16px 60px; top: -8px; }
-    .games-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
-    .card-thumb { height: 100px; }
-    .card-thumb .big-emoji { font-size: 2.6rem; }
-    .card-body { padding: 12px 12px 10px; }
-    .card-title { font-size: 0.85rem; }
-    .card-btn { font-size: 0.72rem; padding: 7px 11px; }
-    .games-heading h2 { font-size: 1.2rem; }
+  .quiz-pin-card:hover { box-shadow:0 8px 32px rgba(245,158,11,0.20); }
+  .quiz-pin-title {
+    font-family:'Playfair Display',serif;
+    color:var(--navy);margin-bottom:6px;
+    font-size:1.05rem;font-weight:700;
+    display:flex;align-items:center;gap:6px;
   }
-
-  /* ── CELULAR (≤600px) ───────────────────── */
-  @media (max-width: 600px) {
-    /* Hero muito compacto */
-    .hero { padding: 10px 14px 18px; }
-    h1 { font-size: 1.25rem; line-height: 1.2; }
-    .logo-badge { font-size: 0.6rem; padding: 4px 12px; margin-bottom: 5px; }
-    .stats-row { gap: 6px; }
-    .stat-pill { padding: 5px 10px; gap: 5px; }
-    .stat-pill .icon { font-size: 0.85rem; }
-    .stat-pill .val  { font-size: 0.72rem; }
-    .stat-pill .lbl  { font-size: 0.54rem; }
-    .next-btn { font-size: 0.72rem; padding: 6px 14px; margin-top: 10px; }
-    .wave-sep { height: 14px; }
-
-    /* Main */
-    .main { padding: 0 10px 50px; top: -6px; }
-
-    /* Sidebar: horizontal compacta abaixo dos cards */
-    .content-wrapper { flex-direction: column-reverse; gap: 12px; }
-    .bncc-info-card {
-      width: 100%;
-      position: static;
-      flex-direction: row;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 14px;
-      border-top: none;
-      border-left: 4px solid var(--purple);
-      border-radius: 12px;
-    }
-    .bncc-info-card h3 { font-size: 0.9rem; margin-bottom: 3px; }
-    .bncc-info-card p  { font-size: 0.74rem; line-height: 1.4; margin-bottom: 6px; }
-    .bncc-info-card > div:last-child { display: none; } /* esconde emojis decorativos */
-    .bncc-saiba-btn { width: auto; padding: 7px 14px; font-size: 0.75rem; margin-top: 0; }
-
-    /* Busca */
-    .search-bar { border-radius: 12px; margin-bottom: 18px; }
-    .search-bar input { font-size: 0.88rem; padding: 12px 10px; }
-
-    /* Grid 2 colunas */
-    .games-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .card-thumb { height: 90px; }
-    .card-thumb .big-emoji { font-size: 2.2rem; }
-    .subject-badge { font-size: 0.56rem; padding: 2px 7px; }
-    .level-tag { font-size: 0.56rem; padding: 2px 7px; bottom: 6px; right: 6px; }
-    .card-body { padding: 10px 10px 9px; }
-    .card-title { font-size: 0.82rem; margin-bottom: 4px; }
-    .card-desc {
-      font-size: 0.72rem;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      margin-bottom: 10px;
-    }
-    .card-tag  { font-size: 0.58rem; padding: 3px 8px; }
-    .card-btn  { font-size: 0.68rem; padding: 6px 10px; min-height: 36px; }
-
-    .games-heading { margin-bottom: 14px; }
-    .games-heading h2 { font-size: 1.1rem; }
-    .count-badge { font-size: 0.68rem; }
-
-    footer { padding: 20px 14px; font-size: 0.74rem; }
+  .quiz-pin-card > p { font-size:.82rem;line-height:1.5;color:var(--muted);margin-bottom:13px;font-weight:600; }
+  .quiz-tag {
+    display:inline-block;background:rgba(245,158,11,0.12);color:#b45309;
+    padding:4px 10px;border-radius:8px;font-weight:800;font-size:.65rem;
+    text-transform:uppercase;margin-bottom:10px;
+    border:1px solid rgba(245,158,11,0.25);
   }
-
-  /* ── CELULAR MUITO PEQUENO (≤360px) ──────── */
-  @media (max-width: 360px) {
-    h1 { font-size: 1.1rem; }
-    .games-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-    .card-thumb { height: 80px; }
-    .card-thumb .big-emoji { font-size: 1.9rem; }
-    .stats-row { gap: 5px; }
-    .stat-pill { padding: 4px 8px; }
+  .pin-label-sm {
+    font-size:.68rem;color:var(--muted);letter-spacing:.1em;
+    text-transform:uppercase;margin-bottom:7px;font-weight:700;
+    display:flex;align-items:center;gap:5px;
   }
-  /* Overlay de bloqueio (fundo escuro) */
-  #overlay-aviso {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.85); /* Escurece o fundo */
-    backdrop-filter: blur(8px);     /* Desfoca o que está atrás */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;                  /* Garante que fique acima de tudo */
+  .pin-input-row { display:flex;gap:7px;align-items:stretch; }
+  .pin-input-field {
+    flex:1;background:#f8fafc;border:2px solid var(--border);
+    border-radius:10px;color:var(--navy);font-family:'Nunito',sans-serif;
+    font-size:1.15rem;font-weight:800;letter-spacing:.22em;
+    padding:9px 8px;text-align:center;outline:none;
+    transition:border-color .2s,box-shadow .2s;width:100%;min-width:0;
   }
-
-  /* Card do aviso */
-  .modal-aviso {
-    background: var(--white);
-    padding: 30px;
-    border-radius: 24px;
-    max-width: 90%;
-    width: 400px;
-    text-align: center;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-    border: 3px solid var(--amber);
+  .pin-input-field::placeholder { letter-spacing:.1em;font-size:.76rem;font-weight:600;color:#94a3b8; }
+  .pin-input-field:focus { border-color:var(--amber);box-shadow:0 0 0 3px rgba(245,158,11,0.15);background:#fff; }
+  .pin-input-field.pin-err { border-color:var(--coral);box-shadow:0 0 0 3px rgba(244,63,94,0.1);animation:pinShake .35s ease; }
+  .pin-input-field.pin-ok  { border-color:var(--green);box-shadow:0 0 0 3px rgba(16,185,129,0.15); }
+  @keyframes pinShake {
+    0%,100%{transform:translateX(0)}  20%{transform:translateX(-5px)}
+    40%{transform:translateX(5px)}    60%{transform:translateX(-3px)}
+    80%{transform:translateX(3px)}
   }
-
-  .modal-aviso h2 {
-    color: var(--navy);
-    margin-bottom: 15px;
-    font-family: 'Playfair Display', serif;
+  .pin-enter-btn {
+    background:linear-gradient(135deg,var(--amber),#d97706);
+    border:none;border-radius:10px;color:#fff;
+    font-family:'Nunito',sans-serif;font-size:.74rem;font-weight:800;
+    padding:9px 12px;cursor:pointer;white-space:nowrap;
+    transition:opacity .2s,transform .15s;flex-shrink:0;
+    letter-spacing:.04em;text-shadow:0 1px 2px rgba(0,0,0,.2);
   }
-
-  .modal-aviso p {
-    color: var(--text);
-    font-weight: 600;
-    line-height: 1.6;
-    margin-bottom: 25px;
+  .pin-enter-btn:hover  { opacity:.9; }
+  .pin-enter-btn:active { transform:scale(.96); }
+  .pin-feedback { margin-top:7px;font-size:.72rem;font-weight:700;min-height:16px;transition:opacity .3s; }
+  .pin-feedback.err { color:var(--coral); }
+  .pin-feedback.ok  { color:var(--green); }
+  .quiz-success-overlay {
+    display:none;position:absolute;inset:0;
+    background:rgba(16,185,129,0.12);border-radius:15px;
+    align-items:center;justify-content:center;flex-direction:column;gap:6px;
+    backdrop-filter:blur(3px);z-index:5;
   }
+  .quiz-success-overlay.show { display:flex;animation:fadeInQz .3s ease; }
+  @keyframes fadeInQz { from{opacity:0} to{opacity:1} }
+  .quiz-success-check { font-size:2rem; }
+  .quiz-success-overlay span { font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:800;color:var(--green); }
 
-  .btn-entendi {
-    background: var(--amber);
-    color: var(--navy2);
-    border: none;
-    padding: 12px 30px;
-    border-radius: 30px;
-    font-weight: 800;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: transform 0.2s;
+  /* ── MODAIS ── */
+  #overlay-aviso { display:none !important; }
+  .modal-novidades { background:var(--white) !important;padding:30px;border-radius:24px;max-width:90%;width:450px;text-align:center;border:3px solid var(--teal);box-shadow:0 20px 50px rgba(0,0,0,.5);animation:modalPop .3s ease-out; }
+  @keyframes modalPop { from{transform:scale(.8);opacity:0} to{transform:scale(1);opacity:1} }
+  .novidade-item { background:var(--cream);padding:15px;border-radius:15px;margin-bottom:15px;display:flex;align-items:center;gap:15px;text-align:left;border:1px solid var(--border); }
+  .novidade-emoji { font-size:2rem; }
+  .novidade-texto h4 { color:#1e3a5f !important;margin-bottom:4px;font-weight:800;font-size:1.1rem; }
+  .novidade-texto p { font-size:.9rem;color:#475569 !important;margin:0;font-weight:600;line-height:1.4; }
+  #overlay-novidades { display:flex;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);z-index:10001;align-items:center;justify-content:center; }
+  .btn-fechar-novidade { background:var(--teal);color:white;border:none;padding:12px 40px;border-radius:30px;font-weight:800;cursor:pointer;margin-top:10px; }
+  .modal-aviso { background:var(--white);padding:30px;border-radius:24px;max-width:90%;width:400px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.3);border:3px solid var(--amber); }
+  .modal-aviso h2 { color:var(--navy);margin-bottom:15px;font-family:'Playfair Display',serif; }
+  .modal-aviso p { color:var(--text);font-weight:600;line-height:1.6;margin-bottom:25px; }
+  .btn-entendi { background:var(--amber);color:var(--navy2);border:none;padding:12px 30px;border-radius:30px;font-weight:800;font-size:1rem;cursor:pointer;transition:transform .2s; }
+  .btn-entendi:active { transform:scale(.95); }
+
+  /* ── MODAL BNCC ── */
+  #modal-bncc { display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);z-index:20000;align-items:center;justify-content:center; }
+  #modal-bncc.open { display:flex; }
+  .modal-bncc-box { background:var(--white);border-radius:24px;max-width:540px;width:92%;padding:36px 32px 28px;box-shadow:0 24px 64px rgba(0,0,0,.35);border-top:6px solid var(--purple);position:relative;animation:modalPop .3s ease-out;max-height:90vh;overflow-y:auto; }
+  .modal-bncc-close { position:absolute;top:16px;right:18px;background:var(--border);border:none;border-radius:50%;width:34px;height:34px;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s; }
+  .modal-bncc-close:hover { background:#e2e8f0; }
+  .modal-bncc-box h2 { font-family:'Playfair Display',serif;color:var(--navy);margin-bottom:6px;font-size:1.5rem; }
+  .modal-bncc-box .bncc-tag { margin-bottom:16px; }
+  .modal-bncc-box p { font-size:.9rem;line-height:1.7;color:var(--muted);margin-bottom:14px;font-weight:600; }
+  .modal-bncc-box ul { padding-left:20px;margin-bottom:16px; }
+  .modal-bncc-box ul li { font-size:.88rem;color:var(--muted);font-weight:600;line-height:1.7; }
+  .modal-bncc-box strong { color:var(--navy); }
+  .modal-bncc-link { display:inline-flex;align-items:center;gap:6px;margin-top:8px;color:var(--purple);font-weight:800;font-size:.88rem;text-decoration:none;border-bottom:2px solid rgba(139,92,246,.3);padding-bottom:2px;transition:border-color .2s; }
+  .modal-bncc-link:hover { border-color:var(--purple); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width:1200px) { .games-grid{grid-template-columns:repeat(4,1fr);gap:16px;} }
+  @media (max-width:900px) {
+    .hero{padding:6px 14px 8px;}
+    h1{font-size:clamp(.95rem,4vw,1.3rem);}
+    .logo-badge{font-size:.56rem;padding:3px 10px;}
+    .hero-bottom-row{gap:6px;}
+    .stat-pill{padding:3px 7px;gap:4px;}
+    .stat-pill .icon{font-size:.68rem;} .stat-pill .val{font-size:.64rem;} .stat-pill .lbl{font-size:.5rem;}
+    .next-btn{font-size:.62rem;padding:3px 10px;}
+    .hero-sep{display:none;}
+    .wave-sep{height:20px;}
+    .content-wrapper{flex-direction:column-reverse;gap:16px;}
+    /* Sidebar horizontal em tablet */
+    .sidebar{width:100%;flex-direction:row;}
+    .bncc-info-card,.quiz-pin-card{flex:1;border-top:none;}
+    .bncc-info-card{border-left:5px solid var(--purple);border-radius:14px;display:flex;align-items:center;gap:16px;padding:14px 18px;}
+    .quiz-pin-card{border-left:5px solid var(--amber);border-radius:14px;}
+    .bncc-info-card h3{font-size:1rem;margin-bottom:4px;} .bncc-info-card p{font-size:.8rem;margin-bottom:8px;}
+    .bncc-saiba-btn{margin-top:0;width:auto;padding:8px 16px;}
+    .main{padding:0 16px 60px;top:-8px;}
+    .games-grid{grid-template-columns:repeat(3,1fr);gap:12px;}
+    .card-thumb{height:100px;} .card-thumb .big-emoji{font-size:2.6rem;}
+    .card-body{padding:12px 12px 10px;} .card-title{font-size:.85rem;}
+    .card-btn{font-size:.72rem;padding:7px 11px;} .games-heading h2{font-size:1.2rem;}
   }
-
-  .btn-entendi:active {
-    transform: scale(0.95);
+  @media (max-width:600px) {
+    .hero{padding:5px 10px 7px;}
+    h1{font-size:.9rem;line-height:1.2;}
+    .logo-badge{font-size:.52rem;padding:2px 9px;}
+    .hero-top-row{gap:8px;}
+    .hero-bottom-row{gap:5px;flex-wrap:wrap;}
+    .stats-row{flex-wrap:nowrap;}
+    .stat-pill{padding:3px 6px;gap:3px;}
+    .stat-pill .icon{font-size:.62rem;} .stat-pill .val{font-size:.6rem;} .stat-pill .lbl{font-size:.46rem;}
+    .next-btn{font-size:.58rem;padding:3px 8px;}
+    .wave-sep{height:14px;}
+    .main{padding:0 10px 50px;top:-6px;}
+    .content-wrapper{flex-direction:column-reverse;gap:12px;}
+    /* Sidebar vertical em mobile */
+    .sidebar{width:100%;flex-direction:column;}
+    .bncc-info-card{flex-direction:row;align-items:center;gap:12px;padding:12px 14px;}
+    .bncc-info-card h3{font-size:.9rem;margin-bottom:3px;} .bncc-info-card p{font-size:.74rem;line-height:1.4;margin-bottom:6px;}
+    .quiz-pin-card{border-radius:12px;}
+    .search-bar{border-radius:12px;margin-bottom:18px;} .search-bar input{font-size:.88rem;padding:12px 10px;}
+    .games-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
+    .card-thumb{height:90px;} .card-thumb .big-emoji{font-size:2.2rem;}
+    .subject-badge{font-size:.56rem;padding:2px 7px;} .level-tag{font-size:.56rem;padding:2px 7px;bottom:6px;right:6px;}
+    .card-body{padding:10px 10px 9px;} .card-title{font-size:.82rem;margin-bottom:4px;}
+    .card-desc{font-size:.72rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:10px;}
+    .card-tag{font-size:.58rem;padding:3px 8px;} .card-btn{font-size:.68rem;padding:6px 10px;min-height:36px;}
+    .games-heading{margin-bottom:14px;} .games-heading h2{font-size:1.1rem;} .count-badge{font-size:.68rem;}
+    footer{padding:20px 14px;font-size:.74rem;}
   }
-
-  /* Trava suave dos modais — sem bloquear o scroll da página */
-  body.modal-open {
-    /* overflow: hidden removido — page scroll sempre liberado */
+  @media (max-width:360px) {
+    h1{font-size:1.1rem;} .games-grid{grid-template-columns:repeat(2,1fr);gap:8px;}
+    .card-thumb{height:80px;} .card-thumb .big-emoji{font-size:1.9rem;} .stats-row{gap:5px;} .stat-pill{padding:4px 8px;}
   }
-
-  /* Estilos do Modal de Novidades 
-  #overlay-novidades {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(8px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10001; /* Fica acima do aviso de celular 
-  }
-
-  .modal-novidades {
-    background: var(--white);
-    padding: 30px;
-    border-radius: 24px;
-    max-width: 90%;
-    width: 450px;
-    text-align: center;
-    border: 3px solid var(--teal);
-    animation: modalPop 0.3s ease-out;
-  }
-
-  @keyframes modalPop {
-    from { transform: scale(0.8); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
-
-  .novidade-item {
-    background: var(--cream);
-    padding: 15px;
-    border-radius: 15px;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    text-align: left;
-    border: 1px solid var(--border);
-  }
-
-  .novidade-emoji { font-size: 2rem; }
-  .novidade-texto h4 { color: var(--navy); margin-bottom: 4px; font-weight: 800; }
-  .novidade-texto p { font-size: 0.85rem; color: var(--muted); margin: 0; }
-
-  .btn-fechar-novidade {
-    background: var(--teal);
-    color: white;
-    border: none;
-    padding: 12px 40px;
-    border-radius: 30px;
-    font-weight: 800;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-   */
-/* --- COLOQUE AQUI (Antes do fechamento da tag style) --- */
-/* Esconde APENAS o aviso de celular */
-#overlay-aviso {
-    display: none !important;
-}
-
-/* Garante que o de novidades esteja pronto para aparecer */
-/* Ajuste para legibilidade total */
-.modal-novidades {
-    background: var(--white) !important; /* Força fundo branco */
-    padding: 30px;
-    border-radius: 24px;
-    max-width: 90%;
-    width: 450px;
-    text-align: center;
-    border: 3px solid var(--teal);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5); /* Sombra para destacar */
-    animation: modalPop 0.3s ease-out;
-}
-
-.novidade-texto h4 { 
-    color: #1e3a5f !important; /* Azul marinho forte */
-    margin-bottom: 4px; 
-    font-weight: 800; 
-    font-size: 1.1rem;
-}
-
-.novidade-texto p { 
-    font-size: 0.9rem; 
-    color: #475569 !important; /* Cinza escuro legível */
-    margin: 0; 
-    font-weight: 600;
-    line-height: 1.4;
-}
-
-/* Esconde o aviso de celular que você não quer */
-#overlay-aviso {
-    display: none !important;
-}
-#overlay-novidades {
-    display: flex; /* Muda de 'none' para 'flex' */
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.85);
-    z-index: 10001;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Botão "Saiba mais" no card BNCC */
-.bncc-saiba-btn {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: var(--purple); color: #fff;
-  border: none; border-radius: 20px;
-  padding: 9px 20px; margin-top: 14px;
-  font-family: 'Nunito', sans-serif;
-  font-size: 0.82rem; font-weight: 800;
-  cursor: pointer; transition: background .2s, transform .18s;
-  width: 100%;
-  justify-content: center;
-}
-.bncc-saiba-btn:hover { background: #7c3aed; transform: scale(1.03); }
-.bncc-info-card { cursor: pointer; }
-.bncc-info-card:hover { border-top-color: #7c3aed; box-shadow: 0 8px 32px rgba(139,92,246,0.18); }
-
-/* Modal Pensamento Computacional */
-#modal-bncc {
-  display: none; position: fixed; inset: 0;
-  background: rgba(0,0,0,0.75); backdrop-filter: blur(8px);
-  z-index: 20000; align-items: center; justify-content: center;
-}
-#modal-bncc.open { display: flex; }
-.modal-bncc-box {
-  background: var(--white);
-  border-radius: 24px;
-  max-width: 540px; width: 92%;
-  padding: 36px 32px 28px;
-  box-shadow: 0 24px 64px rgba(0,0,0,0.35);
-  border-top: 6px solid var(--purple);
-  position: relative;
-  animation: modalPop .3s ease-out;
-  max-height: 90vh; overflow-y: auto;
-}
-.modal-bncc-close {
-  position: absolute; top: 16px; right: 18px;
-  background: var(--border); border: none; border-radius: 50%;
-  width: 34px; height: 34px; font-size: 1.1rem;
-  cursor: pointer; display: flex; align-items: center; justify-content: center;
-  transition: background .2s;
-}
-.modal-bncc-close:hover { background: #e2e8f0; }
-.modal-bncc-box h2 { font-family: 'Playfair Display', serif; color: var(--navy); margin-bottom: 6px; font-size: 1.5rem; }
-.modal-bncc-box .bncc-tag { margin-bottom: 16px; }
-.modal-bncc-box p { font-size: 0.9rem; line-height: 1.7; color: var(--muted); margin-bottom: 14px; font-weight: 600; }
-.modal-bncc-box ul { padding-left: 20px; margin-bottom: 16px; }
-.modal-bncc-box ul li { font-size: 0.88rem; color: var(--muted); font-weight: 600; line-height: 1.7; }
-.modal-bncc-box strong { color: var(--navy); }
-.modal-bncc-link {
-  display: inline-flex; align-items: center; gap: 6px;
-  margin-top: 8px; color: var(--purple);
-  font-weight: 800; font-size: 0.88rem;
-  text-decoration: none; border-bottom: 2px solid rgba(139,92,246,0.3);
-  padding-bottom: 2px; transition: border-color .2s;
-}
-.modal-bncc-link:hover { border-color: var(--purple); }
-
 </style>
 <script>
 function tocarBoasVindas() {
@@ -967,314 +441,179 @@ function tocarBoasVindas() {
   audio.play().catch(() => {});
 }
 </script>
-
 </head>
 <body>
 
-<!-- ✅ MATRIX CANVAS — fixo, cobre toda a página -->
 <canvas id="matrix-canvas"></canvas>
 
+<!-- Modal Novidades -->
 <div id="overlay-novidades" style="display:flex;">
   <div class="modal-novidades">
-    <h2 style="font-family: 'Playfair Display', serif; color: var(--navy); margin-bottom: 20px;">🚀 Novos Jogos Chegaram!</h2>
-    
+    <h2 style="font-family:'Playfair Display',serif;color:var(--navy);margin-bottom:20px;">🚀 Novos Jogos Chegaram!</h2>
     <div class="novidade-item">
       <div class="novidade-emoji">🪁</div>
       <div class="novidade-texto">
         <h4>DESAFIO MATEMÁTICO: FESTIVAL DE PIPAS.</h4>
-    
-        <h4>FOLCLORE BRASILEIRO: VOCABULÁRIO & IMAGEM.</h4>
-         
+        <h4>FOLCLORE BRASILEIRO: VOCABULÁRIO &amp; IMAGEM.</h4>
         <h4>MESTRE DA TABUADA [x2,x3,x4,x5,x6,x7,x8,x9,x10].</h4>
-         
         <h4>PACMAN DE PALAVRAS.</h4>
-         
         <h4>SMART CITY: ECO-ROBÔ PRO.</h4>
-         
         <h4>REPARO CRÍTICO - NÚCLEO 3D.</h4>
-         
         <h4>COFRE DE MEMÓRIA: REDE SINÁPTICA.</h4>
-         
         <h4>MESTRE DA GEOMETRIA.</h4>
-         
         <h4>CUBO MÁGICO 3D.</h4>
-         
         <h4>MAZELOGIC AI: PROTOCOLO DE TESTE.</h4>
-        
         <h4>JOGO DE DAMAS</h4>
         <br>
         <p>Estratégia, robótica e matemática gamificada para treinar a atenção.</p>
       </div>
     </div>
-    <!--
-    <div class="novidade-item">
-      <div class="novidade-emoji">🤖</div>
-      <div class="novidade-texto">
-        <h4>MOSTRABOT</h4>
-        <p>Aprenda lógica de programação de um jeito novo.</p>
-      </div>
-    </div>
-    -->
     <button class="btn-fechar-novidade" onclick="fecharNovidades()">Começar a Explorar!</button>
   </div>
 </div>
-  <!-- COLE O CÓDIGO DO VLIBRAS AQUI -->
-  <!--
-  <div vw class="enabled">
-    <div vw-access-button class="active"></div>
-    <div vw-plugin-wrapper>
-      <div class="vw-plugin-top-wrapper"></div>
-    </div>
-  </div>
-  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-  <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>  -->
-  <div id="overlay-aviso">
-  <div class="modal-aviso">
 
-    <h2>📱 Atenção!</h2>
-    <p>
-      Para uma melhor experiência de aprendizagem, informamos que estas aplicações foram otimizadas para ambientes de <strong>Celulares e Tablets</strong>.
-    </p>
-
-    <hr style="margin:20px 0; border:none; border-top:1px solid #e2e8f0;">
-
-    <h2 style="color:#0ea5e9;">🚀 Em breve...</h2>
-    <p>
-      Curso de <strong>Programação para Iniciantes</strong> com fases progressivas:<br><br>
-      🟢 Scratch → 🔵 Python/JavaScript → 🟣 Projetos → 🟡 Projeto Final<br><br>
-      👨‍💻 Para crianças, jovens e adultos.
-    </p>
-
-    <button class="btn-entendi" onclick="fecharAviso()">
-      Entendi, vamos explorar!
-    </button>
-
-  </div>
-</div>
-  <!-- O resto do seu código continua aqui (overlay-aviso, etc) -->
-  <!-- overlay -->
-<!--
+<!-- Modal Aviso (oculto) -->
 <div id="overlay-aviso">
   <div class="modal-aviso">
     <h2>📱 Atenção!</h2>
-    <p>
-      Para uma melhor experiência de aprendizagem, informamos que estas aplicações foram otimizadas para ambientes de <strong>Celulares e Tablets</strong>.
-    </p>
-    <button class="btn-entendi" onclick="fecharAviso()">Entendi, vamos jogar!</button>
+    <p>Para uma melhor experiência de aprendizagem, informamos que estas aplicações foram otimizadas para ambientes de <strong>Celulares e Tablets</strong>.</p>
+    <button class="btn-entendi" onclick="fecharAviso()">Entendi, vamos explorar!</button>
   </div>
-</div> 
-  -->
+</div>
 
- <div id="overlay-novidades" style="display:none;">
-  <div class="modal-novidades">
-    <h2 style="font-family: 'Playfair Display', serif; color: var(--navy); margin-bottom: 20px;">🚀 Novos Jogos Chegaram!</h2>
-    
-    <div class="novidade-item">
-      <div class="novidade-emoji">🤖 💻 👨‍💻</div>
-      <div class="novidade-texto">
-        <h4>DESAFIO MATEMÁTICO: FESTIVAL DE PIPAS.</h4>
-        <p>Estratégia e robótica gamificada para treinar a atenção.</p>
-      </div>
-    </div>
-    <button class="btn-fechar-novidade" onclick="fecharNovidades()">Começar a Explorar!</button>
-  </div>
-</div>
-    <!--
-    <div class="novidade-item">
-      <div class="novidade-emoji">🐍</div>
-      <div class="novidade-texto">
-        <h4>Snake Matemática</h4>
-        <p>Agora disponível para jogar <strong>OFF-LINE</strong>!</p>
-      </div>
-    </div>
-   
-    <button class="btn-fechar-novidade" onclick="fecharNovidades()">Começar a Explorar!</button>
-  </div>
-</div>
-<!-- ── HERO ─────────────────────────────────────────────────── -->
+<!-- ── HERO ── -->
 <header class="hero">
   <div class="hero-fog"></div>
-  <!--
-  <div class="hero-dots"></div>
-
-  <!-- Ícones flutuantes decorativos 
-  <div class="float-items">
-    <div class="fi" style="left:4%;top:18%;--d:7s;--dl:0s">📚</div>
-    <div class="fi" style="left:12%;top:62%;--d:5s;--dl:1s">✏️</div>
-    <div class="fi" style="left:88%;top:14%;--d:6s;--dl:.5s">🔭</div>
-    <div class="fi" style="left:82%;top:65%;--d:8s;--dl:2s">🧪</div>
-    <div class="fi" style="left:50%;top:8%;--d:5.5s;--dl:1.5s">⭐</div>
-    <div class="fi" style="left:70%;top:40%;--d:9s;--dl:.3s">🧩</div>
-    <div class="fi" style="left:22%;top:40%;--d:6.5s;--dl:2.5s">🎯</div>
-  </div>  -->
-
   <div class="hero-inner">
-    <div class="logo-badge"><span>🎓</span> EDUC Plataforma de Aprendizagem</div>
 
-    <h1>Aprender nunca foi tão divertido!</h1>
-    <!--
-    <p class="hero-sub">
-      Explore os jogos educacionais de todas as disciplinas.
-    </p>
-     -->
-    <div class="stats-row">
-      <div class="stat-pill">
-        <span class="icon">🎮</span>
-        <div>
-          <div class="val" id="total-count">11</div>
-          <div class="lbl">Jogos disponíveis</div>
+    <!-- Linha 1: badge + título numa faixa só -->
+    <div class="hero-top-row">
+      <div class="logo-badge"><span>🎓</span> EDUC Plataforma de Aprendizagem</div>
+      <h1>Aprender nunca foi tão divertido!</h1>
+    </div>
+
+    <!-- Linha 2: pills + botão Educ II + redes sociais, tudo numa faixa -->
+    <div class="hero-bottom-row">
+      <!-- Pills -->
+      <div class="stats-row">
+        <div class="stat-pill">
+          <span class="icon">🎮</span>
+          <div><div class="val" id="total-count">11</div><div class="lbl">Jogos disponíveis</div></div>
+        </div>
+        <div class="stat-pill">
+          <span class="icon">📐</span>
+          <div><div class="val">4</div><div class="lbl">Disciplinas</div></div>
+        </div>
+        <div class="stat-pill">
+          <span class="icon">🆓</span>
+          <div><div class="val">100%</div><div class="lbl">Gratuito</div></div>
         </div>
       </div>
-      <div class="stat-pill">
-        <span class="icon">📐</span>
-        <div>
-          <div class="val">4</div>
-          <div class="lbl">Disciplinas</div>
-        </div>
-      </div>
-      <div class="stat-pill">
-        <span class="icon">🆓</span>
-        <div>
-          <div class="val">100%</div>
-          <div class="lbl">Gratuito</div>
-        </div>
+
+      <!-- Separador visual -->
+      <div class="hero-sep"></div>
+
+      <!-- Botão Educ Games II -->
+      <a class="next-btn" href="https://alvesdealmeida.github.io/educMenu2/" target="_self" rel="noopener">
+        🎓 Educ II <span>→</span>
+      </a>
+
+      <!-- Redes sociais (só ícones, sem texto, para economizar espaço) -->
+      <div class="social-bar">
+        <a class="social-btn fb" href="https://facebook.com/SEU_PERFIL" target="_blank" rel="noopener" title="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.885v2.27h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+        </a>
+        <a class="social-btn ig" href="https://instagram.com/SEU_PERFIL" target="_blank" rel="noopener" title="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        </a>
+        <a class="social-btn wa" href="https://wa.me/55SEUNUMERO" target="_blank" rel="noopener" title="WhatsApp">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </a>
       </div>
     </div>
 
-    <!-- Botão Ver Educ Games II -->
-    <div style="display:flex;justify-content:center;margin-top:16px;">
-      <a class="next-btn"
-         href="https://alvesdealmeida.github.io/educMenu2/"
-         target="_self" rel="noopener">
-        🎓 Ver Educ Games II &nbsp;<span>→</span>
-      </a>
-    </div>
-     <div class="social-bar">
-
-      <!-- FACEBOOK -->
-      <a class="social-btn fb"
-         href="https://facebook.com/SEU_PERFIL"
-         target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24">
-          <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1
-          4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025
-          1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513
-          c-1.491 0-1.956.93-1.956 1.885v2.27h3.328l-.532 3.49h-2.796V24
-          C19.612 23.094 24 18.1 24 12.073z"/>
-        </svg>
-        Facebook
-      </a>
-
-      <!-- INSTAGRAM -->
-      <a class="social-btn ig"
-         href="https://instagram.com/SEU_PERFIL"
-         target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771
-          1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012
-          3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058
-          -1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771
-          -1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013
-          -3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057
-          1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272
-          .273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072
-          4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24
-          c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98
-          .059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947
-          -.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0
-          5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16
-          a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881
-          1.44 1.44 0 000-2.881z"/>
-        </svg>
-        Instagram
-      </a>
-
-      <!-- WHATSAPP -->
-      <a class="social-btn wa"
-         href="https://wa.me/55SEUNUMERO"
-         target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273
-          -.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199
-          -.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788
-          -1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133
-          .298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371
-          -.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5
-          -.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372
-          -.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213
-          3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694
-          .625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413
-          .248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m
-          -5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741
-          .982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45
-          4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825
-          9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413
-          -18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892
-          c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882
-          11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893
-          a11.821 11.821 0 00-3.48-8.413z"/>
-        </svg>
-        WhatsApp
-      </a>
-
-    </div>
   </div>
 </header>
 
 <div class="wave-sep"></div>
 
-<!-- ── CONTEÚDO PRINCIPAL ────────────────────────────────────── -->
+<!-- ── CONTEÚDO PRINCIPAL ── -->
 <main class="main">
-
-  <!-- Busca -->
   <div class="search-bar">
     <span class="si">🔍</span>
-    <input id="searchInput" type="text"
-      placeholder="Buscar jogo por nome ou descrição..."
-      oninput="filterGames()" autocomplete="off">
+    <input id="searchInput" type="text" placeholder="Buscar jogo por nome ou descrição..." oninput="filterGames()" autocomplete="off">
   </div>
-
-  <!-- Tabs com scroll horizontal -->
   <p class="section-label">Filtrar por disciplina</p>
   <div class="tabs-wrap">
     <div class="tabs" id="tabs"></div>
   </div>
-  <div class="content-wrapper"> 
-    
-    <aside class="bncc-info-card" onclick="abrirModalBNCC()" title="Clique para saber mais">
-      <span class="bncc-tag">BNCC & Tecnologia</span>
-      <h3>Pensamento Computacional</h3>
-      <p>
-        Nossos jogos integram <strong>Robótica e Programação</strong> para estimular a lógica e a resolução de problemas, competências essenciais previstas na <strong>BNCC</strong>.
-      </p>
-      <button class="bncc-saiba-btn">📖 Saiba mais →</button>
-      <div style="font-size: 1.4rem; display: flex; gap: 8px; justify-content: center; opacity: 0.8; margin-top:12px;">
-        🧩 🤖 💻 🔢
+
+  <div class="content-wrapper">
+
+    <!-- ══ SIDEBAR (BNCC + QUIZ PIN) ══ -->
+    <div class="sidebar">
+
+      <!-- Card Pensamento Computacional -->
+      <aside class="bncc-info-card" onclick="abrirModalBNCC()" title="Clique para saber mais">
+        <span class="bncc-tag">BNCC &amp; Tecnologia</span>
+        <h3>Pensamento Computacional</h3>
+        <p>Nossos jogos integram <strong>Robótica e Programação</strong> para estimular a lógica e a resolução de problemas, competências essenciais previstas na <strong>BNCC</strong>.</p>
+        <button class="bncc-saiba-btn">📖 Saiba mais →</button>
+        <div style="font-size:1.4rem;display:flex;gap:8px;justify-content:center;opacity:.8;margin-top:12px;">🧩 🤖 💻 🔢</div>
+      </aside>
+
+      <!-- ── QUIZ PIN CARD ── -->
+      <div class="quiz-pin-card" id="quiz-pin-card">
+        <div class="quiz-success-overlay" id="quiz-success-overlay">
+          <div class="quiz-success-check">✅</div>
+          <span>Acessando Quiz…</span>
+        </div>
+        <span class="quiz-tag">🏆 Quiz da Turma</span>
+        <div class="quiz-pin-title">🔒 Acesso por PIN</div>
+        <p>Insira o PIN liberado pelo professor para participar do desafio exclusivo.</p>
+        <div class="pin-label-sm">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          PIN de acesso
+        </div>
+        <div class="pin-input-row">
+          <input
+            type="text"
+            id="quiz-pin-input"
+            class="pin-input-field"
+            maxlength="6"
+            placeholder="••••••"
+            inputmode="numeric"
+            autocomplete="off"
+            oninput="this.value=this.value.replace(/\D/g,'')"
+            onkeydown="if(event.key==='Enter') validarPinQuiz()"
+          >
+          <button class="pin-enter-btn" onclick="validarPinQuiz()">▶ IR</button>
+        </div>
+        <div class="pin-feedback" id="quiz-pin-feedback"></div>
       </div>
-    </aside>
+      <!-- ── FIM QUIZ PIN CARD ── -->
 
-<div class="games-container">
-  <!-- Grid -->
-   <div class="games-heading">
-    <h2>Jogos Educacionais</h2>
-    <span class="count-badge" id="count-label"></span>
-   </div>
+    </div>
+    <!-- ══ FIM SIDEBAR ══ -->
 
-   <div class="games-grid" id="gamesGrid"></div>
- </div>
-  
-</div>
+    <div class="games-container">
+      <div class="games-heading">
+        <h2>Jogos Educacionais</h2>
+        <span class="count-badge" id="count-label"></span>
+      </div>
+      <div class="games-grid" id="gamesGrid"></div>
+    </div>
+
+  </div>
 </main>
 
-<!-- ── MODAL PENSAMENTO COMPUTACIONAL ─────────────────────── -->
+<!-- ── MODAL BNCC ── -->
 <div id="modal-bncc" onclick="if(event.target===this)fecharModalBNCC()">
   <div class="modal-bncc-box">
     <button class="modal-bncc-close" onclick="fecharModalBNCC()">✕</button>
-    <span class="bncc-tag">BNCC & Tecnologia</span>
+    <span class="bncc-tag">BNCC &amp; Tecnologia</span>
     <h2>🧠 Pensamento Computacional</h2>
-    <p>
-      O <strong>Pensamento Computacional</strong> é uma das competências digitais centrais da <strong>Base Nacional Comum Curricular (BNCC)</strong>. Ele envolve a capacidade de resolver problemas de forma estruturada, usando princípios da lógica computacional.
-    </p>
+    <p>O <strong>Pensamento Computacional</strong> é uma das competências digitais centrais da <strong>Base Nacional Comum Curricular (BNCC)</strong>. Ele envolve a capacidade de resolver problemas de forma estruturada, usando princípios da lógica computacional.</p>
     <p><strong>Os 4 pilares do Pensamento Computacional:</strong></p>
     <ul>
       <li>🔍 <strong>Decomposição</strong> – dividir um problema grande em partes menores</li>
@@ -1282,468 +621,116 @@ function tocarBoasVindas() {
       <li>🧩 <strong>Abstração</strong> – focar no essencial, ignorando detalhes irrelevantes</li>
       <li>📋 <strong>Algoritmos</strong> – criar sequências de passos para resolver problemas</li>
     </ul>
-    <p>
-      Nossos jogos integram <strong>Robótica e Programação</strong> para estimular essas competências de forma lúdica. Através da gamificação, o aluno desenvolve a abstração e o raciocínio algorítmico sem perceber que está aprendendo!
-    </p>
-    <a href="http://basenacionalcomum.mec.gov.br/" target="_blank" class="modal-bncc-link">
-      🔗 Consultar Base Nacional (MEC)
-    </a>
+    <p>Nossos jogos integram <strong>Robótica e Programação</strong> para estimular essas competências de forma lúdica.</p>
+    <a href="http://basenacionalcomum.mec.gov.br/" target="_blank" class="modal-bncc-link">🔗 Consultar Base Nacional (MEC)</a>
   </div>
 </div>
 
-<!-- ── RODAPÉ ─────────────────────────────────────────────────── -->
+<!-- ── FOOTER ── -->
 <footer>
   Desenvolvido com 💙 para a <strong>educação</strong> &nbsp;·&nbsp;
   Todos os jogos são gratuitos e de uso educacional.
   Desenvolvido pelo <strong>Professor Sebastião Alves de Almeida.</strong>
   <br><br>
-  <a href="http://lattes.cnpq.br/9094218444915879" target="_blank" rel="noopener" 
-     style="color: var(--teal); text-decoration: none; font-size: 0.9rem; border: 1px solid var(--teal); padding: 5px 15px; border-radius: 20px; display: inline-block; margin-top: 10px; transition: all 0.3s;">
+  <a href="http://lattes.cnpq.br/9094218444915879" target="_blank" rel="noopener"
+     style="color:var(--teal);text-decoration:none;font-size:.9rem;border:1px solid var(--teal);padding:5px 15px;border-radius:20px;display:inline-block;margin-top:10px;">
      📄 Visualizar Currículo Lattes
   </a>
   <a href="https://alvesdealmeida.github.io/politicaTemo/"
-     style="color:var(--teal);text-decoration:none;font-size:0.9rem;border:1px solid var(--teal);padding:5px 15px;border-radius:20px;display:inline-block;margin-top:10px;margin-left:10px;">
+     style="color:var(--teal);text-decoration:none;font-size:.9rem;border:1px solid var(--teal);padding:5px 15px;border-radius:20px;display:inline-block;margin-top:10px;margin-left:10px;">
      🔒 Política &amp; Termos
   </a>
-  <div style="margin-top: 16px;">
-    <!--
-    <img
-      src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Falvesdealmeida.github.io%2FeducMenu1%2F&count_bg=%232980B9&title_bg=%23555555&title=Acessos+Menu+1&edge_flat=false"
-      alt="Contador de Visitas"
-      style="height: 22px; width: auto;">
-    -->
-    <div align=center>
-      <a href='https://contador.s12.com.br'><img src='https://contador.s12.com.br/img-xC1zb67b8ZYDwCY0-7.gif' border='0' alt='contador grátis'>
-      </a>
+  <div style="margin-top:16px;">
+    <div align="center">
+      <a href='https://contador.s12.com.br'><img src='https://contador.s12.com.br/img-xC1zb67b8ZYDwCY0-7.gif' border='0' alt='contador grátis'></a>
       <script type='text/javascript' src='https://contador.s12.com.br/ad.js?id=xC1zb67b8ZYDwCY0'></script>
     </div>
   </div>
 </footer>
 
+<!-- Modal Presente -->
+<div id="overlay-presente" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);align-items:center;justify-content:center;z-index:10000;">
+  <div class="modal-aviso" style="border:3px solid #10b981;">
+    <h2 style="color:#1e3a5f;">🎁 Presente da Plataforma!</h2>
+    <p style="color:#334155;font-weight:600;">As aplicações <strong>Pixel Educ Pro</strong>, <strong>Astro Crew</strong> e <strong>Snake Matemática</strong> agora podem ser executadas <strong>OFF-LINE</strong> como presente para você!</p>
+    <button class="btn-entendi" style="background:#10b981;color:white;" onclick="fecharPresente()">Que demais, obrigado!</button>
+  </div>
+</div>
+
+<!-- VLibras -->
+<div vw class="enabled">
+  <div vw-access-button class="active"></div>
+  <div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div>
+</div>
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
+
 <script>
-/* --- COLOQUE DENTRO DA TAG <SCRIPT> NO FINAL DO ARQUIVO --- */
-function fecharNovidades() {
-  document.getElementById('overlay-novidades').style.display = 'none';
-  document.body.classList.remove('modal-open');
-}
-
-function abrirModalBNCC() {
-  document.getElementById('modal-bncc').classList.add('open');
-}
-function fecharModalBNCC() {
-  document.getElementById('modal-bncc').classList.remove('open');
-}
-
-// Garante que o corpo do site comece travado se o pop-up estiver aberta
-/*
-window.onload = function() {
-  document.body.classList.add('modal-open');
-};
-*/
-/* --------------------------------------------------------- */
 // ── Paleta por disciplina ─────────────────────────────────────
 const SUBJECT_STYLES = {
-  "Matemática": {
-    thumbGrad: "linear-gradient(135deg,#064e3b,#10b981)",
-    tagTxt: "#059669", tagBg: "rgba(16,185,129,0.12)",
-    btn: "#059669"
-  },
-  "Lógica": {
-    thumbGrad: "linear-gradient(135deg,#3b0764,#8b5cf6)",
-    tagTxt: "#7c3aed", tagBg: "rgba(139,92,246,0.12)",
-    btn: "#7c3aed"
-  },
-  "Português": {
-    thumbGrad: "linear-gradient(135deg,#7c2d12,#f97316)",
-    tagTxt: "#ea580c", tagBg: "rgba(249,115,22,0.12)",
-    btn: "#ea580c"
-  },
-  "Educativo": {
-    thumbGrad: "linear-gradient(135deg,#0c4a6e,#0ea5e9)",
-    tagTxt: "#0284c7", tagBg: "rgba(14,165,233,0.12)",
-    btn: "#0284c7"
-  },
-   "Robótica": {
-    thumbGrad: "linear-gradient(135deg,#3b0764,#8b5cf6)",
-    tagTxt: "#7c3aed", tagBg: "rgba(139,92,246,0.12)",
-    btn: "#7c3aed"
-  },
-   "Programação": {
-    thumbGrad: "linear-gradient(135deg,#3b0764,#8b5cf6)",
-    tagTxt: "#7c3aed", tagBg: "rgba(139,92,246,0.12)",
-    btn: "#7c3aed"
-  },
-  "Programação-Scratch": {
-    thumbGrad: "linear-gradient(135deg,#3b0764,#8b5cf6)",
-    tagTxt: "#7c3aed", tagBg: "rgba(139,92,246,0.12)",
-    btn: "#7c3aed"
-  },
+  "Matemática":         { thumbGrad:"linear-gradient(135deg,#064e3b,#10b981)", tagTxt:"#059669", tagBg:"rgba(16,185,129,.12)" },
+  "Lógica":             { thumbGrad:"linear-gradient(135deg,#3b0764,#8b5cf6)", tagTxt:"#7c3aed", tagBg:"rgba(139,92,246,.12)" },
+  "Português":          { thumbGrad:"linear-gradient(135deg,#7c2d12,#f97316)", tagTxt:"#ea580c", tagBg:"rgba(249,115,22,.12)" },
+  "Educativo":          { thumbGrad:"linear-gradient(135deg,#0c4a6e,#0ea5e9)", tagTxt:"#0284c7", tagBg:"rgba(14,165,233,.12)" },
+  "Robótica":           { thumbGrad:"linear-gradient(135deg,#3b0764,#8b5cf6)", tagTxt:"#7c3aed", tagBg:"rgba(139,92,246,.12)" },
+  "Programação":        { thumbGrad:"linear-gradient(135deg,#3b0764,#8b5cf6)", tagTxt:"#7c3aed", tagBg:"rgba(139,92,246,.12)" },
+  "Programação-Scratch":{ thumbGrad:"linear-gradient(135deg,#3b0764,#8b5cf6)", tagTxt:"#7c3aed", tagBg:"rgba(139,92,246,.12)" },
+  "Matemática ":        { thumbGrad:"linear-gradient(135deg,#064e3b,#10b981)", tagTxt:"#059669", tagBg:"rgba(16,185,129,.12)" },
 };
 
-// ── Dados dos jogos ───────────────────────────────────────────
 const games = [
-  /*
-  {
-   title: "🚀 Em breve: Curso de Programação",
-   desc: "Aprenda do zero com Scratch, Python, Java Script e projetos práticos. Para crianças, jovens e adultos.",
-   emoji: "💻🚀",
-   category: "Programação",
-   badge: "EM BREVE",
-   url: "#",
-   accent: "#f59e0b",
- },
- */
-  {
-   title: "MENU - JOGOS - SCRATCH",
-   desc: "SUB-MENU PARA JOGOS PROGRAMADOS NO SCRATCH COM HTML,CSS E JS.",
-   emoji: "💻💻💻",
-   category: "Programação-Scratch",
-   badge: "SCRATCH+HTML+CSS+JS",
-   url: "https://alvesdealmeida.github.io/subMenuScratch/",
-   accent: "#4CAF50",
- },
-  
-   {
-   title: "🧠💻MathCode Quest v3",
-   desc: "Resolva puzzles de Matemática e Lógica de Programação num terminal estilo Matrix. Combos, Boss Rounds, conquistas e ranking!",
-   emoji: "💻💻💻",
-   category: "Matemática ",
-   badge: "HACKER ACADEMY - PROGRAMAÇÃO, LÓGICA",
-   url: "https://alvesdealmeida.github.io/mathCodeQuest/",
-   accent: "#00ff41",
- },
- 
-  {
-    title: "Damas 3D",
-    desc: "Jogue damas contra o computador nesta versão 3D com perspectiva do clássico jogo de tabuleiro. Escolha jogar com as peças brancas ou pretas e tente superar a IA.",
-    emoji: "♟️",
-    category: "Lógica",
-    badge: "ESTRAGÉGIA",
-    url: "https://alvesdealmeida.github.io/damaDama/",
-    accent: "#c8942a",
-  },
-  
-   {
-    title: "Desafio Matemático: Festival de Pipas",
-    desc: "Domine os céus manobrando sua pipa e vencendo duelos de lógica e matemática para se tornar o campeão do festival!",
-    emoji: "🪁🎓",
-    category: "Matemática",
-    badge: "BNCC",
-    url: "https://alvesdealmeida.github.io/pipasMatematica/",
-    accent: "#00ffff",
-  },
-  /*
-  {
-    title: "Folclore Brasileiro - Vocabulário & Imagem",
-    desc: "Um jogo educativo de associação para explorar a cultura brasileira. Aprenda 24 palavras essenciais divididas em personagens, objetos, festas e ambientes através de 6 rodadas interativas.",
-    emoji: "🌿",
-    category: "Português",
-    badge: "Folclore",
-    url: "https://alvesdealmeida.github.io/vocabularioFolcloreBR/",
-    accent: "#E8A020",
-  },
-  */
-   {
-    title: "Mestre da Tabuada",
-    desc: "Domine as operações matemáticas de forma interativa! Arraste os resultados para as expressões correspondentes e visualize as quantidades através de grupos de pontos.",
-    emoji: "🧮",
-    category: "Matemática",
-    badge: "Tabuada",
-    url: "https://alvesdealmeida.github.io/tabuadaMultiplicacao/",
-    accent: "#f39c12",
-  },
-  {
-    title: "Pacman de Palavras",
-    desc: "Jogo educacional de alfabetização em português: mova o Pacman e devore os fantasmas com letras na ordem certa para escrever cada palavra!",
-    emoji: "🟡",
-    category: "Educativo",
-    badge: "Jogos",
-    url: "https://alvesdealmeida.github.io/pacmanPortugues/",
-    accent: "#FFD700",
-  },
-   {
-    title: "Smart City: Eco-Robô Pro",
-    desc: "Desafio interdisciplinar de matemática e português em uma cidade futurista.",
-    emoji: "🤖",
-    category: "Educativo",
-    badge: "V2.0",
-    url: "https://alvesdealmeida.github.io/smartCity/",
-    accent: "#2ecc71",
-  },
-
-  {
-    title: "Reparo Crítico - Núcleo 3D",
-    desc: "jogo (Matrix 3D) apresenta uma narrativa de invasão por vírus onde o jogador deve depurar dados escolares para estabilizar um núcleo de energia.",
-    emoji: "☢️",
-    category: "Educativo",
-    badge: "Alta Voltagem",
-    url: "https://alvesdealmeida.github.io/nucleo3D/",
-    accent: "#00f2ff",
-  },
-   {
-    title: "Cofre da Memória: Rede Sináptica",
-    desc: "Desvende as sílabas e abra o cofre neural para reconstruir as conexões do seu cérebro neste desafio 3D.",
-    emoji: "🧠",
-    category: "Educativo",
-    badge: "Desafio 3D",
-    url: "https://alvesdealmeida.github.io/cofredaMemoria/",
-    accent: "#00d4ff",
-  },
-   {
-    title: "Pixel Educ Pro --- [ON e OFF LINE]",
-    desc: "Desafie sua lógica e percepção espacial criando desenhos em pixel art seguindo objetivos específicos.",
-    emoji: "✏️",
-    category: "Educativo",
-    badge: "OFFLINE",
-    url: "https://alvesdealmeida.github.io/pixelEduc/",
-    accent: "#7c3aed",
-  },
-   {
-    title: "Super Missão Brasil",
-    desc: "Plataforma educativa estilo Mario: pule em inimigos, bata nos blocos ❓ e responda perguntas sobre o Brasil para vencer!",
-    emoji: "🍄👲🏻🏰🐢⭐",
-    category: "Educativo",
-    badge: "Jogo",
-    url: "https://alvesdealmeida.github.io/missaoBrasil/",
-    accent: "#009c3b",
-  },
-   {
-    title: "Robo Code Kids",
-    desc: "Joguinho que te ensina a programar",
-    emoji: "💻 👨‍💻",
-    category: "Programação",
-    badge: "PROGRAMAÇÃO",
-    url: "https://alvesdealmeida.github.io/robocodeKids/",
-    accent: "#00E5FF",
-  },
-  /*
-   {
-    title: "Astro Crew - programação - **** VERSÃO BETA - ON OFF LINE****",
-    desc: "Programe um robô espacial e aprenda lógica de programação em 10 missões pela galáxia.",
-    emoji: "🤖 💭",
-    category: "Programação",
-    badge: "PROGRAMAÇÃO",
-    url: "https://alvesdealmeida.github.io/jogoOffLine/",
-    accent: "#00E5FF",
-  },
-  */
-  {
-    title: "Spider Match Matemátaica",
-    desc: "VCapture números inteiros na teia para resolver somas antes das outras aranhas.",
-    emoji: "🕷️",
-    category: "Matemática",
-    badge: "NÚMEROS INTEIROS",
-    url: "https://alvesdealmeida.github.io/spiderMatematica/",
-    accent: "#ef4444",
-  },
-  {
-    title: "Copa Matemátaica",
-    desc: "Vença desafios de cálculo para marcar gols e conquistar o troféu no estádio.",
-    emoji: "🏆",
-    category: "Matemática",
-    badge: "OPERAÇÕES",
-    url: "https://alvesdealmeida.github.io/copaMatematica/",
-    accent: "#10b981",
-  },
-  {
-    title: "MathGame",
-    desc: "Pratique adição e subtração de forma divertida e interativa!",
-    emoji: "➕",
-    category: "Matemática",
-    badge: "ADIÇÃO",
-    url: "https://alvesdealmeida.github.io/mathGame/",
-    accent: "#10b981",
-  },
-  {
-    title: "ComDecom",
-    desc: "Aprenda decomposição de números de forma lúdica e visual.",
-    emoji: "🔢",
-    category: "Matemática",
-    badge: "DECOMPOSIÇÃO",
-    url: "https://alvesdealmeida.github.io/comDEcom/",
-    accent: "#10b981",
-  },
-  {
-    title: "JogoMD",
-    desc: "Explore o material dourado para entender valor posicional.",
-    emoji: "🟡",
-    category: "Matemática",
-    badge: "MAT. DOURADO",
-    url: "https://alvesdealmeida.github.io/joguinhoMD/",
-    accent: "#10b981",
-  },
-  {
-    title: "Torre de Hanói",
-    desc: "Resolva o clássico puzzle de lógica movendo os discos.",
-    emoji: "🗼",
-    category: "Lógica",
-    badge: "PUZZLE",
-    url: "https://alvesdealmeida.github.io/torreHanoi/",
-    accent: "#8b5cf6",
-  },
-  {
-    title: "Joguinho de Xadrez - [[**EM BREVE ON LINE PARA 2 JOGADORES**]]",
-    desc: "Aprenda e pratique xadrez com peças e regras completas.",
-    emoji: "♟️",
-    category: "Lógica",
-    badge: "XADREZ",
-    url: "https://alvesdealmeida.github.io/jogoXadrez/",
-    accent: "#8b5cf6",
-  },
-  {
-    title: "Sudoku Educacional",
-    desc: "Desenvolva lógica, foco e raciocínio dedutivo com 3 níveis.",
-    emoji: "🔢",
-    category: "Lógica",
-    badge: "3 NÍVEIS",
-    url: "https://alvesdealmeida.github.io/sudokuEducacional/",
-    accent: "#8b5cf6",
-  },
-  {
-    title: "NúmeroQuest",
-    desc: "Reta numérica e sequências: descubra o número oculto e complete os padrões!",
-    emoji: "📏",
-    category: "Matemática",
-    badge: "SEQUÊNCIAS",
-    url: "https://alvesdealmeida.github.io/numeroQuest/",
-    accent: "#10b981",
-  },
-  {
-    title: "Papão Come Palavras",
-    desc: "Escreva um substantivo próprio ou comum — se acertar, o Papão devora a palavra!",
-    emoji: "👾",
-    category: "Português",
-    badge: "SUBSTANTIVOS",
-    url: "https://alvesdealmeida.github.io/subProprioComum/",
-    accent: "#f97316",
-  },
-  {
-    title: "Batalha Matemática",
-    desc: "Responda questões de matemática para disparar nos navios inimigos!",
-    emoji: "⚓",
-    category: "Matemática",
-    badge: "BATALHA",
-    url: "https://alvesdealmeida.github.io/batalhaMatematica/",
-    accent: "#10b981",
-  },
-  {
-    title: "Snake Matemática - **LIBERADA PARA OFF LINE**",
-    desc: "Alimente a cobra direcionando ela para a resposta certa.",
-    emoji: "🐍",
-    category: "Matemática",
-    badge: "CÁLCULO",
-    url: "https://alvesdealmeida.github.io/cobraMatOff/",
-    accent: "#10b981",
-  },
-  {
-    title: "Caça-Palavras",
-    desc: "Encontre palavras de Matemática, Português, Ciências, Geografia e História escondidas na grade!",
-    emoji: "🔤",
-    category: "Educativo",
-    badge: "MULTIDISCIPLINAR",
-    url: "https://alvesdealmeida.github.io/ca-aPalavras/",
-    accent: "#0ea5e9",
-  },
-  {
-    title: "Robô Run",
-    desc: "Programe o robô para pegar os objetos e pular os obstáculos.",
-    emoji: "💾🤖🎮",
-    category: "Lógica",
-    badge: "PROGRAMAÇÃO & LÓGICA",
-    url: "https://alvesdealmeida.github.io/roboRun/",
-    accent: "#0ea5e9",
-  },
-  /*
-  {
-    title: "Ik Robô",
-    desc: "Robótica gamificada em nível de estratégia e atenção.",
-    emoji: "🤖🤖🤖",
-    category: "Robótica",
-    badge: "ROBÓTICA GAMIFICDA",
-    url: "https://alvesdealmeida.github.io/ikRobo/",
-    accent: "#0ea5e9",
-  },
-  */
-  {
-    title: "Soletre com Formas",
-    desc: "Arraste e colete letras coloridas para formar palavras antes que o tempo acabe!",
-    emoji: "🎨",
-    category: "Português",
-    badge: "NÍVEL 1-3",
-    url: "https://alvesdealmeida.github.io/soletrandoInfantil/",
-    accent: "#0ea5e9",
-  },
-  {
-    title: "Matemática Master",
-    desc: "Desafio de aritmética em tela cheia. Misture as 4 operações e conquiste o ouro!",
-    emoji: "📱",
-    category: "Matemática",
-    badge: "Landscape",
-    url: "https://alvesdealmeida.github.io/tabuleiroAritimetico/",
-    accent: "#0ea5e9",
-  },
-  
-   {
-    title: "MazeLogic AI - Protocolo de Teste",
-    desc: "Um simulador interativo de lógica de programação onde o utilizador guia um robô através de labirintos progressivos utilizando comandos sequenciais e sensores de IA.",
-    emoji: "🤖 🤖 🤖",
-    category: "Programação",
-    badge: "Beta 1.0",
-    url: "https://alvesdealmeida.github.io/mazeloLogicIA/",
-    accent: "#00d4ff",
-  },
-  {
-    title: "Mestre da Geometria",
-    desc: "Programe o robô para desenhar formas geométricas e desafios 3D usando lógica e ângulos.",
-    emoji: "🤖 🤖 🤖",
-    category: "Programação",
-    badge: "Lógica",
-    url: "https://alvesdealmeida.github.io/programDesenhGeog/",
-    accent: "#3498db",
-  },
-  
+  { title:"MENU - JOGOS - SCRATCH", desc:"SUB-MENU PARA JOGOS PROGRAMADOS NO SCRATCH COM HTML,CSS E JS.", emoji:"💻💻💻", category:"Programação-Scratch", badge:"SCRATCH+HTML+CSS+JS", url:"https://alvesdealmeida.github.io/subMenuScratch/", accent:"#4CAF50" },
+  { title:"🧠💻MathCode Quest v3", desc:"Resolva puzzles de Matemática e Lógica de Programação num terminal estilo Matrix. Combos, Boss Rounds, conquistas e ranking!", emoji:"💻💻💻", category:"Matemática ", badge:"HACKER ACADEMY - PROGRAMAÇÃO, LÓGICA", url:"https://alvesdealmeida.github.io/mathCodeQuest/", accent:"#00ff41" },
+  { title:"Damas 3D", desc:"Jogue damas contra o computador nesta versão 3D com perspectiva do clássico jogo de tabuleiro. Escolha jogar com as peças brancas ou pretas e tente superar a IA.", emoji:"♟️", category:"Lógica", badge:"ESTRAGÉGIA", url:"https://alvesdealmeida.github.io/damaDama/", accent:"#c8942a" },
+  { title:"Desafio Matemático: Festival de Pipas", desc:"Domine os céus manobrando sua pipa e vencendo duelos de lógica e matemática para se tornar o campeão do festival!", emoji:"🪁🎓", category:"Matemática", badge:"BNCC", url:"https://alvesdealmeida.github.io/pipasMatematica/", accent:"#00ffff" },
+  { title:"Mestre da Tabuada", desc:"Domine as operações matemáticas de forma interativa! Arraste os resultados para as expressões correspondentes e visualize as quantidades através de grupos de pontos.", emoji:"🧮", category:"Matemática", badge:"Tabuada", url:"https://alvesdealmeida.github.io/tabuadaMultiplicacao/", accent:"#f39c12" },
+  { title:"Pacman de Palavras", desc:"Jogo educacional de alfabetização em português: mova o Pacman e devore os fantasmas com letras na ordem certa para escrever cada palavra!", emoji:"🟡", category:"Educativo", badge:"Jogos", url:"https://alvesdealmeida.github.io/pacmanPortugues/", accent:"#FFD700" },
+  { title:"Smart City: Eco-Robô Pro", desc:"Desafio interdisciplinar de matemática e português em uma cidade futurista.", emoji:"🤖", category:"Educativo", badge:"V2.0", url:"https://alvesdealmeida.github.io/smartCity/", accent:"#2ecc71" },
+  { title:"Reparo Crítico - Núcleo 3D", desc:"jogo (Matrix 3D) apresenta uma narrativa de invasão por vírus onde o jogador deve depurar dados escolares para estabilizar um núcleo de energia.", emoji:"☢️", category:"Educativo", badge:"Alta Voltagem", url:"https://alvesdealmeida.github.io/nucleo3D/", accent:"#00f2ff" },
+  { title:"Cofre da Memória: Rede Sináptica", desc:"Desvende as sílabas e abra o cofre neural para reconstruir as conexões do seu cérebro neste desafio 3D.", emoji:"🧠", category:"Educativo", badge:"Desafio 3D", url:"https://alvesdealmeida.github.io/cofredaMemoria/", accent:"#00d4ff" },
+  { title:"Pixel Educ Pro --- [ON e OFF LINE]", desc:"Desafie sua lógica e percepção espacial criando desenhos em pixel art seguindo objetivos específicos.", emoji:"✏️", category:"Educativo", badge:"OFFLINE", url:"https://alvesdealmeida.github.io/pixelEduc/", accent:"#7c3aed" },
+  { title:"Super Missão Brasil", desc:"Plataforma educativa estilo Mario: pule em inimigos, bata nos blocos ❓ e responda perguntas sobre o Brasil para vencer!", emoji:"🍄👲🏻🏰🐢⭐", category:"Educativo", badge:"Jogo", url:"https://alvesdealmeida.github.io/missaoBrasil/", accent:"#009c3b" },
+  { title:"Robo Code Kids", desc:"Joguinho que te ensina a programar", emoji:"💻 👨‍💻", category:"Programação", badge:"PROGRAMAÇÃO", url:"https://alvesdealmeida.github.io/robocodeKids/", accent:"#00E5FF" },
+  { title:"Spider Match Matemátaica", desc:"Capture números inteiros na teia para resolver somas antes das outras aranhas.", emoji:"🕷️", category:"Matemática", badge:"NÚMEROS INTEIROS", url:"https://alvesdealmeida.github.io/spiderMatematica/", accent:"#ef4444" },
+  { title:"Copa Matemátaica", desc:"Vença desafios de cálculo para marcar gols e conquistar o troféu no estádio.", emoji:"🏆", category:"Matemática", badge:"OPERAÇÕES", url:"https://alvesdealmeida.github.io/copaMatematica/", accent:"#10b981" },
+  { title:"MathGame", desc:"Pratique adição e subtração de forma divertida e interativa!", emoji:"➕", category:"Matemática", badge:"ADIÇÃO", url:"https://alvesdealmeida.github.io/mathGame/", accent:"#10b981" },
+  { title:"ComDecom", desc:"Aprenda decomposição de números de forma lúdica e visual.", emoji:"🔢", category:"Matemática", badge:"DECOMPOSIÇÃO", url:"https://alvesdealmeida.github.io/comDEcom/", accent:"#10b981" },
+  { title:"JogoMD", desc:"Explore o material dourado para entender valor posicional.", emoji:"🟡", category:"Matemática", badge:"MAT. DOURADO", url:"https://alvesdealmeida.github.io/joguinhoMD/", accent:"#10b981" },
+  { title:"Torre de Hanói", desc:"Resolva o clássico puzzle de lógica movendo os discos.", emoji:"🗼", category:"Lógica", badge:"PUZZLE", url:"https://alvesdealmeida.github.io/torreHanoi/", accent:"#8b5cf6" },
+  { title:"Joguinho de Xadrez - [[**EM BREVE ON LINE PARA 2 JOGADORES**]]", desc:"Aprenda e pratique xadrez com peças e regras completas.", emoji:"♟️", category:"Lógica", badge:"XADREZ", url:"https://alvesdealmeida.github.io/jogoXadrez/", accent:"#8b5cf6" },
+  { title:"Sudoku Educacional", desc:"Desenvolva lógica, foco e raciocínio dedutivo com 3 níveis.", emoji:"🔢", category:"Lógica", badge:"3 NÍVEIS", url:"https://alvesdealmeida.github.io/sudokuEducacional/", accent:"#8b5cf6" },
+  { title:"NúmeroQuest", desc:"Reta numérica e sequências: descubra o número oculto e complete os padrões!", emoji:"📏", category:"Matemática", badge:"SEQUÊNCIAS", url:"https://alvesdealmeida.github.io/numeroQuest/", accent:"#10b981" },
+  { title:"Papão Come Palavras", desc:"Escreva um substantivo próprio ou comum — se acertar, o Papão devora a palavra!", emoji:"👾", category:"Português", badge:"SUBSTANTIVOS", url:"https://alvesdealmeida.github.io/subProprioComum/", accent:"#f97316" },
+  { title:"Batalha Matemática", desc:"Responda questões de matemática para disparar nos navios inimigos!", emoji:"⚓", category:"Matemática", badge:"BATALHA", url:"https://alvesdealmeida.github.io/batalhaMatematica/", accent:"#10b981" },
+  { title:"Snake Matemática - **LIBERADA PARA OFF LINE**", desc:"Alimente a cobra direcionando ela para a resposta certa.", emoji:"🐍", category:"Matemática", badge:"CÁLCULO", url:"https://alvesdealmeida.github.io/cobraMatOff/", accent:"#10b981" },
+  { title:"Caça-Palavras", desc:"Encontre palavras de Matemática, Português, Ciências, Geografia e História escondidas na grade!", emoji:"🔤", category:"Educativo", badge:"MULTIDISCIPLINAR", url:"https://alvesdealmeida.github.io/ca-aPalavras/", accent:"#0ea5e9" },
+  { title:"Robô Run", desc:"Programe o robô para pegar os objetos e pular os obstáculos.", emoji:"💾🤖🎮", category:"Lógica", badge:"PROGRAMAÇÃO & LÓGICA", url:"https://alvesdealmeida.github.io/roboRun/", accent:"#0ea5e9" },
+  { title:"Soletre com Formas", desc:"Arraste e colete letras coloridas para formar palavras antes que o tempo acabe!", emoji:"🎨", category:"Português", badge:"NÍVEL 1-3", url:"https://alvesdealmeida.github.io/soletrandoInfantil/", accent:"#0ea5e9" },
+  { title:"Matemática Master", desc:"Desafio de aritmética em tela cheia. Misture as 4 operações e conquiste o ouro!", emoji:"📱", category:"Matemática", badge:"Landscape", url:"https://alvesdealmeida.github.io/tabuleiroAritimetico/", accent:"#0ea5e9" },
+  { title:"MazeLogic AI - Protocolo de Teste", desc:"Um simulador interativo de lógica de programação onde o utilizador guia um robô através de labirintos progressivos utilizando comandos sequenciais e sensores de IA.", emoji:"🤖 🤖 🤖", category:"Programação", badge:"Beta 1.0", url:"https://alvesdealmeida.github.io/mazeloLogicIA/", accent:"#00d4ff" },
+  { title:"Mestre da Geometria", desc:"Programe o robô para desenhar formas geométricas e desafios 3D usando lógica e ângulos.", emoji:"🤖 🤖 🤖", category:"Programação", badge:"Lógica", url:"https://alvesdealmeida.github.io/programDesenhGeog/", accent:"#3498db" },
 ];
 
-// ── Estado ────────────────────────────────────────────────────
 let activeCategory = "Todos";
 
 function getCategories() {
-  return ["Todos", "Matemática", "Lógica", "Português", "Educativo","Robótica","Programação","Programação-Scratch",];
+  return ["Todos","Matemática","Lógica","Português","Educativo","Robótica","Programação","Programação-Scratch"];
 }
-
 function countByCategory(cat) {
-  if (cat === "Todos") return games.length;
-  return games.filter(g => g.category === cat).length;
+  return cat === "Todos" ? games.length : games.filter(g => g.category === cat).length;
 }
-
-// ── Render tabs ───────────────────────────────────────────────
-const CAT_ICONS = {
-  "Todos": "📚",
-  "Matemática": "📐",
-  "Lógica": "🧩",
-  "Português": "📖",
-  "Educativo": "🌐",
-  "Scratch": "🖼️",
-};
+const CAT_ICONS = { "Todos":"📚","Matemática":"📐","Lógica":"🧩","Português":"📖","Educativo":"🌐","Scratch":"🖼️" };
 
 function renderTabs() {
-  const tabs = document.getElementById("tabs");
-  tabs.innerHTML = getCategories().map(cat => `
-    <button class="tab ${cat === activeCategory ? 'active' : ''}"
-      onclick="setCategory('${cat}')">
-      ${CAT_ICONS[cat] || ''} ${cat}
+  document.getElementById("tabs").innerHTML = getCategories().map(cat => `
+    <button class="tab ${cat === activeCategory ? 'active' : ''}" onclick="setCategory('${cat}')">
+      ${CAT_ICONS[cat]||''} ${cat}
       <span class="tab-count">${countByCategory(cat)}</span>
     </button>
   `).join('');
 }
+function setCategory(cat) { activeCategory = cat; renderTabs(); filterGames(); }
 
-function setCategory(cat) {
-  activeCategory = cat;
-  renderTabs();
-  filterGames();
-}
-
-// ── Filtrar ───────────────────────────────────────────────────
 function filterGames() {
   const q = document.getElementById("searchInput").value.toLowerCase().trim();
   const filtered = games.filter(g => {
@@ -1754,234 +741,162 @@ function filterGames() {
   renderGames(filtered);
 }
 
-// ── Render cards ──────────────────────────────────────────────
 function renderGames(list) {
   const grid = document.getElementById("gamesGrid");
   const lbl  = document.getElementById("count-label");
   lbl.textContent = list.length + (list.length === 1 ? " jogo" : " jogos");
-
   if (!list.length) {
-    grid.innerHTML = `
-      <div class="empty">
-        <span class="empty-icon">🤔</span>
-        <h3>Nenhum jogo encontrado</h3>
-        <p>Tente outro termo de busca ou selecione outra disciplina.</p>
-      </div>`;
+    grid.innerHTML = `<div class="empty"><span class="empty-icon">🤔</span><h3>Nenhum jogo encontrado</h3><p>Tente outro termo de busca ou selecione outra disciplina.</p></div>`;
     return;
   }
-
   grid.innerHTML = list.map((g, i) => {
     const s = SUBJECT_STYLES[g.category] || SUBJECT_STYLES["Educativo"];
     return `
-    <a class="game-card" href="${g.url}" target="_blank" rel="noopener"
-       style="--accent:${g.accent}; animation-delay:${i * 0.06}s">
-
+    <a class="game-card" href="${g.url}" target="_blank" rel="noopener" style="--accent:${g.accent};animation-delay:${i*0.06}s">
       <div class="card-thumb" style="background:${s.thumbGrad}">
-        <span class="big-emoji"
-          style="--ef-dur:${3 + (i % 3) * 0.8}s; --ef-dl:${(i * 0.25) % 2}s">
-          ${g.emoji}
-        </span>
+        <span class="big-emoji" style="--ef-dur:${3+(i%3)*0.8}s;--ef-dl:${(i*0.25)%2}s">${g.emoji}</span>
         <span class="subject-badge">${g.badge}</span>
         <span class="level-tag">▶ Jogar agora</span>
       </div>
-
       <div class="card-body">
         <div class="card-title">${g.title}</div>
         <div class="card-desc">${g.desc}</div>
         <div class="card-footer">
-          <span class="card-tag"
-            style="color:${s.tagTxt}; background:${s.tagBg}">
-            ${CAT_ICONS[g.category] || ''} ${g.category}
-          </span>
-          <button class="card-btn"
-            style="background:${s.btn}"
-            onclick="event.preventDefault(); window.open('${g.url}','_blank')">
-            <svg viewBox="0 0 16 16"><path d="M6 3l6 5-6 5V3z"/></svg>
-            Jogar
+          <span class="card-tag" style="color:${s.tagTxt};background:${s.tagBg}">${CAT_ICONS[g.category]||''} ${g.category}</span>
+          <button class="card-btn" style="background:${s.tagTxt}" onclick="event.preventDefault();window.open('${g.url}','_blank')">
+            <svg viewBox="0 0 16 16"><path d="M6 3l6 5-6 5V3z"/></svg>Jogar
           </button>
         </div>
       </div>
     </a>`;
   }).join('');
-
   document.getElementById("total-count").textContent = games.length;
 }
 
-// ── Init ──────────────────────────────────────────────────────
 renderTabs();
 filterGames();
 
+// ── Modais ────────────────────────────────────────────────────
+function fecharNovidades() {
+  document.getElementById('overlay-novidades').style.display = 'none';
+  document.body.classList.remove('modal-open');
+  tocarBoasVindas();
+}
 function fecharAviso() {
   const overlay = document.getElementById('overlay-aviso');
   overlay.style.transition = 'opacity 0.5s ease';
   overlay.style.opacity = '0';
-  
   setTimeout(() => {
     overlay.style.display = 'none';
-    // Abre o segundo modal de presente
     const presente = document.getElementById('overlay-presente');
-    presente.style.display = 'flex';
+    if (presente) presente.style.display = 'flex';
   }, 500);
 }
-
 function fecharPresente() {
   const presente = document.getElementById('overlay-presente');
   presente.style.transition = 'opacity 0.5s ease';
   presente.style.opacity = '0';
-  
-  setTimeout(() => {
-    presente.style.display = 'none';
-    document.body.classList.remove('modal-open'); // Libera o scroll apenas aqui
-  }, 500);
+  setTimeout(() => { presente.style.display = 'none'; document.body.classList.remove('modal-open'); }, 500);
 }
-function fecharNovidades() {
-  const popUp = document.getElementById('overlay-novidades');
-  if (popUp) {
-    popUp.style.display = 'none';
-  }
-}
+function abrirModalBNCC()  { document.getElementById('modal-bncc').classList.add('open'); }
+function fecharModalBNCC() { document.getElementById('modal-bncc').classList.remove('open'); }
 
-// Forçar a exibição ao carregar a página
 window.onload = function() {
   document.getElementById('overlay-novidades').style.display = 'flex';
 };
 
-// Função para fechar o modal de novidades
+// ── PIN QUIZ ─────────────────────────────────────────────────
+function validarPinQuiz() {
+  const input    = document.getElementById('quiz-pin-input');
+  const feedback = document.getElementById('quiz-pin-feedback');
+  const overlay  = document.getElementById('quiz-success-overlay');
+  const val      = input.value.trim();
 
-function fecharNovidades() {
-  document.getElementById('overlay-novidades').style.display = 'none';
-  document.body.classList.remove('modal-open');
-  tocarBoasVindas(); // ← aqui
-}
-/*
-// Lógica para mostrar o modal ao carregar a página
-window.addEventListener('DOMContentLoaded', (event) => {
-  // Mostra o modal de novidades
-  document.getElementById('overlay-novidades').style.display = 'flex';
-  document.body.classList.add('modal-open');
-});
+  input.classList.remove('pin-err','pin-ok');
+  feedback.className = 'pin-feedback';
+  feedback.textContent = '';
 
-// Ajuste na sua função fecharAviso original para não conflitar
-function fecharAviso() {
-  document.getElementById('overlay-aviso').style.display = 'none';
-  // Só remove o modal-open se o de novidades também estiver fechado
-  if(document.getElementById('overlay-novidades').style.display === 'none') {
-    document.body.classList.remove('modal-open');
+  if (!val) {
+    input.classList.add('pin-err');
+    feedback.className = 'pin-feedback err';
+    feedback.textContent = 'Digite o PIN.';
+    return;
+  }
+
+  const pinSalvo = localStorage.getItem('quiz_pin_ativo');
+  const expiry   = parseInt(localStorage.getItem('quiz_pin_expiry') || '0');
+
+  if (!pinSalvo || Date.now() > expiry) {
+    input.classList.add('pin-err');
+    feedback.className = 'pin-feedback err';
+    feedback.textContent = 'Nenhum PIN ativo no momento.';
+    return;
+  }
+
+  if (val === pinSalvo) {
+    input.classList.add('pin-ok');
+    feedback.className = 'pin-feedback ok';
+    feedback.textContent = 'PIN correto! Abrindo…';
+    overlay.classList.add('show');
+    setTimeout(() => {
+      // ← Substitua pela URL real do seu quiz:
+      window.open('quiz.html', '_blank');
+      overlay.classList.remove('show');
+      input.classList.remove('pin-ok');
+      input.value = '';
+      feedback.textContent = '';
+    }, 1600);
+  } else {
+    input.classList.add('pin-err');
+    feedback.className = 'pin-feedback err';
+    feedback.textContent = 'PIN incorreto. Tente novamente.';
+    input.value = '';
+    setTimeout(() => input.classList.remove('pin-err'), 600);
   }
 }
-
-// Lógica para mostrar o modal ao carregar a página
-window.addEventListener('DOMContentLoaded', (event) => {
-  // Mostra o modal de novidades
-  document.getElementById('overlay-novidades').style.display = 'flex';
-  document.body.classList.add('modal-open');
-});
-function fecharAviso() {
-  document.getElementById('overlay-aviso').style.display = 'none';
-  if (document.getElementById('overlay-novidades').style.display === 'none') {
-    document.body.classList.remove('modal-open');
-  }
-}
-// Ajuste na sua função fecharAviso original para não conflitar
-/*
-function fecharAviso() {
-  document.getElementById('overlay-aviso').style.display = 'none';
-  // Só remove o modal-open se o de novidades também estiver fechado
-  if(document.getElementById('overlay-novidades').style.display === 'none') {
-    document.body.classList.remove('modal-open');
-  }
-}
-*/
 </script>
-  <!--
-<div style="text-align: center; margin-top: 20px;">
-    
-    <img width="100" src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://alvesdealmeida.github.io/educMenu1/&count_bg=%232980B9&title_bg=%23555555&title=Acessos+Menu+1&edge_flat=false" alt="Contador de Visitas">
-</div>
-  -->
-  
-<div id="overlay-presente" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); align-items: center; justify-content: center; z-index: 10000;">
-  <div class="modal-aviso" style="border: 3px solid #10b981;">
-    <h2 style="color: #1e3a5f;">🎁 Presente da Plataforma!</h2>
-    <p style="color: #334155; font-weight: 600;">
-      As aplicações <strong>Pixel Educ Pro</strong>-<strong>Astro Crew</strong> e <strong>Snake Matematica</strong> agora podem ser executadas <strong>OFF-LINE</strong> como presente para você!
-    </p>
-    <button class="btn-entendi" style="background: #10b981; color: white;" onclick="fecharPresente()">Que demais, obrigado!</button>
-  </div>
-</div>
-<!-- Coloque AQUI, antes de </body> -->
-<div vw class="enabled">
-  <div vw-access-button class="active"></div>
-  <div vw-plugin-wrapper>
-    <div class="vw-plugin-top-wrapper"></div>
-  </div>
-</div>
-<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-<script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
+
+<!-- Matrix Canvas -->
 <script>
 (function initMatrix() {
   const canvas = document.getElementById('matrix-canvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-
-  const CHARS =
-    'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン' +
-    'ァィゥェォッャュョ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ<>{}[]|/\\;:!@#$%^&*()+-=~`';
-
+  const CHARS = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンァィゥェォッャュョ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ<>{}[]|/\\;:!@#$%^&*()+-=~`';
   const FONT_SIZE = 14;
   let cols, drops, W, H, iv;
-
   function resize() {
-    W = canvas.width  = window.innerWidth;
+    W = canvas.width = window.innerWidth;
     H = canvas.height = window.innerHeight;
     cols  = Math.floor(W / FONT_SIZE);
     drops = Array.from({ length: cols }, () => Math.random() * -50);
   }
-
   function draw() {
     if (!drops) return;
     ctx.fillStyle = 'rgba(0,0,0,0.05)';
     ctx.fillRect(0, 0, W, H);
     ctx.font = FONT_SIZE + 'px monospace';
-
     for (let i = 0; i < drops.length; i++) {
       const char = CHARS[Math.floor(Math.random() * CHARS.length)];
       const y = drops[i] * FONT_SIZE;
-
       if (drops[i] > 1 && Math.random() > 0.95) {
-        ctx.fillStyle = '#ffffff';
-        ctx.shadowColor = '#ffffff';
-        ctx.shadowBlur = 8;
+        ctx.fillStyle = '#ffffff'; ctx.shadowColor = '#ffffff'; ctx.shadowBlur = 8;
       } else {
         const b = 80 + Math.floor(Math.random() * 100);
-        ctx.fillStyle = `rgba(0,${b + 100},0,0.95)`;
-        ctx.shadowColor = '#00ff41';
-        ctx.shadowBlur = 4;
+        ctx.fillStyle = `rgba(0,${b+100},0,0.95)`; ctx.shadowColor = '#00ff41'; ctx.shadowBlur = 4;
       }
-
       ctx.fillText(char, i * FONT_SIZE, y);
       ctx.shadowBlur = 0;
-
       if (y > H && Math.random() > 0.975) drops[i] = 0;
       drops[i] += 0.5 + Math.random() * 0.5;
     }
   }
-
-  window.addEventListener('load', function() {
-    resize();
-    iv = setInterval(draw, 40);
-  });
-
+  window.addEventListener('load', function() { resize(); iv = setInterval(draw, 40); });
   let resizeTimer;
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      clearInterval(iv);
-      resize();
-      iv = setInterval(draw, 40);
-    }, 150);
+    resizeTimer = setTimeout(() => { clearInterval(iv); resize(); iv = setInterval(draw, 40); }, 150);
   });
-
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) clearInterval(iv);
     else { resize(); iv = setInterval(draw, 40); }
