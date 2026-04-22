@@ -91,6 +91,7 @@
   /* ── FIM REDES SOCIAIS ───────────────────────────── */
   /* ── Topo decorativo ── */
   /* Reduzi o padding de 48px/80px para 20px/40px */
+  /*
 .hero {
     background: linear-gradient(135deg, var(--navy2) 0%, var(--navy) 60%, #1e4d8c 100%);
     position: relative;
@@ -99,7 +100,7 @@
     text-align: center;
 }
 
-  /* Bolhas decorativas */
+  /* Bolhas decorativas 
   .hero::before {
     content: '';
     position: absolute;
@@ -119,7 +120,7 @@
     pointer-events: none;
   }
 
-  /* Pontinhos decorativos */
+  /* Pontinhos decorativos 
   .hero-dots {
     position: absolute; inset: 0;
     background-image: radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
@@ -127,7 +128,7 @@
     pointer-events: none;
   }
 
-  /* Itens flutuantes */
+  /* Itens flutuantes 
   .float-items {
     position: absolute; inset: 0; overflow: hidden; pointer-events: none;
   }
@@ -142,6 +143,115 @@
     0%,100% { transform: translateY(0) rotate(0deg); }
     50%      { transform: translateY(-18px) rotate(8deg); }
   }
+  */
+  /* ── HERO MATRIX ─────────────────────────────────── */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 20px 24px 32px;
+  text-align: center;
+  background: #000;
+}
+#matrix-canvas {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  opacity: 0.55;
+  pointer-events: none; z-index: 0;
+}
+.hero-fog {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 50%,
+      rgba(0,0,0,0.55) 0%, transparent 100%),
+    linear-gradient(180deg,
+      rgba(0,0,0,0.30) 0%, rgba(0,0,0,0.10) 50%, rgba(0,0,0,0.45) 100%);
+  pointer-events: none; z-index: 1;
+}
+.hero::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%, #00ff41 30%, #39ff14 50%, #00ff41 70%, transparent 100%);
+  z-index: 10;
+  animation: scanLine 3s ease-in-out infinite;
+}
+@keyframes scanLine {
+  0%,100% { opacity:.6; }
+  50%      { opacity:1; box-shadow:0 0 16px #00ff41; }
+}
+.hero::after {
+  content: ''; position: absolute;
+  top: 0; left: 0; bottom: 0; width: 3px;
+  background: linear-gradient(180deg,
+    transparent 0%, #00ff41 40%, #39ff14 60%, transparent 100%);
+  z-index: 10; opacity: 0.7;
+}
+.hero-inner { position: relative; z-index: 5; max-width: 760px; margin: 0 auto; }
+.logo-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(0,255,65,0.08);
+  border: 1px solid rgba(0,255,65,0.35);
+  border-radius: 40px; padding: 5px 16px;
+  font-size: .68rem; font-weight: 700;
+  color: #00ff41; letter-spacing: .15em; text-transform: uppercase;
+  margin-bottom: 10px; backdrop-filter: blur(6px);
+  text-shadow: 0 0 8px rgba(0,255,65,.6);
+  animation: glowPulse 2.5s ease-in-out infinite;
+}
+@keyframes glowPulse {
+  0%,100% { box-shadow: 0 0 0 rgba(0,255,65,0); }
+  50%      { box-shadow: 0 0 18px rgba(0,255,65,.25); }
+}
+.logo-badge span { font-size: .9rem; }
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem,4vw,2.6rem);
+  font-weight: 800; color: #fff;
+  line-height: 1.15; margin-bottom: 10px;
+  text-shadow: 0 0 20px rgba(0,255,65,.3), 0 2px 4px rgba(0,0,0,.8);
+  animation: textFlicker 8s ease-in-out infinite;
+}
+@keyframes textFlicker {
+  0%,95%,100% { opacity:1; } 96% { opacity:.85; } 97% { opacity:1; } 98% { opacity:.9; }
+}
+h1 em {
+  font-style: normal;
+  background: linear-gradient(90deg, #00ff41, #39ff14, #ccff00);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; filter: drop-shadow(0 0 8px rgba(0,255,65,.5));
+}
+.stat-pill {
+  background: rgba(0,255,65,0.07);
+  border: 1px solid rgba(0,255,65,0.25);
+  border-radius: 30px; padding: 7px 16px;
+  display: flex; align-items: center; gap: 7px;
+  backdrop-filter: blur(8px);
+  transition: border-color .3s, box-shadow .3s;
+}
+.stat-pill:hover {
+  border-color: rgba(0,255,65,.55);
+  box-shadow: 0 0 14px rgba(0,255,65,.2);
+}
+.stat-pill .val  { font-size:.85rem; font-weight:800; color:#00ff41; text-shadow:0 0 6px rgba(0,255,65,.5); }
+.stat-pill .lbl  { font-size:.62rem; color:rgba(255,255,255,.5); font-weight:600; margin-top:1px; }
+.next-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: rgba(0,255,65,0.12);
+  border: 2px solid rgba(0,255,65,0.55);
+  border-radius: 40px; padding: 7px 18px;
+  color: #00ff41; font-family:'Nunito',sans-serif;
+  font-size:.78rem; font-weight:800;
+  text-decoration:none; letter-spacing:.04em;
+  backdrop-filter:blur(6px); margin-top:16px;
+  text-shadow:0 0 6px rgba(0,255,65,.5);
+  transition: background .22s, box-shadow .22s, transform .2s;
+}
+.next-btn:hover {
+  background: rgba(0,255,65,.28);
+  box-shadow: 0 0 24px rgba(0,255,65,.45);
+  transform: translateY(-2px);
+}
+/* ── FIM HERO MATRIX ──────────────────────────────── */
 
   /* Logo */
   .hero-inner { position: relative; z-index: 2; max-width: 760px; margin: 0 auto; }
@@ -996,10 +1106,12 @@ function tocarBoasVindas() {
   </div>
 </div>
 <!-- ── HERO ─────────────────────────────────────────────────── -->
-<header class="hero">
+  <canvas id="matrix-canvas"></canvas>
+  <div class="hero-fog"></div>
+  <!--
   <div class="hero-dots"></div>
 
-  <!-- Ícones flutuantes decorativos -->
+  <!-- Ícones flutuantes decorativos 
   <div class="float-items">
     <div class="fi" style="left:4%;top:18%;--d:7s;--dl:0s">📚</div>
     <div class="fi" style="left:12%;top:62%;--d:5s;--dl:1s">✏️</div>
@@ -1008,7 +1120,7 @@ function tocarBoasVindas() {
     <div class="fi" style="left:50%;top:8%;--d:5.5s;--dl:1.5s">⭐</div>
     <div class="fi" style="left:70%;top:40%;--d:9s;--dl:.3s">🧩</div>
     <div class="fi" style="left:22%;top:40%;--d:6.5s;--dl:2.5s">🎯</div>
-  </div>
+  </div>  -->
 
   <div class="hero-inner">
     <div class="logo-badge"><span>🎓</span> EDUC Plataforma de Aprendizagem</div>
@@ -1818,6 +1930,64 @@ function fecharAviso() {
 </div>
 <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
 <script>new window.VLibras.Widget('https://vlibras.gov.br/app');</script>
+<script>
+(function initMatrix() {
+  const canvas = document.getElementById('matrix-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
 
+  const CHARS =
+    'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン' +
+    'ァィゥェォッャュョ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ<>{}[]|/\\;:!@#$%^&*()+-=~`';
+
+  const FONT_SIZE = 14;
+  let cols, drops, W, H;
+
+  function resize() {
+    const hero = canvas.parentElement;
+    W = canvas.width  = hero.offsetWidth;
+    H = canvas.height = hero.offsetHeight;
+    cols  = Math.floor(W / FONT_SIZE);
+    drops = Array.from({ length: cols }, () => Math.random() * -50);
+  }
+
+  function draw() {
+    ctx.fillStyle = 'rgba(0,0,0,0.05)';
+    ctx.fillRect(0, 0, W, H);
+    ctx.font = FONT_SIZE + 'px monospace';
+
+    for (let i = 0; i < drops.length; i++) {
+      const char = CHARS[Math.floor(Math.random() * CHARS.length)];
+      const y = drops[i] * FONT_SIZE;
+
+      if (drops[i] > 1 && Math.random() > 0.95) {
+        ctx.fillStyle = '#ffffff';
+        ctx.shadowColor = '#ffffff';
+        ctx.shadowBlur = 8;
+      } else {
+        const b = 80 + Math.floor(Math.random() * 100);
+        ctx.fillStyle = `rgba(0,${b + 100},0,0.95)`;
+        ctx.shadowColor = '#00ff41';
+        ctx.shadowBlur = 4;
+      }
+
+      ctx.fillText(char, i * FONT_SIZE, y);
+      ctx.shadowBlur = 0;
+
+      if (y > H && Math.random() > 0.975) drops[i] = 0;
+      drops[i] += 0.5 + Math.random() * 0.5;
+    }
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+  let iv = setInterval(draw, 40);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) clearInterval(iv);
+    else iv = setInterval(draw, 40);
+  });
+})();
+</script>
+</body>
 </body>
 </html>
