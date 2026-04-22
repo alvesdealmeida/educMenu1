@@ -32,7 +32,7 @@
   }
   body {
     font-family: 'Nunito', sans-serif;
-    background: var(--cream);
+    background: #e8e8ec;
     color: var(--text);
     min-height: 100vh;
     overflow-x: hidden;
@@ -147,32 +147,23 @@
   /* ── HERO MATRIX ─────────────────────────────────── */
 .hero {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   padding: 20px 24px 32px;
   text-align: center;
-  background: #000;
+  background: transparent;
+  z-index: 2;
 }
 #matrix-canvas {
-  position: absolute;
+  position: fixed;
   top: 0; left: 0;
-  width: 100%; height: 100%;
-  opacity: 0.55;
+  width: 100vw; height: 100vh;
+  opacity: 0.15;
   pointer-events: none;
   z-index: 0;
   display: block;
 }
-.hero {
-  overflow: hidden !important; /* força o corte no limite do hero */
-}
-.hero-fog {
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 50%,
-      rgba(0,0,0,0.55) 0%, transparent 100%),
-    linear-gradient(180deg,
-      rgba(0,0,0,0.30) 0%, rgba(0,0,0,0.10) 50%, rgba(0,0,0,0.45) 100%);
-  pointer-events: none; z-index: 1;
-}
+/* hero overflow removido — canvas é fixed agora */
+.hero-fog { display: none; }
 .hero::before {
   content: ''; position: absolute;
   top: 0; left: 0; right: 0; height: 2px;
@@ -320,10 +311,10 @@ h1 em {
   /* Onda separadora */
   /* Diminui a altura da onda separadora de 60px para 30px */
 .wave-sep {
-    display: block; width: 100%; height: 30px; 
+    display: block; width: 100%; height: 8px;
     margin-top: -1px;
-    background: var(--cream);
-    clip-path: ellipse(56% 100% at 50% 100%);
+    background: #e8e8ec;
+    position: relative; z-index: 2;
 }
 
   /* ── Corpo principal ── */
@@ -333,12 +324,13 @@ h1 em {
     padding: 0 24px 80px;
     position: relative;
     top: -15px;
+    z-index: 2;
 }
 
   /* Barra de busca */
   .search-bar {
     display: flex; align-items: center;
-    background: var(--white);
+    background: rgba(255,255,255,0.82);
     border: 2px solid var(--border);
     border-radius: 16px;
     padding: 0 20px;
@@ -359,26 +351,7 @@ h1 em {
   }
   .search-bar input::placeholder { color: #94a3b8; font-weight: 600; }
 
-  .next-btn {
-    display: inline-flex; align-items: center; gap: 7px;
-    background: rgba(245,158,11,0.18);
-    border: 2px solid rgba(245,158,11,0.55);
-    border-radius: 40px; padding: 7px 18px;
-    color: var(--amber);
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.78rem; font-weight: 800;
-    text-decoration: none; letter-spacing: 0.04em;
-    backdrop-filter: blur(6px);
-    margin-top: 16px;
-    transition: background .22s, box-shadow .22s, transform .2s;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-  }
-  .next-btn:hover {
-    background: rgba(245,158,11,0.32);
-    box-shadow: 0 0 24px rgba(245,158,11,0.35);
-    transform: translateY(-2px);
-  }
+  /* next-btn versão amber removida — versão Matrix verde está acima */
 
   /* Tabs de categoria */
   .section-label {
@@ -407,7 +380,7 @@ h1 em {
     padding: 10px 20px;
     border-radius: 40px;
     border: 2px solid var(--border);
-    background: var(--white);
+    background: rgba(255,255,255,0.78);
     color: var(--muted);
     font-family: 'Nunito', sans-serif;
     font-size: 0.88rem; font-weight: 800;
@@ -466,7 +439,7 @@ h1 em {
 
   /* Card de jogo */
   .game-card {
-    background: var(--white);
+    background: rgba(255,255,255,0.82);
     border-radius: 20px;
     overflow: hidden;
     text-decoration: none;
@@ -550,7 +523,7 @@ h1 em {
   }
   .card-desc {
     font-size: 0.82rem; font-weight: 600;
-    color: var(--muted);
+    color: #94a3b8;
     line-height: 1.5;
     flex: 1; margin-bottom: 14px;
     display: -webkit-box;
@@ -602,12 +575,13 @@ h1 em {
 
   /* ── Rodapé ── */
   footer {
-    background: var(--navy2);
+    background: rgba(30,58,95,0.95);
     color: rgba(255,255,255,0.5);
     text-align: center;
     padding: 28px 24px;
     font-size: 0.82rem; font-weight: 700;
     letter-spacing: 0.04em;
+    position: relative; z-index: 2;
   }
   footer strong { color: rgba(255,255,255,0.85); }
 
@@ -622,7 +596,7 @@ h1 em {
   .bncc-info-card {
     width: 200px;
     flex-shrink: 0;
-    background: var(--white);
+    background: rgba(255,255,255,0.82);
     border-radius: 20px;
     padding: 18px;
     box-shadow: var(--shadow);
@@ -992,7 +966,8 @@ function tocarBoasVindas() {
 </head>
 <body>
 
-  
+<!-- ✅ MATRIX CANVAS — fixo, cobre toda a página -->
+<canvas id="matrix-canvas"></canvas>
 
 <div id="overlay-novidades" style="display:flex;">
   <div class="modal-novidades">
@@ -1112,7 +1087,7 @@ function tocarBoasVindas() {
   </div>
 </div>
 <!-- ── HERO ─────────────────────────────────────────────────── -->
-  <canvas id="matrix-canvas"></canvas>
+<header class="hero">
   <div class="hero-fog"></div>
   <!--
   <div class="hero-dots"></div>
@@ -1161,12 +1136,14 @@ function tocarBoasVindas() {
       </div>
     </div>
 
-    <!-- Link para o Menu II      target="_blank" -->
-    <a class="next-btn"
-       href="https://alvesdealmeida.github.io/educMenu2/"
-      onclick="mostrarPresente(event)">
-      🎓 Ver Educ Games II &nbsp;<span>→</span>
-    </a>
+    <!-- Botão Ver Educ Games II -->
+    <div style="display:flex;justify-content:center;margin-top:16px;">
+      <a class="next-btn"
+         href="https://alvesdealmeida.github.io/educMenu2/"
+         target="_blank" rel="noopener">
+        🎓 Ver Educ Games II &nbsp;<span>→</span>
+      </a>
+    </div>
      <div class="social-bar">
 
       <!-- FACEBOOK -->
@@ -1947,24 +1924,17 @@ function fecharAviso() {
     'ァィゥェォッャュョ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ<>{}[]|/\\;:!@#$%^&*()+-=~`';
 
   const FONT_SIZE = 14;
-  let cols, drops, W, H;
+  let cols, drops, W, H, iv;
 
   function resize() {
-  // Mede o canvas já renderizado pelo CSS (mais confiável)
-  const rect = canvas.getBoundingClientRect();
-  W = canvas.width  = Math.floor(rect.width);
-  H = canvas.height = Math.floor(rect.height);
-  if (W === 0 || H === 0) {
-    // Fallback: tenta pelo pai
-    const hero = canvas.parentElement;
-    W = canvas.width  = hero.offsetWidth  || 800;
-    H = canvas.height = hero.offsetHeight || 200;
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    cols  = Math.floor(W / FONT_SIZE);
+    drops = Array.from({ length: cols }, () => Math.random() * -50);
   }
-  cols  = Math.floor(W / FONT_SIZE);
-  drops = Array.from({ length: cols }, () => Math.random() * -50);
-}
 
   function draw() {
+    if (!drops) return;
     ctx.fillStyle = 'rgba(0,0,0,0.05)';
     ctx.fillRect(0, 0, W, H);
     ctx.font = FONT_SIZE + 'px monospace';
@@ -1992,20 +1962,26 @@ function fecharAviso() {
     }
   }
 
- // Aguarda o layout renderizar antes de iniciar
-setTimeout(resize, 100);
-window.addEventListener('resize', () => {
-  clearInterval(iv);
-  resize();
-  iv = setInterval(draw, 40);
-});
-  let iv = setInterval(draw, 40);
+  window.addEventListener('load', function() {
+    resize();
+    iv = setInterval(draw, 40);
+  });
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      clearInterval(iv);
+      resize();
+      iv = setInterval(draw, 40);
+    }, 150);
+  });
+
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) clearInterval(iv);
-    else iv = setInterval(draw, 40);
+    else { resize(); iv = setInterval(draw, 40); }
   });
 })();
 </script>
-</body>
 </body>
 </html>
