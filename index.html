@@ -784,6 +784,7 @@ function tocarBoasVindas() {
           <option value="14400000">4 horas</option>
           <option value="28800000">8 horas</option>
           <option value="86400000">24 horas</option>
+          <option value="315360000000">Ilimitado</option>
         </select>
 
         <!-- Ações principais -->
@@ -1190,6 +1191,7 @@ function validarPinQuiz() {
   }
 
   /* ─── Atualizar painel de status do PIN ─────────────────────────────── */
+  /*
   function admAtualizarStatus() {
     const statusEl = document.getElementById('adm-pin-status');
     const valEl    = document.getElementById('adm-pin-val');
@@ -1216,7 +1218,43 @@ function validarPinQuiz() {
       expEl.textContent  = '—';
     }
   }
+  */
+  /* ─── Atualizar painel de status do PIN ─────────────────────────────── */
+function admAtualizarStatus() {
+  const statusEl = document.getElementById('adm-pin-status');
+  const valEl    = document.getElementById('adm-pin-val');
+  const expEl    = document.getElementById('adm-pin-exp');
+  const pin    = localStorage.getItem('quiz_pin_ativo');
+  const expiry = parseInt(localStorage.getItem('quiz_pin_expiry') || '0');
+  const agora  = Date.now();
 
+  if (pin && agora < expiry) {
+    let tempoStr = "";
+    
+    // VERIFICAÇÃO DO PIN ILIMITADO (se maior que 1 ano)
+    if (expiry - agora > 31536000000) {
+       tempoStr = "Duração: Ilimitada";
+       expEl.style.color = "var(--green)"; // Deixa o texto verde
+    } else {
+       const restMin  = Math.ceil((expiry - agora) / 60000);
+       const horas    = Math.floor(restMin / 60);
+       const mins     = restMin % 60;
+       tempoStr = horas > 0
+         ? `Expira em ${horas}h ${mins < 10 ? '0'+mins : mins}min`
+         : `Expira em ${mins} min`;
+       expEl.style.color = "var(--muted)";
+    }
+
+    statusEl.className = 'adm-pin-status ativo';
+    valEl.textContent  = pin;
+    expEl.textContent  = tempoStr;
+  } else {
+    if (pin) { localStorage.removeItem('quiz_pin_ativo'); localStorage.removeItem('quiz_pin_expiry'); }
+    statusEl.className = 'adm-pin-status inativo';
+    valEl.textContent  = 'Nenhum PIN ativo';
+    expEl.textContent  = '—';
+  }
+}
   /* ─── Gerar novo PIN aleatório de 6 dígitos ─────────────────────────── */
   function admGerarPin() {
     const fb      = document.getElementById('adm-feedback');
