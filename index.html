@@ -1106,8 +1106,8 @@ function renderGames(list) {
         <div class="card-desc">${g.desc}</div>
         <div class="card-footer">
           <span class="card-tag" style="color:${s.tagTxt};background:${s.tagBg}">${CAT_ICONS[g.category]||''} ${g.category}</span>
-          <button class="card-btn" style="background:${isPinCard?'#4CAF50':s.tagTxt}" ${btnClick}>
-            <svg viewBox="0 0 16 16"><path d="${isPinCard?'M8 1a3 3 0 00-3 3v2H4a1 1 0 00-1 1v7a1 1 0 001 1h8a1 1 0 001-1V7a1 1 0 00-1-1h-1V4a3 3 0 00-3-3zm0 1.5a1.5 1.5 0 011.5 1.5v2h-3V4A1.5 1.5 0 018 2.5z':'M6 3l6 5-6 5V3z'}"/></svg>${isPinCard?'🔒 Acessar':'Jogar'}
+          <button class="card-btn" style="background:${isPinCard?'#4CAF50':s.tagTxt};${isPinCard?'padding:9px 10px;':''}" ${btnClick}>
+            <svg viewBox="0 0 16 16"><path d="${isPinCard?'M8 1a3 3 0 00-3 3v2H4a1 1 0 00-1 1v7a1 1 0 001 1h8a1 1 0 001-1V7a1 1 0 00-1-1h-1V4a3 3 0 00-3-3zm0 1.5a1.5 1.5 0 011.5 1.5v2h-3V4A1.5 1.5 0 018 2.5z':'M6 3l6 5-6 5V3z'}"/></svg>${isPinCard?'PIN':'Jogar'}
           </button>
         </div>
       </div>
