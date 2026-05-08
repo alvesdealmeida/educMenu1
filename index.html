@@ -250,6 +250,64 @@
   footer { background:rgba(30,58,95,.95);color:rgba(255,255,255,.5);text-align:center;padding:28px 24px;font-size:.82rem;font-weight:700;letter-spacing:.04em;position:relative;z-index:2; }
   footer strong { color:rgba(255,255,255,.85); }
 
+  /* ── SCRATCH PIN MODAL ── */
+  #scratch-pin-overlay {
+    display:none;position:fixed;inset:0;z-index:99990;
+    background:rgba(0,0,0,.72);backdrop-filter:blur(6px);
+    align-items:center;justify-content:center;padding:20px;
+  }
+  #scratch-pin-overlay.open { display:flex;animation:fadeInQz .25s ease; }
+  .scratch-pin-box {
+    background:#fff;border-radius:24px;padding:32px 28px 28px;
+    max-width:360px;width:100%;box-shadow:0 24px 80px rgba(0,0,0,.35);
+    border-top:6px solid #4CAF50;position:relative;text-align:center;
+  }
+  .scratch-pin-icon { font-size:2.8rem;margin-bottom:10px;display:block; }
+  .scratch-pin-box h3 {
+    font-family:'Playfair Display',serif;font-size:1.2rem;
+    color:var(--navy);margin-bottom:6px;
+  }
+  .scratch-pin-box p { font-size:.85rem;color:var(--muted);font-weight:600;margin-bottom:18px;line-height:1.5; }
+  .scratch-pin-close {
+    position:absolute;top:14px;right:16px;background:none;border:none;
+    font-size:1.4rem;color:var(--muted);cursor:pointer;line-height:1;
+    transition:color .2s;
+  }
+  .scratch-pin-close:hover { color:var(--coral); }
+  #scratch-pin-field {
+    width:100%;background:#f8fafc;border:2px solid var(--border);
+    border-radius:12px;color:var(--navy);font-family:'Nunito',sans-serif;
+    font-size:1.5rem;font-weight:800;letter-spacing:.32em;
+    padding:12px 8px;text-align:center;outline:none;
+    transition:border-color .2s,box-shadow .2s;margin-bottom:6px;
+  }
+  #scratch-pin-field::placeholder { letter-spacing:.1em;font-size:.9rem;font-weight:600;color:#94a3b8; }
+  #scratch-pin-field:focus { border-color:#4CAF50;box-shadow:0 0 0 3px rgba(76,175,80,.18); }
+  #scratch-pin-field.pin-err { border-color:var(--coral);box-shadow:0 0 0 3px rgba(244,63,94,.1);animation:pinShake .35s ease; }
+  #scratch-pin-field.pin-ok  { border-color:var(--green);box-shadow:0 0 0 3px rgba(16,185,129,.15); }
+  #scratch-pin-feedback { font-size:.78rem;font-weight:700;min-height:18px;margin-bottom:14px;transition:opacity .3s; }
+  #scratch-pin-feedback.err { color:var(--coral); }
+  #scratch-pin-feedback.ok  { color:var(--green); }
+  .scratch-pin-btn {
+    width:100%;background:linear-gradient(135deg,#4CAF50,#388E3C);
+    border:none;border-radius:12px;color:#fff;
+    font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:800;
+    padding:13px;cursor:pointer;letter-spacing:.05em;
+    transition:opacity .2s,transform .15s;
+    text-shadow:0 1px 3px rgba(0,0,0,.2);
+  }
+  .scratch-pin-btn:hover  { opacity:.9;transform:translateY(-1px); }
+  .scratch-pin-btn:active { transform:scale(.97); }
+  /* lock badge no card Scratch */
+  .card-lock-badge {
+    position:absolute;top:10px;right:10px;z-index:3;
+    background:rgba(0,0,0,.55);backdrop-filter:blur(4px);
+    border-radius:20px;padding:4px 10px;
+    display:flex;align-items:center;gap:4px;
+    font-size:.68rem;font-weight:800;color:#fff;
+    border:1px solid rgba(255,255,255,.2);
+  }
+
   /* ── LAYOUT SIDEBAR + GAMES ── */
   .content-wrapper { display:flex;gap:24px;align-items:flex-start; }
   .games-container { flex:1;min-width:0; }
@@ -799,6 +857,29 @@ function tocarBoasVindas() {
         </div>
         <div class="adm-feedback" id="adm-feedback"></div>
 
+        <!-- ── PIN DO SUBMENU SCRATCH ── -->
+        <div style="border-top:1px solid var(--border);margin:14px 0 12px;"></div>
+        <div class="adm-label-sm">💻 PIN — Jogos Scratch</div>
+        <div class="adm-pin-status inativo" id="adm-scratch-status">
+          <span class="pin-val" id="adm-scratch-val">Nenhum PIN ativo</span>
+          <span class="pin-exp" id="adm-scratch-exp">—</span>
+        </div>
+        <div class="adm-label-sm">⏱ Duração do PIN Scratch</div>
+        <select class="adm-duracao-select" id="adm-scratch-duracao">
+          <option value="1800000">30 minutos</option>
+          <option value="3600000" selected>1 hora</option>
+          <option value="7200000">2 horas</option>
+          <option value="14400000">4 horas</option>
+          <option value="86400000">24 horas</option>
+          <option value="315360000000">Ilimitado</option>
+        </select>
+        <div class="adm-btn-row">
+          <button class="adm-btn gerar"     onclick="admGerarScratchPin()">🎲 Gerar PIN</button>
+          <button class="adm-btn desativar" onclick="admDesativarScratchPin()">🚫 Desativar</button>
+        </div>
+        <div class="adm-feedback" id="adm-scratch-feedback"></div>
+        <!-- ── FIM PIN SCRATCH ── -->
+
         <!-- Sair do painel -->
         <button class="adm-btn-logout" onclick="admLogout()">↩ Sair do painel admin</button>
       </div>
@@ -927,7 +1008,7 @@ const SUBJECT_STYLES = {
 
 const games = [
   { title:"🏆 QuizArena — Sala de Quiz Competitivo", desc:"Dupla vs Dupla ao vivo! Professor cria a sala, alunos entram com o código e disputam um quiz de questões BNCC em tempo real com timer, combos e placar dinâmico.", emoji:"⚡🏆💜", category:"Quiz", badge:"MULTIDISCIPLINAR · AO VIVO", url:"https://alvesdealmeida.github.io/quizArena_vBeta/", accent:"#f5c518" },
-  { title:"MENU - JOGOS - SCRATCH", desc:"SUB-MENU PARA JOGOS PROGRAMADOS NO SCRATCH COM HTML,CSS E JS.", emoji:"💻💻💻", category:"Programação-Scratch", badge:"SCRATCH+HTML+CSS+JS", url:"https://alvesdealmeida.github.io/subMenuScratch/", accent:"#4CAF50" },
+  { title:"MENU - JOGOS - SCRATCH", desc:"SUB-MENU PARA JOGOS PROGRAMADOS NO SCRATCH COM HTML,CSS E JS.", emoji:"💻💻💻", category:"Programação-Scratch", badge:"SCRATCH+HTML+CSS+JS", url:"https://alvesdealmeida.github.io/subMenuScratch/", accent:"#4CAF50", pinProtegido: true },
   { title:"🧠💻MathCode Quest v3", desc:"Resolva puzzles de Matemática e Lógica de Programação num terminal estilo Matrix. Combos, Boss Rounds, conquistas e ranking!", emoji:"💻💻💻", category:"Matemática ", badge:"HACKER ACADEMY - PROGRAMAÇÃO, LÓGICA", url:"https://alvesdealmeida.github.io/mathCodeQuest/", accent:"#00ff41" },
   { title:"Damas 3D ON", desc:"Jogue damas contra a IA nesta versão 3D OU ON Line com QUEM você quiser e ONDE você quiser.", emoji:"♟️", category:"Lógica", badge:"ESTRAGÉGIA", url:"https://alvesdealmeida.github.io/DamasON/", accent:"#c8942a" },
   { title:"Desafio Matemático: Festival de Pipas", desc:"Domine os céus manobrando sua pipa e vencendo duelos de lógica e matemática para se tornar o campeão do festival!", emoji:"🪁🎓", category:"Matemática", badge:"BNCC", url:"https://alvesdealmeida.github.io/pipasMatematica/", accent:"#00ffff" },
@@ -1003,20 +1084,30 @@ function renderGames(list) {
   }
   grid.innerHTML = list.map((g, i) => {
     const s = SUBJECT_STYLES[g.category] || SUBJECT_STYLES["Educativo"];
+    const isPinCard = g.pinProtegido === true;
+    const cardHref  = isPinCard ? '#' : g.url;
+    const cardClick = isPinCard ? `onclick="event.preventDefault();abrirScratchPin()"` : '';
+    const btnClick  = isPinCard
+      ? `onclick="event.preventDefault();event.stopPropagation();abrirScratchPin()"`
+      : `onclick="event.preventDefault();window.open('${g.url}','_blank')"`;
+    const lockBadge = isPinCard
+      ? `<span class="card-lock-badge">🔒 PIN necessário</span>`
+      : '';
     return `
-    <a class="game-card" href="${g.url}" target="_blank" rel="noopener" style="--accent:${g.accent};animation-delay:${i*0.06}s">
+    <a class="game-card" href="${cardHref}" target="${isPinCard?'_self':'_blank'}" rel="noopener" style="--accent:${g.accent};animation-delay:${i*0.06}s" ${cardClick}>
       <div class="card-thumb" style="background:${s.thumbGrad}">
         <span class="big-emoji" style="--ef-dur:${3+(i%3)*0.8}s;--ef-dl:${(i*0.25)%2}s">${g.emoji}</span>
         <span class="subject-badge">${g.badge}</span>
-        <span class="level-tag">▶ Jogar agora</span>
+        <span class="level-tag">▶ ${isPinCard?'🔒 PIN':'Jogar agora'}</span>
+        ${lockBadge}
       </div>
       <div class="card-body">
         <div class="card-title">${g.title}</div>
         <div class="card-desc">${g.desc}</div>
         <div class="card-footer">
           <span class="card-tag" style="color:${s.tagTxt};background:${s.tagBg}">${CAT_ICONS[g.category]||''} ${g.category}</span>
-          <button class="card-btn" style="background:${s.tagTxt}" onclick="event.preventDefault();window.open('${g.url}','_blank')">
-            <svg viewBox="0 0 16 16"><path d="M6 3l6 5-6 5V3z"/></svg>Jogar
+          <button class="card-btn" style="background:${isPinCard?'#4CAF50':s.tagTxt}" ${btnClick}>
+            <svg viewBox="0 0 16 16"><path d="${isPinCard?'M8 1a3 3 0 00-3 3v2H4a1 1 0 00-1 1v7a1 1 0 001 1h8a1 1 0 001-1V7a1 1 0 00-1-1h-1V4a3 3 0 00-3-3zm0 1.5a1.5 1.5 0 011.5 1.5v2h-3V4A1.5 1.5 0 018 2.5z':'M6 3l6 5-6 5V3z'}"/></svg>${isPinCard?'🔒 Acessar':'Jogar'}
           </button>
         </div>
       </div>
@@ -1027,6 +1118,91 @@ function renderGames(list) {
 
 renderTabs();
 filterGames();
+
+/* ══════════════════════════════════════════════════════════════
+   ██  SCRATCH PIN — controle de acesso ao submenu Scratch
+   ══════════════════════════════════════════════════════════════ */
+const SCRATCH_PIN_KEY    = 'scratch_pin_ativo';
+const SCRATCH_EXPIRY_KEY = 'scratch_pin_expiry';
+const SCRATCH_URL        = 'https://alvesdealmeida.github.io/subMenuScratch/';
+
+function abrirScratchPin() {
+  // Se PIN ativo e não expirado → acesso direto
+  const pin    = localStorage.getItem(SCRATCH_PIN_KEY);
+  const expiry = parseInt(localStorage.getItem(SCRATCH_EXPIRY_KEY) || '0');
+  if (pin && Date.now() < expiry) {
+    window.open(SCRATCH_URL, '_blank');
+    return;
+  }
+  // Sem PIN ativo → abrir modal
+  const overlay = document.getElementById('scratch-pin-overlay');
+  overlay.classList.add('open');
+  document.body.classList.add('modal-open');
+  setTimeout(() => { document.getElementById('scratch-pin-field').focus(); }, 120);
+}
+
+function fecharScratchPin() {
+  const overlay = document.getElementById('scratch-pin-overlay');
+  overlay.classList.remove('open');
+  document.body.classList.remove('modal-open');
+  const field = document.getElementById('scratch-pin-field');
+  field.value = '';
+  field.className = '';
+  document.getElementById('scratch-pin-feedback').textContent = '';
+  document.getElementById('scratch-pin-feedback').className = '';
+}
+
+function validarScratchPin() {
+  const field    = document.getElementById('scratch-pin-field');
+  const feedback = document.getElementById('scratch-pin-feedback');
+  const val      = field.value.trim();
+
+  field.classList.remove('pin-err','pin-ok');
+  feedback.className = '';
+  feedback.textContent = '';
+
+  if (!val) {
+    field.classList.add('pin-err');
+    feedback.className = 'err';
+    feedback.textContent = '⚠️ Digite o PIN.';
+    return;
+  }
+
+  const pinSalvo = localStorage.getItem(SCRATCH_PIN_KEY);
+  const expiry   = parseInt(localStorage.getItem(SCRATCH_EXPIRY_KEY) || '0');
+
+  if (!pinSalvo || Date.now() > expiry) {
+    field.classList.add('pin-err');
+    feedback.className = 'err';
+    feedback.textContent = '🔒 Nenhum PIN ativo. Consulte o professor.';
+    return;
+  }
+
+  if (val === pinSalvo) {
+    field.classList.add('pin-ok');
+    feedback.className = 'ok';
+    feedback.textContent = '✅ PIN correto! Abrindo…';
+    setTimeout(() => {
+      window.open(SCRATCH_URL, '_blank');
+      fecharScratchPin();
+    }, 1200);
+  } else {
+    field.classList.add('pin-err');
+    feedback.className = 'err';
+    feedback.textContent = '❌ PIN incorreto. Tente novamente.';
+    field.value = '';
+    setTimeout(() => field.focus(), 100);
+  }
+}
+
+// Fechar modal ao clicar no fundo
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('scratch-pin-overlay')
+    .addEventListener('click', function(e) { if (e.target === this) fecharScratchPin(); });
+  document.getElementById('scratch-pin-field')
+    .addEventListener('keydown', e => { if (e.key === 'Enter') validarScratchPin(); });
+});
+/* ══ FIM SCRATCH PIN ══════════════════════════════════════════ */
 
 function fecharNovidades() {
   document.getElementById('overlay-novidades').style.display = 'none';
@@ -1190,9 +1366,10 @@ function validarPinQuiz() {
   function admMostrarCard() {
     document.getElementById('adm-card').classList.add('adm-visivel');
     admAtualizarStatus();
+    admAtualizarScratchStatus();
     // Atualiza o tempo restante do PIN a cada minuto
     clearInterval(admStatusTimer);
-    admStatusTimer = setInterval(admAtualizarStatus, 60000);
+    admStatusTimer = setInterval(() => { admAtualizarStatus(); admAtualizarScratchStatus(); }, 60000);
     // Rola até o card para o professor visualizar
     setTimeout(() => {
       document.getElementById('adm-card').scrollIntoView({ behavior:'smooth', block:'nearest' });
@@ -1301,6 +1478,66 @@ function admAtualizarStatus() {
     clearInterval(admStatusTimer);
     document.getElementById('adm-card').classList.remove('adm-visivel');
   }
+
+  /* ─── Admin: PIN do Submenu Scratch ─────────────────────────────────── */
+  function admAtualizarScratchStatus() {
+    const statusEl = document.getElementById('adm-scratch-status');
+    const valEl    = document.getElementById('adm-scratch-val');
+    const expEl    = document.getElementById('adm-scratch-exp');
+    if (!statusEl) return;
+    const pin    = localStorage.getItem(SCRATCH_PIN_KEY);
+    const expiry = parseInt(localStorage.getItem(SCRATCH_EXPIRY_KEY) || '0');
+    const agora  = Date.now();
+    if (pin && agora < expiry) {
+      let tempoStr;
+      if (expiry - agora > 31536000000) {
+        tempoStr = 'Duração: Ilimitada';
+        expEl.style.color = 'var(--green)';
+      } else {
+        const restMin = Math.ceil((expiry - agora) / 60000);
+        const h = Math.floor(restMin / 60), m = restMin % 60;
+        tempoStr = h > 0 ? `Expira em ${h}h ${m<10?'0'+m:m}min` : `Expira em ${m} min`;
+        expEl.style.color = 'var(--muted)';
+      }
+      statusEl.className = 'adm-pin-status ativo';
+      valEl.textContent  = pin;
+      expEl.textContent  = tempoStr;
+    } else {
+      if (pin) { localStorage.removeItem(SCRATCH_PIN_KEY); localStorage.removeItem(SCRATCH_EXPIRY_KEY); }
+      statusEl.className = 'adm-pin-status inativo';
+      valEl.textContent  = 'Nenhum PIN ativo';
+      expEl.textContent  = '—';
+    }
+  }
+
+  function admGerarScratchPin() {
+    const fb      = document.getElementById('adm-scratch-feedback');
+    const duracao = parseInt(document.getElementById('adm-scratch-duracao').value);
+    const novoPin = String(Math.floor(100000 + Math.random() * 900000));
+    localStorage.setItem(SCRATCH_PIN_KEY,    novoPin);
+    localStorage.setItem(SCRATCH_EXPIRY_KEY, String(Date.now() + duracao));
+    admAtualizarScratchStatus();
+    fb.textContent = `✅ PIN Scratch ${novoPin} ativado!`;
+    fb.className   = 'adm-feedback ok';
+    setTimeout(() => { fb.textContent = ''; fb.className = 'adm-feedback'; }, 5000);
+  }
+
+  function admDesativarScratchPin() {
+    const fb = document.getElementById('adm-scratch-feedback');
+    if (!localStorage.getItem(SCRATCH_PIN_KEY)) {
+      fb.textContent = 'Nenhum PIN Scratch para desativar.';
+      fb.className   = 'adm-feedback err';
+      setTimeout(() => { fb.textContent = ''; fb.className = 'adm-feedback'; }, 3000);
+      return;
+    }
+    localStorage.removeItem(SCRATCH_PIN_KEY);
+    localStorage.removeItem(SCRATCH_EXPIRY_KEY);
+    admAtualizarScratchStatus();
+    fb.textContent = '🚫 PIN Scratch desativado.';
+    fb.className   = 'adm-feedback err';
+    setTimeout(() => { fb.textContent = ''; fb.className = 'adm-feedback'; }, 3000);
+  }
+  /* ─── FIM Admin Scratch PIN ──────────────────────────────────────────── */
 
   /* ─── Gatilho de triple-click na logo EDUC (header) ────────────────── */
   (function registrarGatilhoLogo() {
@@ -1432,6 +1669,28 @@ function admAtualizarStatus() {
     title="eD IA – Assistente Inteligente da Plataforma EDUC">
   🤖
 </a>
+
+<!-- ══ SCRATCH PIN MODAL ══════════════════════════════════════ -->
+<div id="scratch-pin-overlay">
+  <div class="scratch-pin-box">
+    <button class="scratch-pin-close" onclick="fecharScratchPin()" title="Fechar">✕</button>
+    <span class="scratch-pin-icon">💻</span>
+    <h3>Menu Jogos Scratch</h3>
+    <p>Este conteúdo é <strong>restrito</strong>.<br>Digite o PIN liberado pelo professor para acessar.</p>
+    <input
+      id="scratch-pin-field"
+      type="text"
+      maxlength="6"
+      placeholder="••••••"
+      inputmode="numeric"
+      autocomplete="off"
+      oninput="this.value=this.value.replace(/\D/g,'')"
+    >
+    <div id="scratch-pin-feedback"></div>
+    <button class="scratch-pin-btn" onclick="validarScratchPin()">🔓 Acessar</button>
+  </div>
+</div>
+<!-- ══ FIM SCRATCH PIN MODAL ══════════════════════════════════ -->
 
 </body>
 </html>
