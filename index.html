@@ -228,13 +228,19 @@
   .game-card:active { transform:scale(.98); }
   @keyframes cardIn { from{opacity:0;transform:translateY(24px) scale(.97)} to{opacity:1;transform:translateY(0) scale(1)} }
 
-  /* ── CARD NOVO — zoom-in com bounce ── */
+  /* ── CARD NOVO — zoom-in com bounce ── 
   @keyframes cardNovo {
     0%   { opacity:0; transform:scale(0) rotate(-4deg); }
     60%  { opacity:1; transform:scale(1.09) rotate(1deg); }
     80%  { transform:scale(0.96) rotate(0deg); }
     100% { opacity:1; transform:scale(1) rotate(0deg); }
   }
+  */
+  @keyframes cardNovo {
+  0%   { opacity:0; transform:translateX(-120px); }
+  70%  { opacity:1; transform:translateX(10px); }
+  100% { opacity:1; transform:translateX(0); }
+}
   @keyframes novoBadgePulse {
     0%,100% { transform:scale(1); box-shadow:0 0 0 0 rgba(255,215,0,.7); }
     50%     { transform:scale(1.08); box-shadow:0 0 0 8px rgba(255,215,0,0); }
