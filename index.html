@@ -227,6 +227,34 @@
   .game-card:hover { transform:translateY(-8px) scale(1.015);box-shadow:0 20px 50px rgba(30,58,95,.15);border-color:var(--accent,var(--teal)); }
   .game-card:active { transform:scale(.98); }
   @keyframes cardIn { from{opacity:0;transform:translateY(24px) scale(.97)} to{opacity:1;transform:translateY(0) scale(1)} }
+
+  /* ── CARD NOVO — zoom-in com bounce ── */
+  @keyframes cardNovo {
+    0%   { opacity:0; transform:scale(0) rotate(-4deg); }
+    60%  { opacity:1; transform:scale(1.09) rotate(1deg); }
+    80%  { transform:scale(0.96) rotate(0deg); }
+    100% { opacity:1; transform:scale(1) rotate(0deg); }
+  }
+  @keyframes novoBadgePulse {
+    0%,100% { transform:scale(1); box-shadow:0 0 0 0 rgba(255,215,0,.7); }
+    50%     { transform:scale(1.08); box-shadow:0 0 0 8px rgba(255,215,0,0); }
+  }
+  @keyframes novoGlow {
+    0%,100% { box-shadow:0 0 0 0 rgba(255,215,0,0), 0 8px 32px rgba(30,58,95,.10); }
+    50%     { box-shadow:0 0 22px 6px rgba(255,200,0,.35), 0 8px 32px rgba(30,58,95,.10); }
+  }
+  .game-card.card-novo {
+    animation: cardNovo .75s cubic-bezier(.34,1.56,.64,1) both, novoGlow 2.2s ease-in-out 1s infinite;
+  }
+  .novo-badge {
+    position:absolute;top:10px;left:10px;z-index:4;
+    background:linear-gradient(135deg,#FFD700,#FF8C00);
+    color:#fff;font-family:'Nunito',sans-serif;font-size:.62rem;font-weight:900;
+    letter-spacing:.07em;padding:4px 10px;border-radius:20px;
+    text-shadow:0 1px 3px rgba(0,0,0,.3);
+    animation:novoBadgePulse 1.6s ease-in-out infinite;
+    border:2px solid rgba(255,255,255,.6);
+  }
   .card-thumb { height:110px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:var(--thumb-bg,linear-gradient(135deg,#1e3a5f 0%,#2563eb 100%)); }
   .card-thumb::after { content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.25) 100%); }
   .card-thumb .big-emoji { font-size:3rem;filter:drop-shadow(0 4px 16px rgba(0,0,0,.3));animation:emojiFloat var(--ef-dur,3.5s) ease-in-out infinite;animation-delay:var(--ef-dl,0s);position:relative;z-index:1; }
@@ -1021,7 +1049,7 @@ const SUBJECT_STYLES = {
 };
 
 const games = [
-  { title:"🏆 QuizArena — Sala de Quiz Competitivo", desc:"Dupla vs Dupla ao vivo! Professor cria a sala, alunos entram com o código e disputam um quiz de questões BNCC em tempo real com timer, combos e placar dinâmico.", emoji:"⚡🏆💜", category:"Quiz", badge:"MULTIDISCIPLINAR · AO VIVO", url:"https://alvesdealmeida.github.io/quizArena_vBeta/", accent:"#f5c518" },
+  { title:"🏆 QuizArena — Sala de Quiz Competitivo", desc:"Dupla vs Dupla ao vivo! Professor cria a sala, alunos entram com o código e disputam um quiz de questões BNCC em tempo real com timer, combos e placar dinâmico.", emoji:"⚡🏆💜", category:"Quiz", badge:"MULTIDISCIPLINAR · AO VIVO", url:"https://alvesdealmeida.github.io/quizArena_vBeta/", accent:"#f5c518", novo:true, dataLancamento:"2026-05-09" },
   { title:"MENU - JOGOS - SCRATCH", desc:"SUB-MENU PARA JOGOS PROGRAMADOS NO SCRATCH COM HTML,CSS E JS.", emoji:"💻💻💻", category:"Programação-Scratch", badge:"SCRATCH+HTML+CSS+JS", url:"https://alvesdealmeida.github.io/subMenuScratch/", accent:"#4CAF50", pinProtegido: true },
   { title:"🧠💻MathCode Quest v3", desc:"Resolva puzzles de Matemática e Lógica de Programação num terminal estilo Matrix. Combos, Boss Rounds, conquistas e ranking!", emoji:"💻💻💻", category:"Matemática ", badge:"HACKER ACADEMY - PROGRAMAÇÃO, LÓGICA", url:"https://alvesdealmeida.github.io/mathCodeQuest/", accent:"#00ff41" },
   { title:"Damas 3D ON", desc:"Jogue damas contra a IA nesta versão 3D OU ON Line com QUEM você quiser e ONDE você quiser.", emoji:"♟️", category:"Lógica", badge:"ESTRAGÉGIA", url:"https://alvesdealmeida.github.io/DamasON/", accent:"#c8942a" },
@@ -1088,6 +1116,14 @@ function filterGames() {
   renderGames(filtered);
 }
 
+/* ── Verifica se um jogo é "novo" (dentro de 5 dias) ── */
+function isNovo(g) {
+  if (!g.novo || !g.dataLancamento) return false;
+  const lancamento = new Date(g.dataLancamento);
+  const diff = (Date.now() - lancamento.getTime()) / (1000 * 60 * 60 * 24);
+  return diff >= 0 && diff <= 5;
+}
+
 function renderGames(list) {
   const grid = document.getElementById("gamesGrid");
   const lbl  = document.getElementById("count-label");
@@ -1096,24 +1132,33 @@ function renderGames(list) {
     grid.innerHTML = `<div class="empty"><span class="empty-icon">🤔</span><h3>Nenhum jogo encontrado</h3><p>Tente outro termo de busca ou selecione outra disciplina.</p></div>`;
     return;
   }
-  grid.innerHTML = list.map((g, i) => {
+
+  // Novos aparecem primeiro, depois os demais
+  const novos   = list.filter(g => isNovo(g));
+  const demais  = list.filter(g => !isNovo(g));
+  const ordenada = [...novos, ...demais];
+
+  grid.innerHTML = ordenada.map((g, i) => {
     const s = SUBJECT_STYLES[g.category] || SUBJECT_STYLES["Educativo"];
-    const isPinCard = g.pinProtegido === true;
-    const cardHref  = isPinCard ? '#' : g.url;
-    const cardClick = isPinCard ? `onclick="event.preventDefault();abrirScratchPin()"` : '';
-    const btnClick  = isPinCard
+    const isPinCard  = g.pinProtegido === true;
+    const eNovo      = isNovo(g);
+    const cardHref   = isPinCard ? '#' : g.url;
+    const cardClick  = isPinCard ? `onclick="event.preventDefault();abrirScratchPin()"` : '';
+    const btnClick   = isPinCard
       ? `onclick="event.preventDefault();event.stopPropagation();abrirScratchPin()"`
       : `onclick="event.preventDefault();window.open('${g.url}','_blank')"`;
-    const lockBadge = isPinCard
-      ? `<span class="card-lock-badge">🔒 PIN necessário</span>`
-      : '';
+    const lockBadge  = isPinCard ? `<span class="card-lock-badge">🔒 PIN necessário</span>` : '';
+    const novoBadge  = eNovo     ? `<span class="novo-badge">✨ NOVO</span>` : '';
+    // Cards novos têm delay menor para zoom-in ser bem visível
+    const delay      = eNovo ? `${i * 0.08}s` : `${i * 0.06}s`;
+    const extraClass = eNovo ? ' card-novo' : '';
     return `
-    <a class="game-card" href="${cardHref}" target="${isPinCard?'_self':'_blank'}" rel="noopener" style="--accent:${g.accent};animation-delay:${i*0.06}s" ${cardClick}>
+    <a class="game-card${extraClass}" href="${cardHref}" target="${isPinCard?'_self':'_blank'}" rel="noopener" style="--accent:${g.accent};animation-delay:${delay}" ${cardClick}>
       <div class="card-thumb" style="background:${s.thumbGrad}">
         <span class="big-emoji" style="--ef-dur:${3+(i%3)*0.8}s;--ef-dl:${(i*0.25)%2}s">${g.emoji}</span>
         <span class="subject-badge">${g.badge}</span>
         <span class="level-tag">▶ ${isPinCard?'🔒 PIN':'Jogar agora'}</span>
-        ${lockBadge}
+        ${lockBadge}${novoBadge}
       </div>
       <div class="card-body">
         <div class="card-title">${g.title}</div>
