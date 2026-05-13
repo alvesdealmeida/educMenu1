@@ -698,7 +698,33 @@ function tocarBoasVindas() {
 
 <canvas id="matrix-canvas"></canvas>
 
-<!-- Modal Novidades 
+<!-- Modal Novidades -->
+<div id="overlay-novidades" style="display:flex;">
+  <div class="modal-novidades">
+    <h2 style="font-family:'Playfair Display',serif;color:var(--navy);margin-bottom:20px;">🚀 eD - O ASSISTENTE VIRTUAL!</h2>
+    
+    <div class="novidade-item">
+      <div class="novidade-emoji">🪁</div>
+      <div class="novidade-texto">
+        <h4> Meu Primeiro Video IA.</h4>
+        
+        <!-- INSERÇÃO DO VÍDEO -->
+        <div style="margin: 20px 0; border-radius: 10px; overflow: hidden; background: #000;">
+          <video id="videoEd" width="100%" controls>
+            <source src="codigo_ia.mp4" type="video/mp4">
+            Seu navegador não suporta vídeos.
+          </video>
+        </div>
+        
+        <p>Estratégia, robótica e matemática gamificada para treinar a atenção.</p>
+      </div>
+    </div>
+
+    <!-- Botão de fechar atualizado -->
+    <button class="btn-fechar-novidade" onclick="fecharNovidades()">CLIQUE AQUI: PLATAFORMA!!</button>
+  </div>
+</div>
+  <!-- Modal Novidades 
 <div id="overlay-novidades" style="display:flex;">
   <div class="modal-novidades">
     <h2 style="font-family:'Playfair Display',serif;color:var(--navy);margin-bottom:20px;">🚀 eD - O ASSISTENTE VIRTUAL!</h2>
